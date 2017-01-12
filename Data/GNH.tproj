@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TomeProject Version="5">
+    <Name>GNH</Name>
+    <Locale>en_US</Locale>
+    <Components>
+        <Path>GNH</Path>
+    </Components>
+    <FieldDefinitions>
+        <Path>GNH</Path>
+    </FieldDefinitions>
+    <Records>
+        <Path>GNH</Path>
+    </Records>
+    <RecordExportTemplates>
+        <Path>GNH Export YAML.texport</Path>
+    </RecordExportTemplates>
+    <Types>
+        <Path>GNH</Path>
+    </Types>
+    <RecordImportTemplates>
+        <Path>GNH Card Import XLSX.timport</Path>
+        <Path>GNH Card Import CSV.timport</Path>
+    </RecordImportTemplates>
+</TomeProject>

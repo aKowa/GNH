@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Template Version="1">
+    <Name>Cards (XLSX)</Name>
+    <SourceType>XLSX</SourceType>
+    <IdColumn>ID</IdColumn>
+    <RootRecordId>Cards</RootRecordId>
+    <ColumnMap/>
+    <IgnoredIds>
+        <Id>COMMENT</Id>
+    </IgnoredIds>
+    <Parameters>
+        <Parameter Key="Sheet" Value="Sheet1"/>
+    </Parameters>
+</Template>

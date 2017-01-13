@@ -1,25 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Records>
-    <Record Id="Cards" DisplayName="Cards"/>
-    <Record Id="EVENT1.1" DisplayName="EVENT1.1" Parent="Cards">
-        <BackgroundColor Value="#000000"/>
-        <Character Value="Character4"/>
-        <CultureL Value="-1"/>
-        <CultureR Value="1"/>
-        <EconomyL Value="-1"/>
-        <EconomyR Value="1"/>
-        <EnvironmentL Value="-1"/>
-        <EnvironmentR Value="1"/>
-        <SecurityL Value="-1"/>
-        <SecurityR Value="1"/>
-        <Text Value="Increase Values?"/>
-        <TextL Value="No"/>
-        <TextR Value="Yes"/>
-        <TreasuryL Value="-1"/>
-        <TreasuryR Value="1"/>
-    </Record>
-    <Record Id="RANDOM.1" DisplayName="RANDOM.1" Parent="Cards">
+    <Record Id="1000" DisplayName="1000" Parent="Cards">
         <BackgroundColor Value="#55aaff"/>
+        <Category Value="Random"/>
         <Character Value="Character1"/>
         <CultureL Value="-1"/>
         <CultureR Value="1"/>
@@ -35,4 +18,23 @@
         <TreasuryL Value="-1"/>
         <TreasuryR Value="1"/>
     </Record>
+    <Record Id="1100" DisplayName="1100" Parent="Cards">
+        <BackgroundColor Value="#000000"/>
+        <Category Value="Event1"/>
+        <Character Value="Character4"/>
+        <CultureL Value="-1"/>
+        <CultureR Value="1"/>
+        <EconomyL Value="-1"/>
+        <EconomyR Value="1"/>
+        <EnvironmentL Value="-1"/>
+        <EnvironmentR Value="1"/>
+        <SecurityL Value="-1"/>
+        <SecurityR Value="1"/>
+        <Text Value="Increase Values?"/>
+        <TextL Value="No"/>
+        <TextR Value="Yes"/>
+        <TreasuryL Value="-1"/>
+        <TreasuryR Value="1"/>
+    </Record>
+    <Record Id="Cards" DisplayName="Cards"/>
 </Records>

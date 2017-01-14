@@ -1,12 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Content.Scripts;
 
 public class CardController : MonoBehaviour
 {
+	public GameManager gameManager;
 	public float thresholdAngle = 10f;
 	public float maxAngle = 15f;
 	public float backRotationSpeed = 1f;
-	private float t = 0;
+	private float EulerZ
+	{
+		get
+		{
+			var eulerZ = this.transform.rotation.eulerAngles.z;
+			if (eulerZ > 180)
+			{
+				eulerZ -= 360f;
+			}
+			return eulerZ;
+		}
+	}
 
 	/// <summary>
 	/// Called when drag began.
@@ -26,26 +39,31 @@ public class CardController : MonoBehaviour
 		var angle = Mathf.Atan2( targetDirection.y, targetDirection.x ) * Mathf.Rad2Deg;
 		angle = Mathf.Clamp( angle - 90, -maxAngle, maxAngle );
 		this.transform.rotation = Quaternion.AngleAxis( angle, Vector3.forward );
-	}
 
-	/// <summary>
-	/// Called when drag ended.
-	/// </summary>
-	public void OnEndDrag()
-	{
-		var currentRotation = this.transform.rotation.eulerAngles.z;
-		if (currentRotation > 180)
+		// handle threshold angle logic
+		if ( Mathf.Abs( EulerZ ) > thresholdAngle )
 		{
-			currentRotation -= 360f;
-		}
-		if ( Mathf.Abs( currentRotation ) < thresholdAngle )
-		{
-			StartCoroutine ( RotateBack ( currentRotation ) );
+			gameManager.PreviewResults();
 		}
 		else
 		{
-			// TODO: Implement next card logic
-			Debug.Log( "End Round" );
+			gameManager.RevertPreview();
+		}
+	}
+
+	/// <summary>
+	/// Called when drag ended. Starts back rotation or ends this round depending on thresholdAngle.
+	/// </summary>
+	public void OnEndDrag()
+	{
+		if ( Mathf.Abs( EulerZ ) < thresholdAngle )
+		{
+			StartCoroutine ( RotateBack ( EulerZ ) );
+		}
+		else
+		{
+			gameManager.ApplyResults();
+			this.transform.rotation = Quaternion.identity;
 		}
 	}
 
@@ -54,12 +72,12 @@ public class CardController : MonoBehaviour
 	/// </summary>
 	private IEnumerator RotateBack( float currentRotation )
 	{
-		this.t = 0;
-		while ( this.t < 1 )
+		float t = 0;
+		while ( t < 1f )
 		{
-			this.t += backRotationSpeed * Time.deltaTime;
-			var angle = Mathf.Lerp( currentRotation, 0.0f, this.t );
+			var angle = Mathf.Lerp( currentRotation, 0.0f, t );
 			this.transform.rotation = Quaternion.Euler( 0.0f, 0.0f, angle );
+			t += backRotationSpeed * Time.deltaTime;
 			yield return null;
 		}
 		this.transform.rotation = Quaternion.identity;

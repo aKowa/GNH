@@ -619,9 +619,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a6e6818c0011b74a8cadc70432f864d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 1715703455}
   thresholdAngle: 10
   maxAngle: 12
-  backRotationSpeed: 1
+  backRotationSpeed: 2
 --- !u!114 &795344644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1202,6 +1203,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 1715703454}
   - 114: {fileID: 1715703456}
+  - 114: {fileID: 1715703455}
   m_Layer: 5
   m_Name: GameManager
   m_TagString: Untagged
@@ -1231,6 +1233,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -12}
   m_SizeDelta: {x: -26, y: -10}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &1715703455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1715703453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67fb4437eab0bf341993b0a26cb72dd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1715703456
 MonoBehaviour:
   m_ObjectHideFlags: 0

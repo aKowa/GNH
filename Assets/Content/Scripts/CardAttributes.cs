@@ -29,7 +29,7 @@ namespace Content.Scripts
         /// <summary>
         /// Gets or sets the character.
         /// </summary>
-        public int Character { get; set; }
+        public Character Character { get; set; }
 
         /// <summary>
         /// Gets or sets the culture r.

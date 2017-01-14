@@ -11,59 +11,33 @@ namespace Content.Scripts
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
-    using System.Linq.Expressions;
     using System.Text;
 
     using UnityEngine;
-    /*
-    using YamlDotNet.Core;
-    using YamlDotNet.Core.Events;
-    using YamlDotNet.RepresentationModel;
-    using YamlDotNet.Serialization;
-    using YamlDotNet.Serialization.NamingConventions;
-    */
+
     /// <summary>
     /// The card data loader.
     /// </summary>
-    public class CardDataLoader : MonoBehaviour
+    public static class CardDataLoader
     {
         /// <summary>
-        /// The card data list.
+        /// The delimiters.
         /// </summary>
-        private List<CardData> cardDataList;
+        private static char[] delimiter = { ':', ' ' };
 
         /// <summary>
-        /// The delimiter.
+        /// The get card data list.
         /// </summary>
-        private char[] delimiter = { ':', ' ' };
-
-        /// <summary>
-        /// Use this for initialization
-        /// </summary>
-        private void Start()
+        /// <returns>
+        /// The <see cref="List"/>.
+        /// </returns>
+        public static List<CardData> GetCardDataList()
         {
-            this.cardDataList = new List<CardData>();
+            var fileName = "Data/GNH.yaml";
+            var cardDataList = new List<CardData>();
 
-            this.LoadCardData("Data/GNH.yaml");
-
-            var output = new StringBuilder();
-            output.AppendLine("Loading Result:");
-            foreach (var cardData in this.cardDataList)
-            {
-                output.AppendLine(cardData.ToString());
-            }
-            Debug.Log(output);
-        }
-
-        /// <summary>
-        /// Loads the card data from the file with the given file name.
-        /// </summary>
-        /// <param name="fileName">
-        /// The file name of the card data stored in yaml.
-        /// </param>
-        private void LoadCardData(string fileName)
-        {
             try
             {
                 var streamReader = new StreamReader(fileName, Encoding.UTF8);
@@ -83,7 +57,11 @@ namespace Content.Scripts
 
                         if (line.StartsWith("---"))
                         {
-                            this.DeserializeCardData(streamReader);
+                            var cardData = GetDeserializedCardData(streamReader);
+                            if (cardData != null)
+                            {
+                                cardDataList.Add(cardData);
+                            }
                         }
                     }
                     while (line != null);
@@ -93,33 +71,32 @@ namespace Content.Scripts
             {
                 Debug.Log(string.Format("Exception message from {0}: {1}", e, e.Message));
             }
+
+            return cardDataList;
         }
 
         /// <summary>
-        /// The parse card data.
+        /// The get deserialized card data.
         /// </summary>
         /// <param name="streamReader">
         /// The stream reader.
         /// </param>
-        private void DeserializeCardData(TextReader streamReader)
+        /// <returns>
+        /// The <see cref="CardData"/>.
+        /// </returns>
+        private static CardData GetDeserializedCardData(TextReader streamReader)
         {
+            var cardData = new CardData();
+            var cardAttributes = new CardAttributes();
             var output = new StringBuilder();
             output.AppendLine("deserialized card data");
-
-            var cardData = new CardData();
 
             /*
              * CARD ID
              */
             var line = streamReader.ReadLine();
-            if (line == null)
-            {
-                return;
-            }
-            var splittedLine = line.Split(this.delimiter); // index 2 is the id
-            var id = int.Parse(splittedLine[2]);
-            cardData.CardId = id;
-            output.AppendLine(string.Format("id: {0}", id));
+            cardData.CardId = GetIntegerValue(line, 2);
+            output.AppendLine(string.Format("id: {0}", cardData.CardId));
 
             /*
              * PARENT (ignore)
@@ -127,21 +104,16 @@ namespace Content.Scripts
             streamReader.ReadLine();
 
             /*
-             * ATTRIBUTES (create CardAttributes)
+             * ATTRIBUTES (ignore)
              */
             streamReader.ReadLine();
-            var cardAttributes = new CardAttributes();
 
             /*
              * BACKGROUND COLOR
              */
             line = streamReader.ReadLine();
-            if (line == null)
-            {
-                return;
-            }
-            splittedLine = line.Split(this.delimiter); // index 5 is the hex code with # in front
-            output.AppendLine(string.Format("BackgroundColor: {0}", splittedLine[5]));
+            cardAttributes.BackgroundColor = GetColorValue(line, 5);
+            output.AppendLine(string.Format("BackgroundColor: {0}", cardAttributes.BackgroundColor));
             /*
              * do some magic
              *                  here!
@@ -152,180 +124,210 @@ namespace Content.Scripts
              * CATEGORY
              */
             line = streamReader.ReadLine();
-            if (line == null)
-            {
-                return;
-            }
-            splittedLine = line.Split(this.delimiter); // index 5 is the value
-            output.AppendLine(string.Format("Category: {0}", splittedLine[5]));
+            cardAttributes.Category = GetStringValue(line, 5);
+            output.AppendLine(string.Format("Category: {0}", cardAttributes.Category));
 
             /*
              * CHARACTER
              */
             line = streamReader.ReadLine();
-            if (line == null)
+            var character = GetStringValue(line, 5);
+            character = character.Trim(); // trim
+            switch (character)
             {
-                return;
+                case "Character1":
+                    cardAttributes.Character = Character.Character1;
+                    break;
+                case "Character2":
+                    cardAttributes.Character = Character.Character2;
+                    break;
+                case "Character3":
+                    cardAttributes.Character = Character.Character3;
+                    break;
+                case "Character4":
+                    cardAttributes.Character = Character.Character4;
+                    break;
+                default:
+                    cardAttributes.Character = Character.NotSet;
+                    Debug.Log("Error reading Character");
+                    break;
             }
-            splittedLine = line.Split(this.delimiter); // index 5 is the value
-            output.AppendLine(string.Format("Character: {0}", splittedLine[5]));
+            output.AppendLine(string.Format("Character: {0}", cardAttributes.Character));
 
             /*
              * CULTURE L
              */
             line = streamReader.ReadLine();
-            if (line == null)
-            {
-                return;
-            }
-            splittedLine = line.Split(this.delimiter); // index 5 is the value
-            cardAttributes.CultureL = int.Parse(splittedLine[5]);
-            output.AppendLine(string.Format("Culture L: {0}", splittedLine[5]));
+            cardAttributes.CultureL = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Culture L: {0}", cardAttributes.CultureL));
 
             /*
              * CULTURE R
              */
             line = streamReader.ReadLine();
-            if (line == null)
-            {
-                return;
-            }
-            splittedLine = line.Split(this.delimiter); // index 5 is the value
-            cardAttributes.CultureR = int.Parse(splittedLine[5]);
-            output.AppendLine(string.Format("Culture R: {0}", splittedLine[5]));
+            cardAttributes.CultureR = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Culture R: {0}", cardAttributes.CultureR));
 
             /*
              * ECONOMY L
              */
             line = streamReader.ReadLine();
-            if (line == null)
-            {
-                return;
-            }
-            splittedLine = line.Split(this.delimiter); // index 5 is the value
-            cardAttributes.EconomyL = int.Parse(splittedLine[5]);
-            output.AppendLine(string.Format("Economy L: {0}", splittedLine[5]));
+            cardAttributes.EconomyL = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Economy L: {0}", cardAttributes.EconomyL));
 
             /*
              * ECONOMY R
              */
             line = streamReader.ReadLine();
-            if (line == null)
-            {
-                return;
-            }
-            splittedLine = line.Split(this.delimiter); // index 5 is the value
-            cardAttributes.EconomyR = int.Parse(splittedLine[5]);
-            output.AppendLine(string.Format("Economy R: {0}", splittedLine[5]));
+            cardAttributes.EconomyR = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("EconomyR: {0}", cardAttributes.EconomyR));
 
             /*
              * ENVIRONMENT L
              */
             line = streamReader.ReadLine();
-            if (line == null)
-            {
-                return;
-            }
-            splittedLine = line.Split(this.delimiter); // index 5 is the value
-            cardAttributes.EnvironmentL = int.Parse(splittedLine[5]);
-            output.AppendLine(string.Format("Environment L: {0}", splittedLine[5]));
+            cardAttributes.EnvironmentL = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Environment L: {0}", cardAttributes.EnvironmentL));
 
             /*
              * ENVIRONMENT R
              */
             line = streamReader.ReadLine();
-            if (line == null)
-            {
-                return;
-            }
-            splittedLine = line.Split(this.delimiter); // index 5 is the value
-            cardAttributes.EnvironmentR = int.Parse(splittedLine[5]);
-            output.AppendLine(string.Format("Environment R: {0}", splittedLine[5]));
+            cardAttributes.EnvironmentR = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Environment R: {0}", cardAttributes.EnvironmentR));
 
             /*
              * SECURITY L
              */
             line = streamReader.ReadLine();
-            if (line == null)
-            {
-                return;
-            }
-            splittedLine = line.Split(this.delimiter); // index 5 is the value
-            cardAttributes.SecurityL = int.Parse(splittedLine[5]);
-            output.AppendLine(string.Format("Security L: {0}", splittedLine[5]));
+            cardAttributes.SecurityL = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Security L: {0}", cardAttributes.SecurityL));
 
             /*
              * SECURITY R
              */
             line = streamReader.ReadLine();
-            if (line == null)
-            {
-                return;
-            }
-            splittedLine = line.Split(this.delimiter); // index 5 is the value
-            cardAttributes.SecurityR = int.Parse(splittedLine[5]);
-            output.AppendLine(string.Format("Security R: {0}", splittedLine[5]));
+            cardAttributes.SecurityR = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Security R: {0}", cardAttributes.SecurityR));
 
             /*
              * TEXT
              */
             line = streamReader.ReadLine();
-            if (line == null)
-            {
-                return;
-            }
-            splittedLine = line.Split(this.delimiter); // index 5 is the value
-            output.AppendLine(string.Format("Text: {0}", splittedLine[5]));
+            cardAttributes.Text = GetStringValue(line, 5);
+            output.AppendLine(string.Format("Text: {0}", cardAttributes.Text));
 
             /*
              * TEXT L
              */
             line = streamReader.ReadLine();
-            if (line == null)
-            {
-                return;
-            }
-            splittedLine = line.Split(this.delimiter); // index 5 is the value
-            output.AppendLine(string.Format("Text L: {0}", splittedLine[5]));
+            cardAttributes.TextL = GetStringValue(line, 5);
+            output.AppendLine(string.Format("Text L: {0}", cardAttributes.TextL));
 
             /*
              * TEXT R
              */
             line = streamReader.ReadLine();
-            if (line == null)
-            {
-                return;
-            }
-            splittedLine = line.Split(this.delimiter); // index 5 is the value
-            output.AppendLine(string.Format("Text R: {0}", splittedLine[5]));
+            cardAttributes.TextR = GetStringValue(line, 5);
+            output.AppendLine(string.Format("Text R: {0}", cardAttributes.TextR));
 
             /*
              * TREASURY L
              */
             line = streamReader.ReadLine();
-            if (line == null)
-            {
-                return;
-            }
-            splittedLine = line.Split(this.delimiter); // index 5 is the value
-            cardAttributes.TreasuryL = int.Parse(splittedLine[5]);
-            output.AppendLine(string.Format("Treasury L: {0}", splittedLine[5]));
+            cardAttributes.TreasuryL = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Treasury L: {0}", cardAttributes.TreasuryL));
 
             /*
              * TREASURY R
              */
             line = streamReader.ReadLine();
-            if (line == null)
-            {
-                return;
-            }
-            splittedLine = line.Split(this.delimiter); // index 5 is the value
-            cardAttributes.TreasuryR = int.Parse(splittedLine[5]);
-            output.AppendLine(string.Format("Treasury R: {0}", splittedLine[5]));
-
-            this.cardDataList.Add(cardData);
+            cardAttributes.TreasuryR = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Treasury R: {0}", cardAttributes.TreasuryR));
 
             Debug.Log(output);
+
+            cardData.CardAttributes = cardAttributes;
+            return cardData;
+        }
+
+        /// <summary>
+        /// The get color value.
+        /// </summary>
+        /// <param name="line">
+        /// The line.
+        /// </param>
+        /// <param name="index">
+        /// The index.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Color"/>.
+        /// </returns>
+        private static Color GetColorValue(string line, int index)
+        {
+            var hexcode = GetStringValue(line, index);
+
+            if (hexcode.StartsWith("#"))
+            {
+                hexcode = hexcode.Substring(1);
+            }
+
+            if (hexcode.StartsWith("0x"))
+            {
+                hexcode = hexcode.Substring(2);
+            }
+
+            if (hexcode.Length != 6)
+            {
+                //throw new Exception(string.Format("{0} is not a valid color string.", hexcode));
+            }
+
+            var r = byte.Parse(hexcode.Substring(0, 2), NumberStyles.HexNumber);
+            var g = byte.Parse(hexcode.Substring(2, 2), NumberStyles.HexNumber);
+            var b = byte.Parse(hexcode.Substring(4, 2), NumberStyles.HexNumber);
+
+            return new Color(r, g, b);
+        }
+
+        /// <summary>
+        /// The get string value.
+        /// </summary>
+        /// <param name="line">
+        /// The line.
+        /// </param>
+        /// <param name="index">
+        /// The index.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
+        private static string GetStringValue(string line, int index)
+        {
+            var splittedLine = line.Split(delimiter);
+            var text = new StringBuilder();
+            for (var i = index; i < splittedLine.Length; i++)
+            {
+                text.Append(splittedLine[i]);
+                text.Append(" ");
+            }
+            return text.ToString();
+        }
+
+        /// <summary>
+        /// The get integer value.
+        /// </summary>
+        /// <param name="line">
+        /// The line.
+        /// </param>
+        /// <param name="index">
+        /// The index.
+        /// </param>
+        /// <returns>
+        /// The <see cref="int"/>.
+        /// </returns>
+        private static int GetIntegerValue(string line, int index)
+        {
+            return int.Parse(line.Split(delimiter)[index]);
         }
     }
 }

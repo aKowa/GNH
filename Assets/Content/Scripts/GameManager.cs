@@ -7,23 +7,24 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+
 namespace Content.Scripts
 {
-    using System.Collections.Generic;
-
-    using UnityEngine;
+	using System.Collections;
+	using System.Collections.Generic;
+	using UnityEngine;
+	using UnityEngine.UI;
 
     /// <summary>
     /// The game manager.
+    /// TODO: can be made static?
     /// </summary>
     public class GameManager : MonoBehaviour
     {
-        private List<CardData> cardData; 
-
-        /// <summary>
-        /// The card.
-        /// </summary>
-        public CardComponent card;
+	    public float revertSpeed = 1f;
+        private List<CardData> cardData;
+	    private Image[] images;
+	    private Color initColor;
 
         /// <summary>
         /// The start.
@@ -31,35 +32,53 @@ namespace Content.Scripts
         public void Start()
         {
             this.cardData = CardDataLoader.GetCardDataList();
+	        this.images = this.GetComponentsInChildren<Image>();
+	        initColor = this.images[0].color;
         }
 
-        /// <summary>
-        /// The update.
-        /// </summary>
-        public void Update()
-        {
-            for (int i = 0; i <= 1; i++)
-            {
-                if (Input.GetMouseButtonDown(i))
-                {
-                    if (this.card == null) // sanity check
-                    {
-                        return;
-                    }
+		/// <summary>
+		/// Shows a preview of the possible result.
+		/// </summary>
+	    public void PreviewResults()
+	    {
+			StopAllCoroutines();
+			foreach ( var image in images )
+			{
+				image.color = Color.red;
+			}
+	    }
 
-                    var cardPolicy = this.card.policies[i];
-                    foreach (var policyComponent in this.GetComponentsInChildren<PolicyUIComponent>())
-                    {
-                        // if ( policyComponent.policy.name == cardPolicy.name)
-                        // {
-                        // 	policyComponent.AddPolicy ( cardPolicy );
-                        // 	break;
-                        // }
-                    }
+		/// <summary>
+		/// Starts reverting colors;
+		/// </summary>
+	    public void RevertPreview()
+		{
+			StopAllCoroutines();
+			StartCoroutine( RevertPreviewAnimation() );
+		}
 
-                    this.card.SetRandomPolicy();
-                }
-            }
-        }
+		/// <summary>
+		/// Lerps image colors back to its init color.
+		/// </summary>
+	    private IEnumerator RevertPreviewAnimation()
+	    {
+		    float t = 0;
+		    while ( t < 1f )
+		    {
+			    foreach ( var image in images )
+			    {
+				    image.color = Color.Lerp( Color.red, initColor, t );
+				    t += revertSpeed * Time.deltaTime;
+			    }
+				yield return null;
+			}
+	    }
+
+		// TODO: Implement next card logic
+		public void ApplyResults()
+	    {
+			RevertPreview ();
+			Debug.LogWarning( "Apply Results not implemented!" );
+	    }
     }
 }

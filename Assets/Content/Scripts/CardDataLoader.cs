@@ -134,19 +134,19 @@ namespace Content.Scripts
             switch (character)
             {
                 case "Character1":
-                    cardAttributes.Character = 1;
+                    cardAttributes.Character = Character.Character1;
                     break;
                 case "Character2":
-                    cardAttributes.Character = 2;
+                    cardAttributes.Character = Character.Character2;
                     break;
                 case "Character3":
-                    cardAttributes.Character = 3;
+                    cardAttributes.Character = Character.Character3;
                     break;
                 case "Character4":
-                    cardAttributes.Character = 4;
+                    cardAttributes.Character = Character.Character4;
                     break;
                 default:
-                    cardAttributes.Character = 0;
+                    cardAttributes.Character = Character.NotSet;
                     Debug.Log("Error reading Character");
                     break;
             }

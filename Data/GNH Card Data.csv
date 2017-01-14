@@ -1,0 +1,5 @@
+ID;Category;BackgroundColor;Character;CultureR;EconomyR;EnvironmentR;SecurityR;TreasuryR;CultureL;EconomyL;EnvironmentL;SecurityL;TreasuryL;Text;TextR;TextL
+COMMENT;These cards will be in queue in a random order;;;;;;;;;;;;;;;
+1000;Random;#55aaff;Character1;1;1;1;1;1;-1;-1;-1;-1;-1;Increase Values?;Yes;No
+COMMENT;These cards will be in queue when event1 is triggered (needs to be designed, how exactly events behave);;;;;;;;;;;;;;;
+1100;Event1;#000000;Character4;1;1;1;1;1;-1;-1;-1;-1;-1;Increase Values?;Yes;No

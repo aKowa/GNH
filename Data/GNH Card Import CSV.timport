@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Template Version="1">
+    <Name>Cards (CSV)</Name>
+    <SourceType>CSV</SourceType>
+    <IdColumn>ID</IdColumn>
+    <RootRecordId>Cards</RootRecordId>
+    <ColumnMap/>
+    <IgnoredIds>
+        <Id>COMMENT</Id>
+    </IgnoredIds>
+    <Parameters/>
+</Template>

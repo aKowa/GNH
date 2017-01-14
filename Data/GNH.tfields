@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Fields>
+    <Field Id="BackgroundColor" DisplayName="BackgroundColor" Description="The background color of the card." Type="Color" Component="CardAttributes" DefaultValue="#55aaff"/>
+    <Field Id="Category" DisplayName="Category" Description="The category of the card. Possible values: Random, Event.1, Event.2, etc." Type="String" Component="CardAttributes" DefaultValue="Random"/>
+    <Field Id="Character" DisplayName="Character" Description="The character triggering this card" Type="Character" Component="CardAttributes" DefaultValue="Character1"/>
+    <Field Id="CultureL" DisplayName="CultureL" Description="The change of value culture when swiping left." Type="Integer" Component="CardAttributes" DefaultValue="-1"/>
+    <Field Id="CultureR" DisplayName="CultureR" Description="The change of value culture when swiping right." Type="Integer" Component="CardAttributes" DefaultValue="1"/>
+    <Field Id="EconomyL" DisplayName="EconomyL" Description="The change of value economy when swiping left." Type="Integer" Component="CardAttributes" DefaultValue="-1"/>
+    <Field Id="EconomyR" DisplayName="EconomyR" Description="The change of value economy when swiping right." Type="Integer" Component="CardAttributes" DefaultValue="1"/>
+    <Field Id="EnvironmentL" DisplayName="EnvironmentL" Description="The change of value environment when swiping left." Type="Integer" Component="CardAttributes" DefaultValue="-1"/>
+    <Field Id="EnvironmentR" DisplayName="EnvironmentR" Description="The change of value environment when swiping right." Type="Integer" Component="CardAttributes" DefaultValue="1"/>
+    <Field Id="SecurityL" DisplayName="SecurityL" Description="The change of value security when swiping left." Type="Integer" Component="CardAttributes" DefaultValue="-1"/>
+    <Field Id="SecurityR" DisplayName="SecurityR" Description="The change of value security when swiping right." Type="Integer" Component="CardAttributes" DefaultValue="1"/>
+    <Field Id="Text" DisplayName="Text" Description="The text of the card to be shown." Type="String" Component="CardAttributes" DefaultValue="&lt;no text&gt;"/>
+    <Field Id="TextL" DisplayName="TextL" Description="The text to be shown when swiping left." Type="String" Component="CardAttributes" DefaultValue="No"/>
+    <Field Id="TextR" DisplayName="TextR" Description="The text to be shown when swiping right." Type="String" Component="CardAttributes" DefaultValue="Yes"/>
+    <Field Id="TreasuryL" DisplayName="TreasuryL" Description="The change of value treasury when swiping left." Type="Integer" Component="CardAttributes" DefaultValue="-1"/>
+    <Field Id="TreasuryR" DisplayName="TreasuryR" Description="The change of value treasury when swiping right." Type="Integer" Component="CardAttributes" DefaultValue="1"/>
+</Fields>

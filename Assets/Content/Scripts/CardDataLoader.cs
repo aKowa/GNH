@@ -11,6 +11,7 @@ namespace Content.Scripts
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using System.Text;
 
@@ -131,6 +132,7 @@ namespace Content.Scripts
              */
             line = streamReader.ReadLine();
             var character = GetStringValue(line, 5);
+            character = character.Trim(); // trim
             switch (character)
             {
                 case "Character1":
@@ -263,12 +265,28 @@ namespace Content.Scripts
         /// </returns>
         private static Color GetColorValue(string line, int index)
         {
-            var color = new Color();
-            /*
-             * do some magic here
-             */
-            Debug.Log("Color not implemented yet");
-            return color;
+            var hexcode = GetStringValue(line, index);
+
+            if (hexcode.StartsWith("#"))
+            {
+                hexcode = hexcode.Substring(1);
+            }
+
+            if (hexcode.StartsWith("0x"))
+            {
+                hexcode = hexcode.Substring(2);
+            }
+
+            if (hexcode.Length != 6)
+            {
+                //throw new Exception(string.Format("{0} is not a valid color string.", hexcode));
+            }
+
+            var r = byte.Parse(hexcode.Substring(0, 2), NumberStyles.HexNumber);
+            var g = byte.Parse(hexcode.Substring(2, 2), NumberStyles.HexNumber);
+            var b = byte.Parse(hexcode.Substring(4, 2), NumberStyles.HexNumber);
+
+            return new Color(r, g, b);
         }
 
         /// <summary>

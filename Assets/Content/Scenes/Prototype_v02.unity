@@ -619,8 +619,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a6e6818c0011b74a8cadc70432f864d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thresholdAngle: 10
   maxAngle: 12
-  speed: 2
+  backRotationSpeed: 1
 --- !u!114 &795344644
 MonoBehaviour:
   m_ObjectHideFlags: 0

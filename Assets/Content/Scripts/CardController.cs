@@ -3,8 +3,9 @@ using System.Collections;
 
 public class CardController : MonoBehaviour
 {
+	public float thresholdAngle = 10f;
 	public float maxAngle = 15f;
-	public float speed = 1f;
+	public float backRotationSpeed = 1f;
 	private float t = 0;
 
 	/// <summary>
@@ -22,13 +23,9 @@ public class CardController : MonoBehaviour
 	{
 		// handle rotation
 		var targetDirection = ( Input.mousePosition - this.transform.position ).normalized;
-		var angle = Vector3.Angle( targetDirection, Vector3.up );
-		angle = Mathf.Clamp( angle, 0, maxAngle );
-		if ( Input.mousePosition.x > this.transform.position.x )
-		{
-			angle *= -1;
-		}
-		this.transform.rotation = Quaternion.Euler ( 0.0f, 0.0f, angle );
+		var angle = Mathf.Atan2( targetDirection.y, targetDirection.x ) * Mathf.Rad2Deg;
+		angle = Mathf.Clamp( angle - 90, -maxAngle, maxAngle );
+		this.transform.rotation = Quaternion.AngleAxis( angle, Vector3.forward );
 	}
 
 	/// <summary>
@@ -36,22 +33,33 @@ public class CardController : MonoBehaviour
 	/// </summary>
 	public void OnEndDrag()
 	{
-		StartCoroutine( RotateBack() );
+		var currentRotation = this.transform.rotation.eulerAngles.z;
+		if (currentRotation > 180)
+		{
+			currentRotation -= 360f;
+		}
+		if ( Mathf.Abs( currentRotation ) < thresholdAngle )
+		{
+			StartCoroutine ( RotateBack ( currentRotation ) );
+		}
+		else
+		{
+			// TODO: Implement next card logic
+			Debug.Log( "End Round" );
+		}
 	}
 
 	/// <summary>
 	/// Rotates the card smoothly back, when drag ended.
 	/// </summary>
-	private IEnumerator RotateBack()
+	private IEnumerator RotateBack( float currentRotation )
 	{
 		this.t = 0;
-		var startRotation = this.transform.rotation.z * 100;
 		while ( this.t < 1 )
 		{
-			this.t += speed * Time.deltaTime;
-			var angle = Mathf.Lerp( startRotation, 0.0f, this.t );
+			this.t += backRotationSpeed * Time.deltaTime;
+			var angle = Mathf.Lerp( currentRotation, 0.0f, this.t );
 			this.transform.rotation = Quaternion.Euler( 0.0f, 0.0f, angle );
-			//Debug.Log( t + "   " + angle );
 			yield return null;
 		}
 		this.transform.rotation = Quaternion.identity;

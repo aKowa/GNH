@@ -306,7 +306,8 @@ Prefab:
       propertyPath: m_FontData.m_MaxSize
       value: 300
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114000011455117154, guid: 8c1c019a3ec65df45beaebac8e0b218a, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 8c1c019a3ec65df45beaebac8e0b218a, type: 2}
   m_IsPrefabParent: 0
 --- !u!224 &139428621 stripped
@@ -530,7 +531,8 @@ Prefab:
       propertyPath: m_FontData.m_MaxSize
       value: 300
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114000011455117154, guid: 8c1c019a3ec65df45beaebac8e0b218a, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 8c1c019a3ec65df45beaebac8e0b218a, type: 2}
   m_IsPrefabParent: 0
 --- !u!224 &687313318 stripped
@@ -619,6 +621,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a6e6818c0011b74a8cadc70432f864d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  policyValuesL: 00000000000000000000000000000000
+  policyValuesR: 00000000000000000000000000000000
+  minMaxPolicyValue: 10
   gameManager: {fileID: 1715703455}
   thresholdAngle: 10
   maxAngle: 15
@@ -997,7 +1002,8 @@ Prefab:
       propertyPath: m_FontData.m_MaxSize
       value: 300
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114000011455117154, guid: 8c1c019a3ec65df45beaebac8e0b218a, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 8c1c019a3ec65df45beaebac8e0b218a, type: 2}
   m_IsPrefabParent: 0
 --- !u!224 &1054995071 stripped
@@ -1191,7 +1197,8 @@ Prefab:
       propertyPath: m_FontData.m_MaxSize
       value: 300
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114000011455117154, guid: 8c1c019a3ec65df45beaebac8e0b218a, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 8c1c019a3ec65df45beaebac8e0b218a, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1715703453

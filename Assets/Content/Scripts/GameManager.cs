@@ -39,7 +39,7 @@ namespace Content.Scripts
 		/// <summary>
 		/// Shows a preview of the possible result.
 		/// </summary>
-	    public void PreviewResults()
+	    public void PreviewResults( int[] values )
 	    {
 			StopAllCoroutines();
 			foreach ( var image in images )

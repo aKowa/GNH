@@ -4,6 +4,9 @@ using Content.Scripts;
 
 public class CardController : MonoBehaviour
 {
+	public int[] policyValuesL = new int[4];
+	public int[] policyValuesR = new int[4];
+	public int minMaxPolicyValue = 10;
 	public GameManager gameManager;
 	public float thresholdAngle = 10f;
 	public float maxAngle = 15f;
@@ -19,6 +22,14 @@ public class CardController : MonoBehaviour
 			}
 			return eulerZ;
 		}
+	}
+
+	/// <summary>
+	/// Sets card values on start.
+	/// </summary>
+	private void Start ()
+	{
+		SetRandomValues();
 	}
 
 	/// <summary>
@@ -43,7 +54,14 @@ public class CardController : MonoBehaviour
 		// handle threshold angle logic
 		if ( Mathf.Abs( EulerZ ) > thresholdAngle )
 		{
-			gameManager.PreviewResults();
+			if ( EulerZ > 0 )
+			{
+				gameManager.PreviewResults (policyValuesL);
+			}
+			else if ( EulerZ < 0 )
+			{
+				gameManager.PreviewResults ( policyValuesR );
+			}
 		}
 		else
 		{
@@ -81,5 +99,18 @@ public class CardController : MonoBehaviour
 			yield return null;
 		}
 		this.transform.rotation = Quaternion.identity;
+	}
+
+	/// <summary>
+	/// Sets card values at random.
+	/// </summary>
+	// TODO: Replace by stack of cards
+	private void SetRandomValues()
+	{
+		for ( int i = 0; i < policyValuesL.Length; i++ )
+		{
+			policyValuesL[i] = Random.Range( -minMaxPolicyValue, minMaxPolicyValue );
+			policyValuesR[i] = Random.Range ( -minMaxPolicyValue, minMaxPolicyValue );
+		}
 	}
 }

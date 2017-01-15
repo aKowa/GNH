@@ -108,6 +108,7 @@ public class CardController : MonoBehaviour
 	// TODO: Replace by getting next card from stack
 	private void SetRandomValues()
 	{
+		Debug.LogWarning ( "Getting new Card not implemented! Only sets new random values on the same card." );
 		for ( int i = 0; i < policyValuesL.Length; i++ )
 		{
 			policyValuesL[i] = Random.Range( -minMaxPolicyValue, minMaxPolicyValue );

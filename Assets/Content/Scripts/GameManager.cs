@@ -21,7 +21,9 @@ namespace Content.Scripts
     /// </summary>
     public class GameManager : MonoBehaviour
     {
-	    public float revertSpeed = 1f;
+	    public Color positivePreviewColor = Color.green;
+		public Color negativePreviewColor = Color.red;
+		public float revertSpeed = 1f;
         private List<CardData> cardData;
 	    private Image[] images;
 	    private Color initColor;
@@ -42,9 +44,16 @@ namespace Content.Scripts
 	    public void PreviewResults( int[] values )
 	    {
 			StopAllCoroutines();
-			foreach ( var image in images )
+			for ( int i = 0; i < values.Length; i++ )
 			{
-				image.color = Color.red;
+				if ( values[i] > 0 )
+				{
+					images[i].color = positivePreviewColor;
+				}
+				else if (values[i] < 0)
+				{
+					images[i].color = negativePreviewColor;
+				}
 			}
 	    }
 
@@ -63,13 +72,18 @@ namespace Content.Scripts
 	    private IEnumerator RevertPreviewAnimation()
 	    {
 		    float t = 0;
+			var colors = new Color[images.Length];
+			for ( int i = 0; i < colors.Length; i++ )
+			{
+				colors[i] = images[i].color;
+			}
 		    while ( t < 1f )
 		    {
-			    foreach ( var image in images )
+			    for ( int i = 0; i < images.Length; i++ )
 			    {
-				    image.color = Color.Lerp( Color.red, initColor, t );
-				    t += revertSpeed * Time.deltaTime;
-			    }
+					images[i].color = Color.Lerp ( colors[i], initColor, t );
+				}
+				t += revertSpeed * Time.deltaTime;
 				yield return null;
 			}
 	    }

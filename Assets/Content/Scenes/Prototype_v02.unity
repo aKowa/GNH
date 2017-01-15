@@ -90,6 +90,11 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &51874523 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000010508500252, guid: 8c1c019a3ec65df45beaebac8e0b218a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1054995070}
 --- !u!1001 &139428620
 Prefab:
   m_ObjectHideFlags: 0
@@ -313,6 +318,16 @@ Prefab:
 --- !u!224 &139428621 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224000014165284068, guid: 8c1c019a3ec65df45beaebac8e0b218a,
+    type: 2}
+  m_PrefabInternal: {fileID: 139428620}
+--- !u!1 &231165457 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000010508500252, guid: 8c1c019a3ec65df45beaebac8e0b218a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1444938393}
+--- !u!1 &665314106 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000010508500252, guid: 8c1c019a3ec65df45beaebac8e0b218a,
     type: 2}
   m_PrefabInternal: {fileID: 139428620}
 --- !u!1001 &687313317
@@ -1251,6 +1266,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67fb4437eab0bf341993b0a26cb72dd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boundPolicyValues:
+  - targetGameObject: {fileID: 231165457}
+    componentID: 2
+    targetComponent: {fileID: 0}
+    propertyID: 4
+    valueUnbound: 50
+  - targetGameObject: {fileID: 665314106}
+    componentID: 2
+    targetComponent: {fileID: 0}
+    propertyID: 4
+    valueUnbound: 50
+  - targetGameObject: {fileID: 51874523}
+    componentID: 2
+    targetComponent: {fileID: 0}
+    propertyID: 4
+    valueUnbound: 50
+  - targetGameObject: {fileID: 1869293223}
+    componentID: 2
+    targetComponent: {fileID: 0}
+    propertyID: 4
+    valueUnbound: 50
   positivePreviewColor: {r: 0, g: 1, b: 0, a: 1}
   negativePreviewColor: {r: 1, g: 0, b: 0, a: 1}
   revertSpeed: 2
@@ -1457,3 +1493,8 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -0.9209976}
   m_SizeDelta: {x: 0, y: -1.8399963}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1869293223 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000010508500252, guid: 8c1c019a3ec65df45beaebac8e0b218a,
+    type: 2}
+  m_PrefabInternal: {fileID: 687313317}

@@ -24,6 +24,23 @@ public class CardController : MonoBehaviour
 		}
 	}
 
+	private int[] ChosenPolicy
+	{
+		get
+		{
+			if (EulerZ > 0)
+			{
+				return policyValuesL;
+			}
+			else if (EulerZ < 0)
+			{
+				return policyValuesR;
+			}
+			Debug.LogWarning( "Do not call ChosenPolicy, when EulerZ equals zero!" );
+			return new int[4];
+		}
+	}
+
 	/// <summary>
 	/// Sets card values on start.
 	/// </summary>
@@ -54,14 +71,7 @@ public class CardController : MonoBehaviour
 		// handle threshold angle logic
 		if ( Mathf.Abs( EulerZ ) > thresholdAngle )
 		{
-			if ( EulerZ > 0 )
-			{
-				gameManager.PreviewResults (policyValuesL);
-			}
-			else if ( EulerZ < 0 )
-			{
-				gameManager.PreviewResults ( policyValuesR );
-			}
+			gameManager.PreviewResults( ChosenPolicy );
 		}
 		else
 		{
@@ -80,7 +90,7 @@ public class CardController : MonoBehaviour
 		}
 		else
 		{
-			gameManager.ApplyResults();
+			gameManager.ApplyResults( ChosenPolicy );
 			SetRandomValues();
 			this.transform.rotation = Quaternion.identity;	//TODO: play next card animation
 		}

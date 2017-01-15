@@ -14,13 +14,15 @@ namespace Content.Scripts
 	using System.Collections.Generic;
 	using UnityEngine;
 	using UnityEngine.UI;
+	using PolyDev.UI;
 
 	/// <summary>
 	/// The game manager.
 	/// </summary>
 	/// TODO: can be made static?
 	public class GameManager : MonoBehaviour
-    {
+	{
+		public BindInt[] boundPolicyValues = new BindInt[4];
 	    public Color positivePreviewColor = Color.green;
 		public Color negativePreviewColor = Color.red;
 		public float revertSpeed = 1f;
@@ -88,11 +90,14 @@ namespace Content.Scripts
 			}
 	    }
 
-		// TODO: Implement next card logic
-		public void ApplyResults()
+		// TODO: Implement next card logic (here or in Card Controller?)
+		public void ApplyResults( int[] values )
 	    {
 			RevertPreview ();
-			Debug.LogWarning( "Apply Results not implemented!" );
+			for ( int i = 0; i < values.Length; i++ )
+			{
+				boundPolicyValues[i].Value += values[i];
+			}
 	    }
     }
 }

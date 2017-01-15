@@ -621,7 +621,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1715703455}
   thresholdAngle: 10
-  maxAngle: 12
+  maxAngle: 15
   backRotationSpeed: 2
 --- !u!114 &795344644
 MonoBehaviour:
@@ -1244,6 +1244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67fb4437eab0bf341993b0a26cb72dd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  revertSpeed: 1
 --- !u!114 &1715703456
 MonoBehaviour:
   m_ObjectHideFlags: 0

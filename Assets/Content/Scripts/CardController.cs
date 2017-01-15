@@ -81,7 +81,8 @@ public class CardController : MonoBehaviour
 		else
 		{
 			gameManager.ApplyResults();
-			this.transform.rotation = Quaternion.identity;
+			SetRandomValues();
+			this.transform.rotation = Quaternion.identity;	//TODO: play next card animation
 		}
 	}
 
@@ -104,7 +105,7 @@ public class CardController : MonoBehaviour
 	/// <summary>
 	/// Sets card values at random.
 	/// </summary>
-	// TODO: Replace by stack of cards
+	// TODO: Replace by getting next card from stack
 	private void SetRandomValues()
 	{
 		for ( int i = 0; i < policyValuesL.Length; i++ )

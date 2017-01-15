@@ -15,11 +15,11 @@ namespace Content.Scripts
 	using UnityEngine;
 	using UnityEngine.UI;
 
-    /// <summary>
-    /// The game manager.
-    /// TODO: can be made static?
-    /// </summary>
-    public class GameManager : MonoBehaviour
+	/// <summary>
+	/// The game manager.
+	/// </summary>
+	/// TODO: can be made static?
+	public class GameManager : MonoBehaviour
     {
 	    public Color positivePreviewColor = Color.green;
 		public Color negativePreviewColor = Color.red;

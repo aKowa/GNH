@@ -4,6 +4,9 @@ using Content.Scripts;
 
 public class CardController : MonoBehaviour
 {
+	public int[] policyValuesL = new int[4];
+	public int[] policyValuesR = new int[4];
+	public int minMaxPolicyValue = 10;
 	public GameManager gameManager;
 	public float thresholdAngle = 10f;
 	public float maxAngle = 15f;
@@ -19,6 +22,31 @@ public class CardController : MonoBehaviour
 			}
 			return eulerZ;
 		}
+	}
+
+	private int[] ChosenPolicy
+	{
+		get
+		{
+			if (EulerZ > 0)
+			{
+				return policyValuesL;
+			}
+			else if (EulerZ < 0)
+			{
+				return policyValuesR;
+			}
+			Debug.LogWarning( "Do not call ChosenPolicy, when EulerZ equals zero!" );
+			return new int[4];
+		}
+	}
+
+	/// <summary>
+	/// Sets card values on start.
+	/// </summary>
+	private void Start ()
+	{
+		SetRandomValues();
 	}
 
 	/// <summary>
@@ -43,7 +71,7 @@ public class CardController : MonoBehaviour
 		// handle threshold angle logic
 		if ( Mathf.Abs( EulerZ ) > thresholdAngle )
 		{
-			gameManager.PreviewResults();
+			gameManager.PreviewResults( ChosenPolicy );
 		}
 		else
 		{
@@ -62,8 +90,9 @@ public class CardController : MonoBehaviour
 		}
 		else
 		{
-			gameManager.ApplyResults();
-			this.transform.rotation = Quaternion.identity;
+			gameManager.ApplyResults( ChosenPolicy );
+			SetRandomValues();
+			this.transform.rotation = Quaternion.identity;	//TODO: play next card animation
 		}
 	}
 
@@ -81,5 +110,19 @@ public class CardController : MonoBehaviour
 			yield return null;
 		}
 		this.transform.rotation = Quaternion.identity;
+	}
+
+	/// <summary>
+	/// Sets card values at random.
+	/// </summary>
+	// TODO: Replace by getting next card from stack
+	private void SetRandomValues()
+	{
+		Debug.LogWarning ( "Getting new Card not implemented! Only sets new random values on the same card." );
+		for ( int i = 0; i < policyValuesL.Length; i++ )
+		{
+			policyValuesL[i] = Random.Range( -minMaxPolicyValue, minMaxPolicyValue );
+			policyValuesR[i] = Random.Range ( -minMaxPolicyValue, minMaxPolicyValue );
+		}
 	}
 }

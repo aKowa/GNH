@@ -14,14 +14,18 @@ namespace Content.Scripts
 	using System.Collections.Generic;
 	using UnityEngine;
 	using UnityEngine.UI;
+	using PolyDev.UI;
 
-    /// <summary>
-    /// The game manager.
-    /// TODO: can be made static?
-    /// </summary>
-    public class GameManager : MonoBehaviour
-    {
-	    public float revertSpeed = 1f;
+	/// <summary>
+	/// The game manager.
+	/// </summary>
+	/// TODO: can be made static?
+	public class GameManager : MonoBehaviour
+	{
+		public BindInt[] boundPolicyValues = new BindInt[4];
+	    public Color positivePreviewColor = Color.green;
+		public Color negativePreviewColor = Color.red;
+		public float revertSpeed = 1f;
         private List<CardData> cardData;
 	    private Image[] images;
 	    private Color initColor;
@@ -39,12 +43,19 @@ namespace Content.Scripts
 		/// <summary>
 		/// Shows a preview of the possible result.
 		/// </summary>
-	    public void PreviewResults()
+	    public void PreviewResults( int[] values )
 	    {
 			StopAllCoroutines();
-			foreach ( var image in images )
+			for ( int i = 0; i < values.Length; i++ )
 			{
-				image.color = Color.red;
+				if ( values[i] > 0 )
+				{
+					images[i].color = positivePreviewColor;
+				}
+				else if (values[i] < 0)
+				{
+					images[i].color = negativePreviewColor;
+				}
 			}
 	    }
 
@@ -63,22 +74,30 @@ namespace Content.Scripts
 	    private IEnumerator RevertPreviewAnimation()
 	    {
 		    float t = 0;
+			var colors = new Color[images.Length];
+			for ( int i = 0; i < colors.Length; i++ )
+			{
+				colors[i] = images[i].color;
+			}
 		    while ( t < 1f )
 		    {
-			    foreach ( var image in images )
+			    for ( int i = 0; i < images.Length; i++ )
 			    {
-				    image.color = Color.Lerp( Color.red, initColor, t );
-				    t += revertSpeed * Time.deltaTime;
-			    }
+					images[i].color = Color.Lerp ( colors[i], initColor, t );
+				}
+				t += revertSpeed * Time.deltaTime;
 				yield return null;
 			}
 	    }
 
-		// TODO: Implement next card logic
-		public void ApplyResults()
+		// TODO: Implement next card logic (here or in Card Controller?)
+		public void ApplyResults( int[] values )
 	    {
 			RevertPreview ();
-			Debug.LogWarning( "Apply Results not implemented!" );
+			for ( int i = 0; i < values.Length; i++ )
+			{
+				boundPolicyValues[i].Value += values[i];
+			}
 	    }
     }
 }

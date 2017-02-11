@@ -9,6 +9,6 @@
         <Id>COMMENT</Id>
     </IgnoredIds>
     <Parameters>
-        <Parameter Key="Sheet" Value="Sheet1"/>
+        <Parameter Key="Cards" Value="Cards"/>
     </Parameters>
 </Template>

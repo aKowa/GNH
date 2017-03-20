@@ -79,7 +79,6 @@ namespace Content.Scripts
         /// </summary>
         public void Start()
         {
-            this.cardData = CardDataLoader.GetCardDataList();
             this.images = this.GetComponentsInChildren<Image>();
             this.initColor = this.images[0].color;
         }

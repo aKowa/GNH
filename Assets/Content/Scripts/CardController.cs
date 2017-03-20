@@ -14,36 +14,23 @@ public class CardController : MonoBehaviour
 
     public float maxAngle = 15f;
 
+    public int maxCardsInHand = 20;
+
     public int minMaxPolicyValue = 10;
 
     public int[] policyValuesL = new int[5];
 
     public int[] policyValuesR = new int[5];
 
+    public string[] theFourCardCategories = new string[4];
+
     public float thresholdAngle = 10f;
 
-    public string[] theFourCardCategories = new string[4];
+    private List<CardData> cardHand;
 
     private Dictionary<string, Stack<CardData>> cardStacks;
 
     private int lastCategory;
-
-    public int maxCardsInHand = 20;
-
-    private List<CardData> cardHand; 
-
-    private int LastCategory
-    {
-        get
-        {
-            return this.lastCategory;
-        }
-
-        set
-        {
-            this.lastCategory = value % 4;
-        }
-    }
 
     private int[] ChosenPolicy
     {
@@ -73,6 +60,19 @@ public class CardController : MonoBehaviour
             }
 
             return eulerZ;
+        }
+    }
+
+    private int LastCategory
+    {
+        get
+        {
+            return this.lastCategory;
+        }
+
+        set
+        {
+            this.lastCategory = value % 4;
         }
     }
 
@@ -118,79 +118,15 @@ public class CardController : MonoBehaviour
         else
         {
             this.gameManager.ApplyResults(this.ChosenPolicy);
-            this.SetRandomValues();
+            this.GetNextCard();
             this.transform.rotation = Quaternion.identity; // TODO: play next card animation
         }
-    }
-
-    /// <summary>
-    /// Rotates the card smoothly back, when drag ended.
-    /// </summary>
-    private IEnumerator RotateBack(float currentRotation)
-    {
-        float t = 0;
-        while (t < 1f)
-        {
-            var angle = Mathf.Lerp(currentRotation, 0.0f, t);
-            this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle);
-            t += this.backRotationSpeed * Time.deltaTime;
-            yield return null;
-        }
-
-        this.transform.rotation = Quaternion.identity;
-    }
-
-    /// <summary>
-    /// Sets card values at random.
-    /// </summary>
-    // TODO: Replace by getting next card from stack
-    private void SetRandomValues()
-    {
-        Debug.LogWarning("Getting new Card not implemented! Only sets new random values on the same card.");
-        for (var i = 0; i < this.policyValuesL.Length; i++)
-        {
-            this.policyValuesL[i] = Random.Range(-this.minMaxPolicyValue, this.minMaxPolicyValue);
-            this.policyValuesR[i] = Random.Range(-this.minMaxPolicyValue, this.minMaxPolicyValue);
-        }
-    }
-
-    /// <summary>
-    /// Sets card values on start.
-    /// </summary>
-    private void Start()
-    {
-        this.StartCoroutine(this.SetupCardStacks());
-
-        this.SetRandomValues();
-    }
-
-    private IEnumerator SetupCardStacks()
-    {
-        // init dictionary and load card data
-        this.cardStacks = new Dictionary<string, Stack<CardData>>();
-        var list = CardDataLoader.GetCardDataList();
-        yield return new WaitForEndOfFrame(); // wait
-
-        // sort list by descending id, because they are later pushed to a stack in order. the big ones need to go down first
-        list = new List<CardData>(list.OrderByDescending(card => card.CardId));
-        yield return new WaitForEndOfFrame(); // wait
-
-        // add all cards to the stacks
-        foreach (var card in list)
-        {
-            this.AddToCardStacks(card);
-            Debug.Log(card.CardId);
-        }
-
-        // fill card hand initially
-        this.FillCardHand();
-        yield return null;
     }
 
     private void AddToCardStacks(CardData card)
     {
         var category = card.CardAttributes.Category;
-        
+
         // if a card with this category was added before
         if (this.cardStacks.ContainsKey(category))
         {
@@ -205,24 +141,6 @@ public class CardController : MonoBehaviour
             // and push to stack
             this.cardStacks[category].Push(card);
         }
-    }
-
-    private CardData GetCardFromStack(string category)
-    {
-        if (this.cardStacks.ContainsKey(category))
-        {
-            var card = this.cardStacks[category].Pop();
-            if (card != null)
-            {
-                return card;
-            }
-
-            Debug.LogWarning("You tried to get a card from a category, where the card stack is empty.");
-            return null;
-        }
-
-        Debug.LogWarning("You tried to get a card from a category, where no card stack is present (not even an empty one, so that might be a wrong category).");
-        return null;
     }
 
     private void FillCardHand()
@@ -248,5 +166,93 @@ public class CardController : MonoBehaviour
                 this.cardHand.Add(card);
             }
         }
+    }
+
+    private CardData GetCardFromStack(string category)
+    {
+        if (this.cardStacks.ContainsKey(category))
+        {
+            var card = this.cardStacks[category].Pop();
+            if (card != null)
+            {
+                return card;
+            }
+
+            Debug.LogWarning("You tried to get a card from a category, where the card stack is empty.");
+            return null;
+        }
+
+        Debug.LogWarning(
+            "You tried to get a card from a category, where no card stack is present (not even an empty one, so that might be a wrong category).");
+        return null;
+    }
+
+    private void GetNextCard()
+    {
+        var card = this.cardHand[0].CardAttributes;
+
+        this.policyValuesL[0] = card.CultureL;
+        this.policyValuesL[1] = card.EconomyL;
+        this.policyValuesL[2] = card.EnvironmentL;
+        this.policyValuesL[3] = card.SecurityL;
+        this.policyValuesL[4] = card.TreasuryL;
+
+        this.policyValuesR[0] = card.CultureR;
+        this.policyValuesR[1] = card.EconomyR;
+        this.policyValuesR[2] = card.EnvironmentR;
+        this.policyValuesR[3] = card.SecurityR;
+        this.policyValuesR[4] = card.TreasuryR;
+
+        this.cardHand.RemoveAt(0);
+        this.FillCardHand();
+    }
+
+    /// <summary>
+    /// Rotates the card smoothly back, when drag ended.
+    /// </summary>
+    private IEnumerator RotateBack(float currentRotation)
+    {
+        float t = 0;
+        while (t < 1f)
+        {
+            var angle = Mathf.Lerp(currentRotation, 0.0f, t);
+            this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle);
+            t += this.backRotationSpeed * Time.deltaTime;
+            yield return null;
+        }
+
+        this.transform.rotation = Quaternion.identity;
+    }
+
+    private IEnumerator SetupCardStacks()
+    {
+        // init dictionary and load card data
+        this.cardStacks = new Dictionary<string, Stack<CardData>>();
+        var list = CardDataLoader.GetCardDataList();
+        yield return new WaitForEndOfFrame(); // wait
+
+        // sort list by descending id, because they are later pushed to a stack in order. the big ones need to go down first
+        list = new List<CardData>(list.OrderByDescending(card => card.CardId));
+        yield return new WaitForEndOfFrame(); // wait
+
+        // add all cards to the stacks
+        foreach (var card in list)
+        {
+            this.AddToCardStacks(card);
+            Debug.Log(card.CardId);
+        }
+
+        // fill card hand initially
+        this.FillCardHand();
+        this.GetNextCard();
+        yield return null;
+    }
+
+    /// <summary>
+    /// Sets card values on start.
+    /// </summary>
+    private void Start()
+    {
+        this.StartCoroutine(this.SetupCardStacks());
     }
 }

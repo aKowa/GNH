@@ -117,7 +117,7 @@ public class CardController : MonoBehaviour
         }
         else
         {
-            this.gameManager.ApplyResults(this.ChosenPolicy);
+            this.gameManager.ApplyResults(this.ChosenPolicy); // TODO: get follow up cards when swipe was right ("yes") with if (this.EulerZ < 0)
             this.GetNextCard();
             this.transform.rotation = Quaternion.identity; // TODO: play next card animation
         }

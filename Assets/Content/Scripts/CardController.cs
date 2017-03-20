@@ -22,7 +22,28 @@ public class CardController : MonoBehaviour
 
     public float thresholdAngle = 10f;
 
+    public string[] theFourCardCategories = new string[4];
+
     private Dictionary<string, Stack<CardData>> cardStacks;
+
+    private int lastCategory;
+
+    public int maxCardsInHand = 20;
+
+    private List<CardData> cardHand; 
+
+    private int LastCategory
+    {
+        get
+        {
+            return this.lastCategory;
+        }
+
+        set
+        {
+            this.lastCategory = value % 4;
+        }
+    }
 
     private int[] ChosenPolicy
     {
@@ -126,7 +147,7 @@ public class CardController : MonoBehaviour
     private void SetRandomValues()
     {
         Debug.LogWarning("Getting new Card not implemented! Only sets new random values on the same card.");
-        for (int i = 0; i < this.policyValuesL.Length; i++)
+        for (var i = 0; i < this.policyValuesL.Length; i++)
         {
             this.policyValuesL[i] = Random.Range(-this.minMaxPolicyValue, this.minMaxPolicyValue);
             this.policyValuesR[i] = Random.Range(-this.minMaxPolicyValue, this.minMaxPolicyValue);
@@ -161,6 +182,8 @@ public class CardController : MonoBehaviour
             Debug.Log(card.CardId);
         }
 
+        // fill card hand initially
+        this.FillCardHand();
         yield return null;
     }
 
@@ -181,6 +204,49 @@ public class CardController : MonoBehaviour
 
             // and push to stack
             this.cardStacks[category].Push(card);
+        }
+    }
+
+    private CardData GetCardFromStack(string category)
+    {
+        if (this.cardStacks.ContainsKey(category))
+        {
+            var card = this.cardStacks[category].Pop();
+            if (card != null)
+            {
+                return card;
+            }
+
+            Debug.LogWarning("You tried to get a card from a category, where the card stack is empty.");
+            return null;
+        }
+
+        Debug.LogWarning("You tried to get a card from a category, where no card stack is present (not even an empty one, so that might be a wrong category).");
+        return null;
+    }
+
+    private void FillCardHand()
+    {
+        if (this.cardHand == null)
+        {
+            this.cardHand = new List<CardData>();
+        }
+
+        var cardsInHand = this.cardHand.Count;
+
+        if (cardsInHand >= this.maxCardsInHand)
+        {
+            return;
+        }
+
+        for (var i = 0; i < this.maxCardsInHand - cardsInHand; i++)
+        {
+            var card = this.GetCardFromStack(this.theFourCardCategories[this.lastCategory++]);
+
+            if (card != null)
+            {
+                this.cardHand.Add(card);
+            }
         }
     }
 }

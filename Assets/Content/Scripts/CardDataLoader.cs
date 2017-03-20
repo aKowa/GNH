@@ -118,7 +118,8 @@ namespace Content.Scripts
              * do some magic
              *                  here!
              */
-            cardAttributes.BackgroundColor = new Color32(0x2B, 0x2B, 0x2B, 0x2B); // pass right byte or float values
+
+            // cardAttributes.BackgroundColor = new Color32(0x2B, 0x2B, 0x2B, 0x2B); // pass right byte or float values
 
             /*
              * CATEGORY
@@ -245,7 +246,7 @@ namespace Content.Scripts
             cardAttributes.TreasuryR = GetIntegerValue(line, 5);
             output.AppendLine(string.Format("Treasury R: {0}", cardAttributes.TreasuryR));
 
-            Debug.Log(output);
+            //Debug.Log(output);
 
             cardData.CardAttributes = cardAttributes;
             return cardData;

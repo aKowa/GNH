@@ -47,6 +47,11 @@ namespace Content.Scripts
         public int EnvironmentR { get; set; }
 
         /// <summary>
+        /// Gets or sets the follow up id.
+        /// </summary>
+        public int FollowUpId { get; set; }
+
+        /// <summary>
         /// Gets or sets the security r.
         /// </summary>
         public int SecurityR { get; set; }

@@ -118,7 +118,8 @@ namespace Content.Scripts
              * do some magic
              *                  here!
              */
-            cardAttributes.BackgroundColor = new Color32(0x2B, 0x2B, 0x2B, 0x2B); // pass right byte or float values
+
+            // cardAttributes.BackgroundColor = new Color32(0x2B, 0x2B, 0x2B, 0x2B); // pass right byte or float values
 
             /*
              * CATEGORY
@@ -197,6 +198,13 @@ namespace Content.Scripts
             output.AppendLine(string.Format("Environment R: {0}", cardAttributes.EnvironmentR));
 
             /*
+             * FOLLOW UP ID
+             */
+            line = streamReader.ReadLine();
+            cardAttributes.FollowUpId = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Follow Up Id: {0}", cardAttributes.SecurityL));
+
+            /*
              * SECURITY L
              */
             line = streamReader.ReadLine();
@@ -245,7 +253,7 @@ namespace Content.Scripts
             cardAttributes.TreasuryR = GetIntegerValue(line, 5);
             output.AppendLine(string.Format("Treasury R: {0}", cardAttributes.TreasuryR));
 
-            Debug.Log(output);
+            //Debug.Log(output);
 
             cardData.CardAttributes = cardAttributes;
             return cardData;

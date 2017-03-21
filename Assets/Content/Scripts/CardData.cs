@@ -9,6 +9,8 @@
 
 namespace Content.Scripts
 {
+    using System.Collections;
+
     using UnityEngine;
 
     /// <summary>

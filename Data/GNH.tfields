@@ -9,6 +9,7 @@
     <Field Id="EconomyR" DisplayName="EconomyR" Description="The change of value economy when swiping right." Type="Integer" Component="CardAttributes" DefaultValue="1"/>
     <Field Id="EnvironmentL" DisplayName="EnvironmentL" Description="The change of value environment when swiping left." Type="Integer" Component="CardAttributes" DefaultValue="-1"/>
     <Field Id="EnvironmentR" DisplayName="EnvironmentR" Description="The change of value environment when swiping right." Type="Integer" Component="CardAttributes" DefaultValue="1"/>
+    <Field Id="FollowUpId" DisplayName="FollowUpId" Description="The ID, which card will be added to the list of next cards, when this card was swiped right (&quot;yes&quot;)" Type="Integer" Component="CardAttributes" DefaultValue="0"/>
     <Field Id="SecurityL" DisplayName="SecurityL" Description="The change of value security when swiping left." Type="Integer" Component="CardAttributes" DefaultValue="-1"/>
     <Field Id="SecurityR" DisplayName="SecurityR" Description="The change of value security when swiping right." Type="Integer" Component="CardAttributes" DefaultValue="1"/>
     <Field Id="Text" DisplayName="Text" Description="The text of the card to be shown." Type="String" Component="CardAttributes" DefaultValue="&lt;no text&gt;"/>

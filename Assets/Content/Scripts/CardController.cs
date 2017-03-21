@@ -30,6 +30,8 @@ public class CardController : MonoBehaviour
 
     private Dictionary<string, Stack<CardData>> cardStacks;
 
+    private Dictionary<string, List<CardData>> cardLists; 
+
     private int lastCategory;
 
     private int[] ChosenPolicy
@@ -123,24 +125,34 @@ public class CardController : MonoBehaviour
         }
     }
 
+    private void AddToCardLists(CardData card)
+    {
+        var category = card.CardAttributes.Category;
+
+        // if category was not added to dictionary
+        if (!this.cardLists.ContainsKey(category))
+        {
+            // create and add list for this category
+            this.cardLists.Add(category, new List<CardData>());
+        }
+
+        // add to list for this category
+        this.cardLists[category].Add(card);
+    }
+
     private void AddToCardStacks(CardData card)
     {
         var category = card.CardAttributes.Category;
 
-        // if a card with this category was added before
-        if (this.cardStacks.ContainsKey(category))
+        // if category was not added to dictionary
+        if (!this.cardStacks.ContainsKey(category))
         {
-            // push to stack for this category
-            this.cardStacks[category].Push(card);
-        }
-        else
-        {
-            // create stack for this category
+            // create and add stack for this category
             this.cardStacks.Add(category, new Stack<CardData>());
-
-            // and push to stack
-            this.cardStacks[category].Push(card);
         }
+
+        // add to stack for this category
+        this.cardStacks[category].Push(card);
     }
 
     private void FillCardHand()
@@ -224,28 +236,42 @@ public class CardController : MonoBehaviour
         this.transform.rotation = Quaternion.identity;
     }
 
-    private IEnumerator SetupCardStacks()
+    private void SetupCardLists()
     {
         // init dictionary and load card data
-        this.cardStacks = new Dictionary<string, Stack<CardData>>();
+        this.cardLists = new Dictionary<string, List<CardData>>();
         var list = CardDataLoader.GetCardDataList();
-        yield return new WaitForEndOfFrame(); // wait
 
-        // sort list by descending id, because they are later pushed to a stack in order. the big ones need to go down first
-        list = new List<CardData>(list.OrderByDescending(card => card.CardId));
-        yield return new WaitForEndOfFrame(); // wait
-
-        // add all cards to the stacks
         foreach (var card in list)
         {
-            this.AddToCardStacks(card);
-            Debug.Log(card.CardId);
+            this.AddToCardLists(card);
         }
+    }
 
-        // fill card hand initially
-        this.FillCardHand();
-        this.GetNextCard();
-        yield return null;
+    private void SetupCardStacks()
+    {
+        // init dictionary
+        this.cardStacks = new Dictionary<string, Stack<CardData>>();
+
+        foreach (var key in this.cardLists.Keys.ToList())
+        {
+            // if the category is one of the big four
+            if (this.theFourCardCategories.Contains(key))
+            {
+                // shuffle cards
+                this.cardLists[key].Shuffle();
+            }
+            else
+            {
+                // sort list by descending id, because they are later pushed to a stack in order. the big ones need to go down first
+                this.cardLists[key] = new List<CardData>(this.cardLists[key].OrderByDescending(card => card.CardId));
+            }
+
+            foreach (var card in this.cardLists[key])
+            {
+                this.AddToCardStacks(card);
+            }
+        }
     }
 
     /// <summary>
@@ -253,6 +279,9 @@ public class CardController : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        this.StartCoroutine(this.SetupCardStacks());
+        this.SetupCardLists();
+        this.SetupCardStacks();
+        this.FillCardHand();
+        this.GetNextCard();
     }
 }

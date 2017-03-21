@@ -10,6 +10,7 @@
         <EconomyR Value="1"/>
         <EnvironmentL Value="-1"/>
         <EnvironmentR Value="1"/>
+        <FollowUpId Value=""/>
         <SecurityL Value="-1"/>
         <SecurityR Value="1"/>
         <Text Value="Increase Values?"/>
@@ -28,6 +29,7 @@
         <EconomyR Value="1"/>
         <EnvironmentL Value="-1"/>
         <EnvironmentR Value="1"/>
+        <FollowUpId Value=""/>
         <SecurityL Value="-1"/>
         <SecurityR Value="1"/>
         <Text Value="Increase Values?"/>

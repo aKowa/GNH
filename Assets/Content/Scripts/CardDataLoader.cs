@@ -198,6 +198,13 @@ namespace Content.Scripts
             output.AppendLine(string.Format("Environment R: {0}", cardAttributes.EnvironmentR));
 
             /*
+             * FOLLOW UP ID
+             */
+            line = streamReader.ReadLine();
+            cardAttributes.FollowUpId = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Follow Up Id: {0}", cardAttributes.SecurityL));
+
+            /*
              * SECURITY L
              */
             line = streamReader.ReadLine();

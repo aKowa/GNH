@@ -190,6 +190,7 @@ public class CardController : MonoBehaviour
                 return card;
             }
 
+            // TODO: implement refilling stack with cards from list? big four new shuffle?
             Debug.LogWarning("You tried to get a card from a category, where the card stack is empty.");
             return null;
         }

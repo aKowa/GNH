@@ -51,6 +51,7 @@ public class CardController : MonoBehaviour
             return new int[5];
         }
     }
+
     private float EulerZ
     {
         get

@@ -120,7 +120,7 @@ namespace Content.Scripts
 	    {
 		    for ( int i = 0; i < 4; i++ )
 		    {
-			    if ( boundPolicyValues[i].valueUnbound <= 0 )
+			    if ( boundPolicyValues[i].valueUnbound <= 45 )
 			    {
 				    blockInput = true;
 					this.gameOverObject.SetActive( true );

@@ -318,7 +318,7 @@ namespace Content.Scripts
                 text.Append(splittedLine[i]);
                 text.Append(" ");
             }
-            return text.ToString();
+            return text.ToString().Trim();
         }
 
         /// <summary>

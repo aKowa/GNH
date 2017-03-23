@@ -1,5 +1,29 @@
-ID;Category;BackgroundColor;Character;CultureR;EconomyR;EnvironmentR;SecurityR;TreasuryR;CultureL;EconomyL;EnvironmentL;SecurityL;TreasuryL;Text;TextR;TextL
-COMMENT;These cards will be in queue in a random order;;;;;;;;;;;;;;;
-1000;Random;#55aaff;Character1;1;1;1;1;1;-1;-1;-1;-1;-1;Increase Values?;Yes;No
-COMMENT;These cards will be in queue when event1 is triggered (needs to be designed, how exactly events behave);;;;;;;;;;;;;;;
-1100;Event1;#000000;Character4;1;1;1;1;1;-1;-1;-1;-1;-1;Increase Values?;Yes;No
+ID;Category;BackgroundColor;Character;Text;TextL;TextR;FollowUpId;CultureL;EconomyL;EnvironmentL;SecurityL;TreasuryL;CultureR;EconomyR;EnvironmentR;SecurityR;TreasuryR
+COMMENT;;Focus Culture;;;0;-5;;5;-5;5;0;-5;35;30;-15;-10;-45
+1000;Culture;#9177AC;Character1;A gang of artists occupies a highly profitable area in the city. Several companies showed interest in buying it.;Support the artists;Remove artists and sell it;0;15;-10;5;0;-5;-15;10;-5;0;5
+1001;Culture;#9177AC;Character1;Researches show that working 35 hours a week doesn't only leave employees with more time for themselves but also increases productivity long term.;Haha, that's half of what I did working in games.;Encourage companies to introduce it;2000;-5;5;0;0;0;10;-10;0;0;-10
+1002;Culture;#9177AC;Character1;The Olympus Games want our country to be the next host! People from all over the world will come to watch!;I have no time for games.;You can never have enough stadiums!;0;-10;0;0;0;0;20;10;-10;-10;-15
+1003;Culture;#9177AC;Character1;We should offer higher taxation benefits for charity donations.;We can't afford that;Sounds good.;0;-5;0;0;0;0;10;10;0;0;-10
+1004;Culture;#9177AC;Character1;We should build a new phillarmonic hall in the city that will put all others to shame. It will take a year but when its finished the people will love it.;I'm not sure about your calculations here ...;Yes, the City needs a new landmark.;2001;0;0;0;0;0;0;10;0;0;-15
+1005;Culture;#9177AC;Character1;The bill to legalize same sex marriage is ready for your signature.;Why would I not sign that?;It's about time;0;10;0;0;0;0;10;0;0;0;0
+COMMENT;;Focus Environment;;;-15;5;;10;-10;-10;0;-5;-10;-20;60;-10;-15
+1100;Environment;#88CC88;Character2;New studies found out that global warming is in fact real!;The scientists must be conspirators too;Release lower emission standard;0;0;0;-5;0;0;5;-10;10;0;-5
+1101;Environment;#88CC88;Character2;Green Power offered to raise the amount of clean energy to over 90.00 percent, given the right funding.;Other countries don't care about clean energy either;Let's raise some wind turbines!;0;10;0;-10;0;0;-5;0;20;0;-15
+1102;Environment;#88CC88;Character2;Pollution from traffic keeps increasing in all areas.;Raise a toll on commercial transport;No more driving on sunday;0;0;-20;15;0;-5;-10;0;15;0;-5
+1103;Environment;#88CC88;Character2;The big pharma does questionable things with their waste. If we spoil their business they might increase insurance cost for the people though.;Meddling with them isn't worth it;Fines are always good;0;0;10;-10;0;0;0;-10;15;-10;10
+COMMENT;;Focus Economy;;;15;20;;20;-15;10;15;-15;-15;55;-15;0;-5
+1200;Economy;#D4CE6A;Character3;Some companies complain about too high taxes and threaten to relocate their business.;They're bluffing;Lower the taxes;0;5;-10;0;-5;0;-5;10;0;5;-10
+1201;Economy;#D4CE6A;Character3;Open the boarders so the trade can flow more freely.;We need to focus on ourselves;Open borders;0;5;-10;0;10;0;-5;15;0;-10;0
+1202;Economy;#D4CE6A;Character3;Companies would be willing to pay more taxes if there was more tolerance in regards of pollution.;I have little tolerance for that;We don't have to be so nitpicky;0;0;-10;10;0;0;0;15;-15;0;10
+1203;Economy;#D4CE6A;Character3;Our neighbours start to produce and sell wares similar to ours, we expect there are industry spies.;Prosecute theft of IP more thoroughly;Allow for more surveillance at work;0;10;15;0;10;-15;-5;15;0;5;-5
+COMMENT;;Focus Security;;;-10;-5;;15;-10;-10;10;-15;-10;0;15;40;-50
+1300;Security;#D46A6A;Character4;There have been some accidents, some believe it was terrorist attacks.;No reason to overreact...;Raise police presence;0;0;0;0;0;0;-5;0;0;5;-5
+1301;Security;#D46A6A;Character4;People fear about their living standard after the crisis. If there are no raises they will ask us to lower the taxes.;Some of the taxes can be shifted towards the employers;We can lower the taxes a bit;0;5;-10;0;15;0;5;0;0;10;-10
+1302;Security;#D46A6A;Character4;We need to rework our health insurance system.;No we don't;If you say so;0;0;0;0;0;0;0;0;0;10;-15
+1303;Security;#D46A6A;Character4;The introduction of the reformed recycling and waste disposal costs, contrary to our calculation, more than we can afford.;Cut the recycling;Raise the fee for waste disposal;0;0;0;-10;0;-5;0;0;15;-10;-5
+1304;Security;#D46A6A;Character4;Another bank files for insolvency. We need to help them out or a lot of people will lose their money.;We can't afford that;We have no choice;0;0;0;0;-15;0;0;0;0;15;-15
+1305;Security;#D46A6A;Character4;The Great Celebration of Happiness draws near and our secret service found hints of a potential terrorist attack.;The celebration can't be canceled anymore. Increase safety measures;The celebration must be canceled;0;10;0;0;10;-10;-10;0;0;10;0
+COMMENT;;Follow Up;;;15;20;;10;5;0;0;0;10;25;0;0;-15
+2000;FollowUp;#9177AC;Character1;Companies who introduced the 35 hours week register an increased productivity.;How is that still not a thing?;Great!;0;0;10;0;0;0;0;10;0;0;0
+2001;FollowUp;#9177AC;Character1;The phillarmonic hall we are building takes longer than anticipated. We need more funds to continue the construction.;Cancel the project and salvage what's possible;It will pay off eventually;2002;0;-10;0;0;0;0;10;0;0;-15
+2002;FollowUp;#9177AC;Character1;The phillarmonic hall is done!;Didn't think that day would come;Terrific!;0;10;5;0;0;0;10;5;0;0;0

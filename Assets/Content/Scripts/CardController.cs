@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -171,7 +172,8 @@ public class CardController : MonoBehaviour
 
         for (var i = 0; i < this.maxCardsInHand - cardsInHand; i++)
         {
-            var card = this.GetCardFromStack(this.theFourCardCategories[this.lastCategory++]);
+            var category = this.theFourCardCategories[this.LastCategory++];
+            var card = this.GetCardFromStack(category);
 
             if (card != null)
             {
@@ -184,10 +186,9 @@ public class CardController : MonoBehaviour
     {
         if (this.cardStacks.ContainsKey(category))
         {
-            var card = this.cardStacks[category].Pop();
-            if (card != null)
+            if (this.cardStacks[category].Count != 0)
             {
-                return card;
+                return this.cardStacks[category].Pop();
             }
 
             // TODO: implement refilling stack with cards from list? big four new shuffle?
@@ -196,12 +197,24 @@ public class CardController : MonoBehaviour
         }
 
         Debug.LogWarning(
-            "You tried to get a card from a category, where no card stack is present (not even an empty one, so that might be a wrong category).");
+            "You tried to get a card from a category, where no card stack is present (not even an empty one, so that might be a wrong category or your card data is corrupt/incorrect).");
         return null;
     }
 
     private void GetNextCard()
     {
+        if (this.cardHand == null)
+        {
+            Debug.LogWarning("The cardHand list is null, aborting GetNextCard()");
+            return;
+        }
+
+        if (this.cardHand.Count == 0)
+        {
+            Debug.LogWarning("The cardHand list is empty, aborting GetNextCard()");
+            return;
+        }
+
         var card = this.cardHand[0].CardAttributes;
 
         this.policyValuesL[0] = card.CultureL;

@@ -24,29 +24,35 @@ namespace Content.Scripts
     {
         public BindInt[] boundPolicyValues = new BindInt[6];
 
-        public Color negativePreviewColor = Color.red;
+		public GameObject gameOverObject;
+
+		public Color negativePreviewColor = Color.red;
 
         public Color positivePreviewColor = Color.green;
 
         public float revertSpeed = 1f;
 
-        private List<CardData> cardData;
+        private List<CardData> cardData; // TODO: is this param needed?
 
         private Text[] textValues;
 
         private Color initColor;
 
+		[HideInInspector]
+	    public bool blockInput = false;
 
 		/// <summary>
-		/// The start.
+		/// The start. Sets initial parameter
 		/// </summary>
 		public void Start ()
 		{
 			this.textValues = this.GetComponentsInChildren<Text> ();
 			this.initColor = this.textValues[0].color;
+			this.gameOverObject.SetActive( false );
+			blockInput = false;
 		}
 
-		// TODO: Implement next card logic (here or in Card Controller?)
+		// TODO: Implement next card logic (here or in Card Controller?) -> in Card Controller is fine I guess ;)
 		public void ApplyResults(int[] values)
         {
             this.RevertPreview();
@@ -54,6 +60,7 @@ namespace Content.Scripts
             {
                 this.boundPolicyValues[i].Value += values[i];
             }
+			this.CheckforGameOver();
         }
 
         /// <summary>
@@ -108,5 +115,19 @@ namespace Content.Scripts
                 yield return null;
             }
         }
+
+	    private void CheckforGameOver()
+	    {
+		    for ( int i = 0; i < boundPolicyValues.Length; i++ )
+		    {
+			    if ( boundPolicyValues[i].valueUnbound <= 0 )
+			    {
+				    blockInput = true;
+					this.gameOverObject.SetActive( true );
+				    var gameOverText = this.gameOverObject.GetComponentInChildren<Text>();
+					gameOverText.text = "You Lost! Your something was too damn low!";
+			    }
+		    }
+	    }
 	}
 }

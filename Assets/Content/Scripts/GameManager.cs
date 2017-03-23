@@ -22,7 +22,7 @@ namespace Content.Scripts
     /// TODO: can be made static?
     public class GameManager : MonoBehaviour
     {
-        public BindInt[] boundPolicyValues = new BindInt[4];
+        public BindInt[] boundPolicyValues = new BindInt[6];
 
         public Color negativePreviewColor = Color.red;
 

@@ -116,19 +116,34 @@ namespace Content.Scripts
             }
         }
 
+		/// <summary>
+		/// Checks policy values and determines as well as executes a game over. 
+		/// NOTE: reload logic is on the GameOverScreenObject 
+		/// </summary>
 	    private void CheckforGameOver()
 	    {
 		    for ( int i = 0; i < 4; i++ )
 		    {
-			    if ( boundPolicyValues[i].valueUnbound <= 45 )
+			    if ( boundPolicyValues[i].valueUnbound <= 0 )
 			    {
 				    blockInput = true;
 					this.gameOverObject.SetActive( true );
 				    var gameOverText = this.gameOverObject.GetComponentInChildren<Text>();
 				    var policyName = boundPolicyValues[i].targetGameObject.GetComponentInParent<Image>().gameObject.name;
 					gameOverText.text = "You Lost! \n \n Your " + policyName + " was too damn low!";
-			    }
-		    }
+					return;
+				}
+
+				if (boundPolicyValues[i].valueUnbound >= 100)
+				{
+					blockInput = true;
+					this.gameOverObject.SetActive ( true );
+					var gameOverText = this.gameOverObject.GetComponentInChildren<Text> ();
+					var policyName = boundPolicyValues[i].targetGameObject.GetComponentInParent<Image> ().gameObject.name;
+					gameOverText.text = "You Lost! \n \n Your " + policyName + " was too damn high!";
+					return;
+				}
+			}
 	    }
 	}
 }

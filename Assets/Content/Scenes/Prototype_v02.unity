@@ -479,7 +479,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: 50
 --- !u!222 &341516887
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1786,11 +1786,12 @@ MonoBehaviour:
     componentID: 2
     targetComponent: {fileID: 0}
     propertyID: 4
-    valueUnbound: 0
+    valueUnbound: 50
   gameOverObject: {fileID: 966244895}
   negativePreviewColor: {r: 1, g: 0, b: 0, a: 1}
   positivePreviewColor: {r: 0, g: 1, b: 0, a: 1}
   revertSpeed: 2
+  happinesThreshold: {x: 30, y: -1}
   blockInput: 0
 --- !u!1 &1794012712
 GameObject:

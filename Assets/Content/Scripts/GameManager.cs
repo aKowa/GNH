@@ -6,6 +6,9 @@
 //   Defines the GameManager type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System.Linq;
+
 namespace Content.Scripts
 {
     using System.Collections;
@@ -31,6 +34,9 @@ namespace Content.Scripts
         public Color positivePreviewColor = Color.green;
 
         public float revertSpeed = 1f;
+
+		[Tooltip("Threshold values of happines used to determine a GameOver! Use negative values to disable.")]
+		public Vector2 happinesThreshold = new Vector2(20, -1);
 
         private List<CardData> cardData; // TODO: is this param needed?
 
@@ -60,8 +66,27 @@ namespace Content.Scripts
             {
                 this.boundPolicyValues[i].Value += values[i];
             }
+
+			this.boundPolicyValues[5].Value = Happiness;
 			this.CheckforGameOver();
         }
+
+		/// <summary>
+		/// Calculates happiness by using the average of all policy values.
+		/// </summary>
+	    private int Happiness
+	    {
+		    get
+		    {
+			    int targetHappines = 0;
+			    for ( int i = 0; i < 4; i++ )
+			    {
+				    targetHappines += this.boundPolicyValues[i].valueUnbound;
+			    }
+			    return targetHappines / 4;
+		    }
+	    }
+
 
         /// <summary>
         /// Shows a preview of the possible result.
@@ -122,28 +147,49 @@ namespace Content.Scripts
 		/// </summary>
 	    private void CheckforGameOver()
 	    {
-		    for ( int i = 0; i < 4; i++ )
+			// Check happines bounds
+			if (this.boundPolicyValues[5].valueUnbound <= happinesThreshold.x && happinesThreshold.x > 0)
+			{
+				this.GetGameOverText ( 5 ).text += " was too damn low!";
+				return;
+			}
+			if (this.boundPolicyValues[5].valueUnbound >= happinesThreshold.y && happinesThreshold.y > 0)
+			{
+				this.GetGameOverText ( 5 ).text += " was too damn high!";
+				return;
+			}
+
+			// check policy bounds
+			for ( int i = 0; i < 4; i++ )
 		    {
-			    if ( boundPolicyValues[i].valueUnbound <= 0 )
+				// Check if policy is too low
+				if ( boundPolicyValues[i].valueUnbound <= 0 )
 			    {
-				    blockInput = true;
-					this.gameOverObject.SetActive( true );
-				    var gameOverText = this.gameOverObject.GetComponentInChildren<Text>();
-				    var policyName = boundPolicyValues[i].targetGameObject.GetComponentInParent<Image>().gameObject.name;
-					gameOverText.text = "You Lost! \n \n Your " + policyName + " was too damn low!";
+					this.GetGameOverText( i ).text += " was too damn low!";
 					return;
 				}
 
+				// Check if policy is too high
 				if (boundPolicyValues[i].valueUnbound >= 100)
 				{
-					blockInput = true;
-					this.gameOverObject.SetActive ( true );
-					var gameOverText = this.gameOverObject.GetComponentInChildren<Text> ();
-					var policyName = boundPolicyValues[i].targetGameObject.GetComponentInParent<Image> ().gameObject.name;
-					gameOverText.text = "You Lost! \n \n Your " + policyName + " was too damn high!";
+					this.GetGameOverText ( i ).text += " was too damn high!";
 					return;
 				}
 			}
+	    }
+
+		/// <summary>
+		/// Returns GameOver text object and sets parameter for blocking input.
+		/// </summary>
+		/// <param name="policyID">The policyID responsible for the game over.</param>
+	    private Text GetGameOverText( int policyID )
+	    {
+			blockInput = true;
+			this.gameOverObject.SetActive ( true );
+			var gameOverText = this.gameOverObject.GetComponentInChildren<Text> ();
+			var policyName = boundPolicyValues[policyID].targetGameObject.GetComponentInParent<Image> ().gameObject.name;
+			gameOverText.text = "You Lost! \n \n Your " + policyName;
+		    return gameOverText;
 	    }
 	}
 }

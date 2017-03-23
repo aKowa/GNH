@@ -118,14 +118,15 @@ namespace Content.Scripts
 
 	    private void CheckforGameOver()
 	    {
-		    for ( int i = 0; i < boundPolicyValues.Length; i++ )
+		    for ( int i = 0; i < 4; i++ )
 		    {
 			    if ( boundPolicyValues[i].valueUnbound <= 0 )
 			    {
 				    blockInput = true;
 					this.gameOverObject.SetActive( true );
 				    var gameOverText = this.gameOverObject.GetComponentInChildren<Text>();
-					gameOverText.text = "You Lost! Your something was too damn low!";
+				    var policyName = boundPolicyValues[i].targetGameObject.GetComponentInParent<Image>().gameObject.name;
+					gameOverText.text = "You Lost! \n \n Your " + policyName + " was too damn low!";
 			    }
 		    }
 	    }

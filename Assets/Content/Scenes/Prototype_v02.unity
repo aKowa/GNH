@@ -1744,6 +1744,7 @@ MonoBehaviour:
     targetComponent: {fileID: 0}
     propertyID: 4
     valueUnbound: 0
+  gameOverObject: {fileID: 966244895}
   negativePreviewColor: {r: 1, g: 0, b: 0, a: 1}
   positivePreviewColor: {r: 0, g: 1, b: 0, a: 1}
   revertSpeed: 2

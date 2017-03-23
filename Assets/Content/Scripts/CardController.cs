@@ -43,7 +43,8 @@ public class CardController : MonoBehaviour
             {
                 return this.policyValuesL;
             }
-            else if (this.EulerZ < 0)
+
+			if (this.EulerZ < 0)
             {
                 return this.policyValuesR;
             }

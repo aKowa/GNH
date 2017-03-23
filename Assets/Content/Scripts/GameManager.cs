@@ -32,12 +32,22 @@ namespace Content.Scripts
 
         private List<CardData> cardData;
 
-        private Image[] images;
+        private Text[] textValues;
 
         private Color initColor;
 
-        // TODO: Implement next card logic (here or in Card Controller?)
-        public void ApplyResults(int[] values)
+
+		/// <summary>
+		/// The start.
+		/// </summary>
+		public void Start ()
+		{
+			this.textValues = this.GetComponentsInChildren<Text> ();
+			this.initColor = this.textValues[0].color;
+		}
+
+		// TODO: Implement next card logic (here or in Card Controller?)
+		public void ApplyResults(int[] values)
         {
             this.RevertPreview();
             for (int i = 0; i < values.Length; i++)
@@ -56,11 +66,11 @@ namespace Content.Scripts
             {
                 if (values[i] > 0)
                 {
-                    this.images[i].color = this.positivePreviewColor;
+                    this.textValues[i].color = this.positivePreviewColor;
                 }
                 else if (values[i] < 0)
                 {
-                    this.images[i].color = this.negativePreviewColor;
+                    this.textValues[i].color = this.negativePreviewColor;
                 }
             }
         }
@@ -75,31 +85,22 @@ namespace Content.Scripts
         }
 
         /// <summary>
-        /// The start.
-        /// </summary>
-        public void Start()
-        {
-            this.images = this.GetComponentsInChildren<Image>();
-            this.initColor = this.images[0].color;
-        }
-
-        /// <summary>
         /// Lerps image colors back to its init color.
         /// </summary>
         private IEnumerator RevertPreviewAnimation()
         {
             float t = 0;
-            var colors = new Color[this.images.Length];
+            var colors = new Color[this.textValues.Length];
             for (int i = 0; i < colors.Length; i++)
             {
-                colors[i] = this.images[i].color;
+                colors[i] = this.textValues[i].color;
             }
 
             while (t < 1f)
             {
-                for (int i = 0; i < this.images.Length; i++)
+                for (int i = 0; i < this.textValues.Length; i++)
                 {
-                    this.images[i].color = Color.Lerp(colors[i], this.initColor, t);
+                    this.textValues[i].color = Color.Lerp(colors[i], this.initColor, t);
                 }
 
                 t += this.revertSpeed * Time.deltaTime;

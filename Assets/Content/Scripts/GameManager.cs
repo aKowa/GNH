@@ -64,6 +64,7 @@ namespace Content.Scripts
             this.StopAllCoroutines();
             for (int i = 0; i < values.Length; i++)
             {
+	            this.textValues[i].color = initColor;
                 if (values[i] > 0)
                 {
                     this.textValues[i].color = this.positivePreviewColor;
@@ -107,5 +108,5 @@ namespace Content.Scripts
                 yield return null;
             }
         }
-    }
+	}
 }

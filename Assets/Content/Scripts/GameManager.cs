@@ -35,10 +35,13 @@ namespace Content.Scripts
 
         public float revertSpeed = 1f;
 
-		[Tooltip("Threshold values of happines used to determine a GameOver! Use negative values to disable.")]
-		public Vector2 happinesThreshold = new Vector2(20, -1);
+		[Tooltip("Threshold value of happines used to determine when player lost! Use negative value to disable.")]
+		public int loseHappinesThreshold = 20;
 
-        private List<CardData> cardData; // TODO: is this param needed?
+		[Tooltip ( "Threshold value of happines used to determine when player lost! Use negative value to disable." )]
+		public int winHappinesThreshold = 90;
+
+		private List<CardData> cardData; // TODO: is this param needed?
 
         private Text[] textValues;
 
@@ -59,6 +62,7 @@ namespace Content.Scripts
 		}
 
 		// TODO: Implement next card logic (here or in Card Controller?) -> in Card Controller is fine I guess ;)
+		// TODO: Implement turn count to determine time passed
 		public void ApplyResults(int[] values)
         {
             this.RevertPreview();
@@ -147,15 +151,17 @@ namespace Content.Scripts
 		/// </summary>
 	    private void CheckforGameOver()
 	    {
-			// Check happines bounds
-			if (this.boundPolicyValues[5].valueUnbound <= happinesThreshold.x && happinesThreshold.x > 0)
+			// Check for victory by happiness
+			if ( this.boundPolicyValues[5].valueUnbound >= winHappinesThreshold && winHappinesThreshold > 0 )
 			{
-				this.GetGameOverText ( 5 ).text += " was too damn low!";
+				this.GetGameOverText( 5 ).text = "Victory! \n \n Your happiness exceeds all expectations! \n \n Party hard!!!";
 				return;
 			}
-			if (this.boundPolicyValues[5].valueUnbound >= happinesThreshold.y && happinesThreshold.y > 0)
+
+			// Check for lose by happines
+			if (this.boundPolicyValues[5].valueUnbound <= loseHappinesThreshold && loseHappinesThreshold > 0)
 			{
-				this.GetGameOverText ( 5 ).text += " was too damn high!";
+				this.GetGameOverText ( 5 ).text += " was too damn low!";
 				return;
 			}
 

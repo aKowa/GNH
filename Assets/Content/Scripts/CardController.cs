@@ -93,6 +93,12 @@ public class CardController : MonoBehaviour
     /// </summary>
     public void OnDrag()
     {
+		// early out
+	    if ( this.gameManager.blockInput )
+	    {
+		    return;
+	    }
+
         // handle rotation
         var targetDirection = (Input.mousePosition - this.transform.position).normalized;
         var angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
@@ -202,6 +208,10 @@ public class CardController : MonoBehaviour
         return null;
     }
 
+	/// <summary>
+	/// Gets next card.
+	/// </summary>
+	/// TODO: integrate happiness parameter and set overwrite card text
     private void GetNextCard()
     {
         if (this.cardHand == null)

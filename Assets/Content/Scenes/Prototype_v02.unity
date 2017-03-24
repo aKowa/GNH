@@ -987,14 +987,6 @@ MonoBehaviour:
   gameManager: {fileID: 1715703455}
   maxAngle: 15
   maxCardsInHand: 20
-  minMaxPolicyValue: 10
-  policyValuesL: 0000000000000000000000000000000000000000
-  policyValuesR: 0000000000000000000000000000000000000000
-  theFourCardCategories:
-  - Culture
-  - Economy
-  - Environment
-  - Security
   thresholdAngle: 10
 --- !u!114 &795344644
 MonoBehaviour:
@@ -1781,19 +1773,18 @@ MonoBehaviour:
     componentID: 2
     targetComponent: {fileID: 0}
     propertyID: 4
-    valueUnbound: 0
+    valueUnbound: 50
   - targetGameObject: {fileID: 341516884}
     componentID: 2
     targetComponent: {fileID: 0}
     propertyID: 4
     valueUnbound: 50
   gameOverObject: {fileID: 966244895}
-  negativePreviewColor: {r: 1, g: 0, b: 0, a: 1}
-  positivePreviewColor: {r: 0, g: 1, b: 0, a: 1}
+  happinessThresholdLose: 20
+  happinessThresholdWin: 90
+  previewColorNegative: {r: 1, g: 0, b: 0, a: 1}
+  previewColorPositive: {r: 0, g: 1, b: 0, a: 1}
   revertSpeed: 2
-  loseHappinesThreshold: 20
-  winHappinesThreshold: 90
-  blockInput: 0
 --- !u!1 &1794012712
 GameObject:
   m_ObjectHideFlags: 0

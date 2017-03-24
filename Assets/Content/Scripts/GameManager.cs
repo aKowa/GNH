@@ -41,8 +41,6 @@ namespace Content.Scripts
 		[Tooltip ( "Threshold value of happines used to determine when player lost! Use negative value to disable." )]
 		public int winHappinesThreshold = 90;
 
-		private List<CardData> cardData; // TODO: is this param needed?
-
         private Text[] textValues;
 
         private Color initColor;

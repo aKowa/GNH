@@ -59,7 +59,6 @@ namespace Content.Scripts
 			blockInput = false;
 		}
 
-		// TODO: Implement next card logic (here or in Card Controller?) -> in Card Controller is fine I guess ;)
 		// TODO: Implement turn count to determine time passed
 		public void ApplyResults(int[] values)
         {

@@ -41,6 +41,12 @@ namespace Content.Scripts
         private Dictionary<string, Stack<CardData>> cardStacks;
 
         /// <summary>
+        /// The deviation to help.
+        /// </summary>
+        [SerializeField]
+        private int deviationToHelp = 20;
+
+        /// <summary>
         /// The game manager.
         /// </summary>
         [SerializeField]
@@ -246,14 +252,77 @@ namespace Content.Scripts
                 this.cardHand = new List<CardData>();
             }
 
-            var cardsInHand = this.cardHand.Count;
-
-            if (cardsInHand >= this.maxCardsInHand)
+            if (this.cardHand.Count >= this.maxCardsInHand)
             {
                 return;
             }
 
-            for (var i = 0; i < this.maxCardsInHand - cardsInHand; i++)
+            var deviation = 0;
+            var mostDeviatedValue = this.GetFirstMostDeviatedValue(ref deviation);
+
+            if (deviation < this.deviationToHelp)
+            {
+                this.NormalCardHandFill();
+            }
+            else
+            {
+                this.DeviatedCardHandFill(mostDeviatedValue);
+            }
+        }
+
+        /// <summary>
+        /// The deviated card hand fill.
+        /// </summary>
+        /// <param name="mostDeviatedValue">
+        /// The most deviated value.
+        /// </param>
+        private void DeviatedCardHandFill(PolicyValue mostDeviatedValue)
+        {
+            Debug.Log(string.Format("As the value of the policy {0} has deviated too far from the current happiness of {1}, a card from that category was drawn.", mostDeviatedValue, this.gameManager.GetPolicyValue(PolicyValue.Happiness)));
+            this.cardHand.Insert(0, this.GetCardFromStack(this.theFourCardCategories[(int)mostDeviatedValue]));
+            this.NormalCardHandFill();
+        }
+
+        /// <summary>
+        /// The get first most deviated value.
+        /// </summary>
+        /// <param name="maxDeviation">
+        /// The max deviation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="PolicyValue"/>.
+        /// </returns>
+        private PolicyValue GetFirstMostDeviatedValue(ref int maxDeviation)
+        {
+            var happiness = this.gameManager.GetPolicyValue(PolicyValue.Happiness);
+
+            var deviations = new int[4];
+            for (var i = 0; i < deviations.Length; i++)
+            {
+                deviations[i] = Mathf.Abs(happiness - this.gameManager.GetPolicyValue((PolicyValue)i));
+            }
+
+            var index = -1;
+            for (var i = 0; i < deviations.Length; i++)
+            {
+                var current = deviations[i];
+                if (current > maxDeviation)
+                {
+                    maxDeviation = current;
+                    index = i;
+                }
+            }
+
+            return (PolicyValue)index;
+        }
+
+        /// <summary>
+        /// The normal card hand fill.
+        /// </summary>
+        private void NormalCardHandFill()
+        {
+
+            for (var i = 0; i < this.maxCardsInHand - this.cardHand.Count; i++)
             {
                 var category = this.theFourCardCategories[this.LastCategory++];
                 var card = this.GetCardFromStack(category);

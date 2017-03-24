@@ -42,14 +42,14 @@ namespace Content.Scripts
         /// <summary>
         /// The happiness threshold lose.
         /// </summary>
-        [Tooltip("Threshold value of happines used to determine when player lost! Use negative value to disable.")]
+        [Tooltip("Threshold policyValue of happines used to determine when player lost! Use negative policyValue to disable.")]
         [SerializeField]
         private int happinessThresholdLose = 20;
 
         /// <summary>
         /// The happiness threshold win.
         /// </summary>
-        [Tooltip("Threshold value of happines used to determine when player lost! Use negative value to disable.")]
+        [Tooltip("Threshold policyValue of happines used to determine when player lost! Use negative policyValue to disable.")]
         [SerializeField]
         private int happinessThresholdWin = 90;
 
@@ -82,7 +82,7 @@ namespace Content.Scripts
         private Text[] textValues;
 
         /// <summary>
-        /// Gets a value indicating whether to block input.
+        /// Gets a policyValue indicating whether to block input.
         /// </summary>
         public bool BlockInput
         {
@@ -98,23 +98,38 @@ namespace Content.Scripts
         }
 
         /// <summary>
-        /// Gets the calculated happiness by using the average of all policy values.
+        /// The get policy value.
         /// </summary>
-        private int Happiness
+        /// <param name="policyValue">
+        /// The policy value.
+        /// </param>
+        /// <returns>
+        /// The <see cref="int"/>.
+        /// </returns>
+        public int GetPolicyValue(PolicyValue policyValue)
         {
-            get
+            switch (policyValue)
             {
-                var targetHappines = 0;
-                for (var i = 0; i < 4; i++)
-                {
-                    targetHappines += this.boundPolicyValues[i].valueUnbound;
-                }
+                case PolicyValue.Culture:
+                case PolicyValue.Economy:
+                case PolicyValue.Environment:
+                case PolicyValue.Security:
+                case PolicyValue.Treasury:
+                    return this.boundPolicyValues[(int)policyValue].Value;
+                case PolicyValue.Happiness:
+                    // Gets the calculated happiness by using the average of the big four policy values.
+                    var targetHappiness = 0;
+                    for (var i = 0; i < 4; i++)
+                    {
+                        targetHappiness += this.boundPolicyValues[i].Value;
+                    }
 
-                return targetHappines / 4;
+                    return targetHappiness / 4;
+                default:
+                    Debug.LogWarning("passed PolicyValue enum not valid, please think about what you are doing here. returned 0.");
+                    return 0;
             }
         }
-
-        // TODO: Implement turn count to determine time passed
 
         /// <summary>
         /// The apply results.
@@ -124,13 +139,14 @@ namespace Content.Scripts
         /// </param>
         public void ApplyResults(int[] values)
         {
+            // TODO: Implement turn count to determine time passed
             this.RevertPreview();
             for (var i = 0; i < values.Length; i++)
             {
                 this.boundPolicyValues[i].Value += values[i];
             }
 
-            this.boundPolicyValues[5].Value = this.Happiness;
+            this.boundPolicyValues[5].Value = this.GetPolicyValue(PolicyValue.Happiness);
             this.CheckforGameOver();
         }
 

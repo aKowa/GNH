@@ -279,7 +279,15 @@ namespace Content.Scripts
         private void DeviatedCardHandFill(PolicyValue mostDeviatedValue)
         {
             Debug.Log(string.Format("As the value of the policy {0} has deviated too far from the current happiness of {1}, a card from that category was drawn.", mostDeviatedValue, this.gameManager.GetPolicyValue(PolicyValue.Happiness)));
-            this.cardHand.Insert(0, this.GetCardFromStack(this.theFourCardCategories[(int)mostDeviatedValue]));
+
+            var card = this.GetCardFromStack(mostDeviatedValue.ToString());
+            if (card == null)
+            {
+                Debug.LogWarning("DeviatedCardHandFill got null as card, aborting.");
+                return;
+            }
+            Debug.Log("DeviatedCardHandFill worked.");
+            this.cardHand.Insert(0, card);
             this.NormalCardHandFill();
         }
 
@@ -352,8 +360,8 @@ namespace Content.Scripts
                     return this.cardStacks[category].Pop();
                 }
 
-                // TODO: implement refilling stack with cards from list? big four new shuffle?
-                Debug.LogWarning("You tried to get a card from a category, where the card stack is empty.");
+                this.PrepareCardList(category);
+                this.AddCardListToCardStack(category);
                 return null;
             }
 
@@ -380,6 +388,7 @@ namespace Content.Scripts
                 return;
             }
 
+            Debug.Log(string.Format("Getting card with id {0}", this.cardHand[0].CardId));
             var card = this.cardHand[0].CardAttributes;
 
             this.policyValuesL[0] = card.CultureL;
@@ -446,22 +455,43 @@ namespace Content.Scripts
 
             foreach (var key in this.cardLists.Keys.ToList())
             {
-                // if the category is one of the big four
-                if (this.theFourCardCategories.Contains(key))
-                {
-                    // shuffle cards
-                    this.cardLists[key].Shuffle();
-                }
-                else
-                {
-                    // sort list by descending id, because they are later pushed to a stack in order. the big ones need to go down first
-                    this.cardLists[key] = new List<CardData>(this.cardLists[key].OrderByDescending(card => card.CardId));
-                }
+                this.PrepareCardList(key);
+                this.AddCardListToCardStack(key);
+            }
+        }
 
-                foreach (var card in this.cardLists[key])
-                {
-                    this.AddToCardStacks(card);
-                }
+        /// <summary>
+        /// The add card list to card stack.
+        /// </summary>
+        /// <param name="category">
+        /// The category.
+        /// </param>
+        private void AddCardListToCardStack(string category)
+        {
+            foreach (var card in this.cardLists[category])
+            {
+                this.AddToCardStacks(card);
+            }
+        }
+
+        /// <summary>
+        /// The prepare card list.
+        /// </summary>
+        /// <param name="category">
+        /// The category.
+        /// </param>
+        private void PrepareCardList(string category)
+        {
+            // if the category is one of the big four
+            if (this.theFourCardCategories.Contains(category))
+            {
+                // shuffle cards
+                this.cardLists[category].Shuffle();
+            }
+            else
+            {
+                // sort list by descending id, because they are later pushed to a stack in order. the big ones need to go down first
+                this.cardLists[category] = new List<CardData>(this.cardLists[category].OrderByDescending(card => card.CardId));
             }
         }
 

@@ -21,38 +21,91 @@ namespace Content.Scripts
     /// TODO: can be made static?
     public class GameManager : MonoBehaviour
     {
+        /// <summary>
+        /// The block input.
+        /// </summary>
         [HideInInspector]
-        public bool blockInput = false;
+        private bool blockInput = false;
 
-        public BindInt[] boundPolicyValues = new BindInt[6];
+        /// <summary>
+        /// The bound policy values.
+        /// </summary>
+        [SerializeField]
+        private BindInt[] boundPolicyValues = new BindInt[6];
 
-        public GameObject gameOverObject;
+        /// <summary>
+        /// The game over object.
+        /// </summary>
+        [SerializeField]
+        private GameObject gameOverObject;
 
+        /// <summary>
+        /// The happiness threshold lose.
+        /// </summary>
         [Tooltip("Threshold value of happines used to determine when player lost! Use negative value to disable.")]
-        public int loseHappinesThreshold = 20;
+        [SerializeField]
+        private int happinessThresholdLose = 20;
 
-        public Color negativePreviewColor = Color.red;
-
-        public Color positivePreviewColor = Color.green;
-
-        public float revertSpeed = 1f;
-
+        /// <summary>
+        /// The happiness threshold win.
+        /// </summary>
         [Tooltip("Threshold value of happines used to determine when player lost! Use negative value to disable.")]
-        public int winHappinesThreshold = 90;
+        [SerializeField]
+        private int happinessThresholdWin = 90;
 
+        /// <summary>
+        /// The init color.
+        /// </summary>
         private Color initColor;
 
+        /// <summary>
+        /// The preview color negative.
+        /// </summary>
+        [SerializeField]
+        private Color previewColorNegative = Color.red;
+
+        /// <summary>
+        /// The preview color positive.
+        /// </summary>
+        [SerializeField]
+        private Color previewColorPositive = Color.green;
+
+        /// <summary>
+        /// The revert speed.
+        /// </summary>
+        [SerializeField]
+        private float revertSpeed = 1f;
+
+        /// <summary>
+        /// The text values.
+        /// </summary>
         private Text[] textValues;
 
         /// <summary>
-        /// Calculates happiness by using the average of all policy values.
+        /// Gets a value indicating whether to block input.
+        /// </summary>
+        public bool BlockInput
+        {
+            get
+            {
+                return this.blockInput;
+            }
+
+            private set
+            {
+                this.blockInput = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the calculated happiness by using the average of all policy values.
         /// </summary>
         private int Happiness
         {
             get
             {
-                int targetHappines = 0;
-                for (int i = 0; i < 4; i++)
+                var targetHappines = 0;
+                for (var i = 0; i < 4; i++)
                 {
                     targetHappines += this.boundPolicyValues[i].valueUnbound;
                 }
@@ -62,10 +115,17 @@ namespace Content.Scripts
         }
 
         // TODO: Implement turn count to determine time passed
+
+        /// <summary>
+        /// The apply results.
+        /// </summary>
+        /// <param name="values">
+        /// The values.
+        /// </param>
         public void ApplyResults(int[] values)
         {
             this.RevertPreview();
-            for (int i = 0; i < values.Length; i++)
+            for (var i = 0; i < values.Length; i++)
             {
                 this.boundPolicyValues[i].Value += values[i];
             }
@@ -77,19 +137,22 @@ namespace Content.Scripts
         /// <summary>
         /// Shows a preview of the possible result.
         /// </summary>
+        /// <param name="values">
+        /// The values.
+        /// </param>
         public void PreviewResults(int[] values)
         {
             this.StopAllCoroutines();
-            for (int i = 0; i < values.Length; i++)
+            for (var i = 0; i < values.Length; i++)
             {
                 this.textValues[i].color = this.initColor;
                 if (values[i] > 0)
                 {
-                    this.textValues[i].color = this.positivePreviewColor;
+                    this.textValues[i].color = this.previewColorPositive;
                 }
                 else if (values[i] < 0)
                 {
-                    this.textValues[i].color = this.negativePreviewColor;
+                    this.textValues[i].color = this.previewColorNegative;
                 }
             }
         }
@@ -111,7 +174,7 @@ namespace Content.Scripts
             this.textValues = this.GetComponentsInChildren<Text>();
             this.initColor = this.textValues[0].color;
             this.gameOverObject.SetActive(false);
-            this.blockInput = false;
+            this.BlockInput = false;
         }
 
         /// <summary>
@@ -121,7 +184,7 @@ namespace Content.Scripts
         private void CheckforGameOver()
         {
             // Check for victory by happiness
-            if (this.boundPolicyValues[5].valueUnbound >= this.winHappinesThreshold && this.winHappinesThreshold > 0)
+            if (this.boundPolicyValues[5].valueUnbound >= this.happinessThresholdWin && this.happinessThresholdWin > 0)
             {
                 this.GetGameOverText(5).text =
                     "Victory! \n \n Your happiness exceeds all expectations! \n \n Party hard!!!";
@@ -129,14 +192,14 @@ namespace Content.Scripts
             }
 
             // Check for lose by happines
-            if (this.boundPolicyValues[5].valueUnbound <= this.loseHappinesThreshold && this.loseHappinesThreshold > 0)
+            if (this.boundPolicyValues[5].valueUnbound <= this.happinessThresholdLose && this.happinessThresholdLose > 0)
             {
                 this.GetGameOverText(5).text += " was too damn low!";
                 return;
             }
 
             // check policy bounds
-            for (int i = 0; i < 4; i++)
+            for (var i = 0; i < 4; i++)
             {
                 // Check if policy is too low
                 if (this.boundPolicyValues[i].valueUnbound <= 0)
@@ -157,14 +220,19 @@ namespace Content.Scripts
         /// <summary>
         /// Returns GameOver text object and sets parameter for blocking input.
         /// </summary>
-        /// <param name="policyID">The policyID responsible for the game over.</param>
-        private Text GetGameOverText(int policyID)
+        /// <param name="policyId">
+        /// The policyID responsible for the game over.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Text"/>.
+        /// </returns>
+        private Text GetGameOverText(int policyId)
         {
-            this.blockInput = true;
+            this.BlockInput = true;
             this.gameOverObject.SetActive(true);
             var gameOverText = this.gameOverObject.GetComponentInChildren<Text>();
             var policyName =
-                this.boundPolicyValues[policyID].targetGameObject.GetComponentInParent<Image>().gameObject.name;
+                this.boundPolicyValues[policyId].targetGameObject.GetComponentInParent<Image>().gameObject.name;
             gameOverText.text = "You Lost! \n \n Your " + policyName;
             return gameOverText;
         }
@@ -172,18 +240,21 @@ namespace Content.Scripts
         /// <summary>
         /// Lerps image colors back to its init color.
         /// </summary>
+        /// <returns>
+        /// The <see cref="IEnumerator"/>.
+        /// </returns>
         private IEnumerator RevertPreviewAnimation()
         {
             float t = 0;
             var colors = new Color[this.textValues.Length];
-            for (int i = 0; i < colors.Length; i++)
+            for (var i = 0; i < colors.Length; i++)
             {
                 colors[i] = this.textValues[i].color;
             }
 
             while (t < 1f)
             {
-                for (int i = 0; i < this.textValues.Length; i++)
+                for (var i = 0; i < this.textValues.Length; i++)
                 {
                     this.textValues[i].color = Color.Lerp(colors[i], this.initColor, t);
                 }

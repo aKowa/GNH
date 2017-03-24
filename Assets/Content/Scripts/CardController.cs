@@ -94,7 +94,7 @@ public class CardController : MonoBehaviour
     public void OnDrag()
     {
 		// early out
-	    if ( this.gameManager.blockInput )
+	    if ( this.gameManager.BlockInput )
 	    {
 		    return;
 	    }

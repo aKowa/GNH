@@ -566,6 +566,7 @@ GameObject:
   - component: {fileID: 497749265}
   - component: {fileID: 497749264}
   - component: {fileID: 497749263}
+  - component: {fileID: 497749266}
   m_Layer: 5
   m_Name: Culture
   m_TagString: Untagged
@@ -629,6 +630,18 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 497749262}
+--- !u!114 &497749266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 497749262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4406058fec414a94cacd1a39d5e89f7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
 --- !u!1 &665314106
 GameObject:
   m_ObjectHideFlags: 0
@@ -719,6 +732,7 @@ GameObject:
   - component: {fileID: 679233020}
   - component: {fileID: 679233019}
   - component: {fileID: 679233018}
+  - component: {fileID: 679233021}
   m_Layer: 5
   m_Name: Environment
   m_TagString: Untagged
@@ -784,6 +798,18 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 679233017}
+--- !u!114 &679233021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 679233017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4406058fec414a94cacd1a39d5e89f7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 2
 --- !u!224 &687313318
 RectTransform:
   m_ObjectHideFlags: 0
@@ -816,6 +842,7 @@ GameObject:
   - component: {fileID: 745386111}
   - component: {fileID: 745386110}
   - component: {fileID: 745386109}
+  - component: {fileID: 745386112}
   m_Layer: 5
   m_Name: Happiness
   m_TagString: Untagged
@@ -901,6 +928,18 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 745386107}
+--- !u!114 &745386112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 745386107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4406058fec414a94cacd1a39d5e89f7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 5
 --- !u!1 &795344639
 GameObject:
   m_ObjectHideFlags: 0
@@ -1300,6 +1339,7 @@ GameObject:
   - component: {fileID: 1112820107}
   - component: {fileID: 1112820106}
   - component: {fileID: 1112820105}
+  - component: {fileID: 1112820108}
   m_Layer: 5
   m_Name: Economy
   m_TagString: Untagged
@@ -1365,6 +1405,18 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1112820104}
+--- !u!114 &1112820108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1112820104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4406058fec414a94cacd1a39d5e89f7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
 --- !u!1 &1127767390
 GameObject:
   m_ObjectHideFlags: 0
@@ -1474,6 +1526,7 @@ GameObject:
   - component: {fileID: 1349639702}
   - component: {fileID: 1349639701}
   - component: {fileID: 1349639700}
+  - component: {fileID: 1349639703}
   m_Layer: 5
   m_Name: Treasury
   m_TagString: Untagged
@@ -1559,6 +1612,18 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1349639698}
+--- !u!114 &1349639703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1349639698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4406058fec414a94cacd1a39d5e89f7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 4
 --- !u!1 &1367451367
 GameObject:
   m_ObjectHideFlags: 0
@@ -1781,9 +1846,19 @@ MonoBehaviour:
     targetComponent: {fileID: 0}
     propertyID: 4
     valueUnbound: 50
+  policies:
+  - {fileID: 497749266}
+  - {fileID: 1112820108}
+  - {fileID: 679233021}
+  - {fileID: 2092970683}
+  - {fileID: 1349639703}
+  - {fileID: 745386112}
   gameOverObject: {fileID: 966244895}
   happinessThresholdLose: 20
   happinessThresholdWin: 90
+  HideValues: 1
+  maxColor: {r: 0, g: 0, b: 0, a: 1}
+  minColor: {r: 0, g: 0, b: 0, a: 0}
   previewColorNegative: {r: 1, g: 0, b: 0, a: 1}
   previewColorPositive: {r: 0, g: 1, b: 0, a: 1}
   revertSpeed: 2
@@ -2060,6 +2135,7 @@ GameObject:
   - component: {fileID: 2092970682}
   - component: {fileID: 2092970681}
   - component: {fileID: 2092970680}
+  - component: {fileID: 2092970683}
   m_Layer: 5
   m_Name: Security
   m_TagString: Untagged
@@ -2125,3 +2201,15 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2092970679}
+--- !u!114 &2092970683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2092970679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4406058fec414a94cacd1a39d5e89f7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 3

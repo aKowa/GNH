@@ -11,7 +11,7 @@ namespace Content.Scripts
     /// <summary>
     /// The values.
     /// </summary>
-    public enum PolicyValue
+    public enum PolicyType
     {
         /// <summary>
         /// The culture.

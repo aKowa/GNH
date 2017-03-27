@@ -276,9 +276,9 @@ namespace Content.Scripts
         /// <param name="mostDeviatedValue">
         /// The most deviated value.
         /// </param>
-        private void DeviatedCardHandFill(PolicyValue mostDeviatedValue)
+        private void DeviatedCardHandFill(PolicyType mostDeviatedValue)
         {
-            Debug.Log(string.Format("As the value of the policy {0} has deviated too far from the current happiness of {1}, a card from that category was drawn.", mostDeviatedValue, this.gameManager.GetPolicyValue(PolicyValue.Happiness)));
+            Debug.Log(string.Format("As the value of the policy {0} has deviated too far from the current happiness of {1}, a card from that category was drawn.", mostDeviatedValue, this.gameManager.GetPolicyValue(PolicyType.Happiness)));
 
             var card = this.GetCardFromStack(mostDeviatedValue.ToString());
             if (card == null)
@@ -298,16 +298,16 @@ namespace Content.Scripts
         /// The max deviation.
         /// </param>
         /// <returns>
-        /// The <see cref="PolicyValue"/>.
+        /// The <see cref="PolicyType"/>.
         /// </returns>
-        private PolicyValue GetFirstMostDeviatedValue(ref int maxDeviation)
+        private PolicyType GetFirstMostDeviatedValue(ref int maxDeviation)
         {
-            var happiness = this.gameManager.GetPolicyValue(PolicyValue.Happiness);
+            var happiness = this.gameManager.GetPolicyValue(PolicyType.Happiness);
 
             var deviations = new int[4];
             for (var i = 0; i < deviations.Length; i++)
             {
-                deviations[i] = Mathf.Abs(happiness - this.gameManager.GetPolicyValue((PolicyValue)i));
+                deviations[i] = Mathf.Abs(happiness - this.gameManager.GetPolicyValue((PolicyType)i));
             }
 
             var index = -1;
@@ -321,7 +321,7 @@ namespace Content.Scripts
                 }
             }
 
-            return (PolicyValue)index;
+            return (PolicyType)index;
         }
 
         /// <summary>

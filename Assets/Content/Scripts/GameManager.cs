@@ -32,11 +32,19 @@ namespace Content.Scripts
         /// </summary>
         [SerializeField]
         private BindInt[] boundPolicyValues = new BindInt[6];
+	
+		/// <summary>
+		/// The bound policy values.
+		/// </summary>
+		[SerializeField]
+		private Policy[] policies = new Policy[6];
 
-        /// <summary>
-        /// The game over object.
-        /// </summary>
-        [SerializeField]
+
+
+		/// <summary>
+		/// The game over object.
+		/// </summary>
+		[SerializeField]
         private GameObject gameOverObject;
 
         /// <summary>
@@ -53,15 +61,36 @@ namespace Content.Scripts
         [SerializeField]
         private int happinessThresholdWin = 90;
 
-        /// <summary>
-        /// The init color.
-        /// </summary>
-        private Color initColor;
+		/// <summary>
+		/// Fales, when values on policies should be shown.
+		/// </summary>
+		[Tooltip ( "Fales, when values on policies should be shown." )]
+		[SerializeField]
+		private bool HideValues = true;
 
-        /// <summary>
-        /// The preview color negative.
-        /// </summary>
-        [SerializeField]
+		/// <summary>
+		/// The init color.
+		/// </summary>
+		private Color initColor;
+
+		/// <summary>
+		/// An policy icons target color, when reaching its max value.
+		/// </summary>
+		[Tooltip( "An policy icons target color, when reaching its max value." )]
+		[SerializeField]
+		private Color maxColor = Color.black;
+
+		/// <summary>
+		/// An policy icons target color, when reaching its min value.
+		/// </summary>
+		[Tooltip ( "An policy icons target color, when reaching its min value." )]
+		[SerializeField]
+		private Color minColor = Color.black;
+
+		/// <summary>
+		/// The preview color negative.
+		/// </summary>
+		[SerializeField]
         private Color previewColorNegative = Color.red;
 
         /// <summary>
@@ -75,11 +104,6 @@ namespace Content.Scripts
         /// </summary>
         [SerializeField]
         private float revertSpeed = 1f;
-
-        /// <summary>
-        /// The text values.
-        /// </summary>
-        private Text[] textValues;
 
         /// <summary>
         /// Gets a policyValue indicating whether to block input.
@@ -106,17 +130,17 @@ namespace Content.Scripts
         /// <returns>
         /// The <see cref="int"/>.
         /// </returns>
-        public int GetPolicyValue(PolicyValue policyValue)
+        public int GetPolicyValue(PolicyType policyValue)
         {
             switch (policyValue)
             {
-                case PolicyValue.Culture:
-                case PolicyValue.Economy:
-                case PolicyValue.Environment:
-                case PolicyValue.Security:
-                case PolicyValue.Treasury:
+                case PolicyType.Culture:
+                case PolicyType.Economy:
+                case PolicyType.Environment:
+                case PolicyType.Security:
+                case PolicyType.Treasury:
                     return this.boundPolicyValues[(int)policyValue].Value;
-                case PolicyValue.Happiness:
+                case PolicyType.Happiness:
                     // Gets the calculated happiness by using the average of the big four policy values.
                     var targetHappiness = 0;
                     for (var i = 0; i < 4; i++)
@@ -143,10 +167,10 @@ namespace Content.Scripts
             this.RevertPreview();
             for (var i = 0; i < values.Length; i++)
             {
-                this.boundPolicyValues[i].Value += values[i];
+                this.policies[i].SetValue(values[i], minColor, maxColor);
             }
 
-            this.boundPolicyValues[5].Value = this.GetPolicyValue(PolicyValue.Happiness);
+            this.policies[5].SetValue(this.GetPolicyValue(PolicyType.Happiness), minColor, maxColor);
             this.CheckforGameOver();
         }
 
@@ -161,14 +185,14 @@ namespace Content.Scripts
             this.StopAllCoroutines();
             for (var i = 0; i < values.Length; i++)
             {
-                this.textValues[i].color = this.initColor;
+                this.policies[i].Text.color = this.initColor;
                 if (values[i] > 0)
                 {
-                    this.textValues[i].color = this.previewColorPositive;
+					this.policies[i].Text.color = this.previewColorPositive;
                 }
                 else if (values[i] < 0)
                 {
-                    this.textValues[i].color = this.previewColorNegative;
+					this.policies[i].Text.color = this.previewColorNegative;
                 }
             }
         }
@@ -187,8 +211,7 @@ namespace Content.Scripts
         /// </summary>
         public void Start()
         {
-            this.textValues = this.GetComponentsInChildren<Text>();
-            this.initColor = this.textValues[0].color;
+            this.initColor = this.policies[0].Text.color;
             this.gameOverObject.SetActive(false);
             this.BlockInput = false;
         }
@@ -262,17 +285,17 @@ namespace Content.Scripts
         private IEnumerator RevertPreviewAnimation()
         {
             float t = 0;
-            var colors = new Color[this.textValues.Length];
+            var colors = new Color[this.policies.Length];
             for (var i = 0; i < colors.Length; i++)
             {
-                colors[i] = this.textValues[i].color;
+                colors[i] = this.policies[i].Text.color;
             }
 
             while (t < 1f)
             {
-                for (var i = 0; i < this.textValues.Length; i++)
+                for (var i = 0; i < this.policies.Length; i++)
                 {
-                    this.textValues[i].color = Color.Lerp(colors[i], this.initColor, t);
+                    this.policies[i].Text.color = Color.Lerp(colors[i], this.initColor, t);
                 }
 
                 t += this.revertSpeed * Time.deltaTime;

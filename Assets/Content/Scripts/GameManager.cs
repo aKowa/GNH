@@ -66,7 +66,7 @@ namespace Content.Scripts
 		/// </summary>
 		[Tooltip ( "Fales, when values on policies should be shown." )]
 		[SerializeField]
-		private bool HideValues = true;
+		private bool hideValues = true;
 
 		/// <summary>
 		/// The init color.

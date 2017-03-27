@@ -9,3 +9,5 @@ EditorBuildSettings:
     path: Assets/Content/Scenes/StartScreen_v01.unity
   - enabled: 1
     path: Assets/Content/Scenes/Prototype_v02.unity
+  - enabled: 1
+    path: Assets/Content/Scenes/Credits_v01.unity

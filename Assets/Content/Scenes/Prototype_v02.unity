@@ -1165,8 +1165,8 @@ GameObject:
   - component: {fileID: 966244896}
   - component: {fileID: 966244898}
   - component: {fileID: 966244897}
-  - component: {fileID: 966244899}
   - component: {fileID: 966244900}
+  - component: {fileID: 966244899}
   m_Layer: 5
   m_Name: GameOverScreen
   m_TagString: Untagged
@@ -1234,9 +1234,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 966244895}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 094729ea79e465443b2cf8f8b802fba4, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c294a3f61ca1be4f9fc5130ec0cf845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
 --- !u!114 &966244900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1254,7 +1255,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 966244899}
-          m_MethodName: OnTouch
+          m_MethodName: LoadScene
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

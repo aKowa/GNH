@@ -42,6 +42,11 @@ namespace Content.Scripts
         private Dictionary<string, Stack<CardData>> cardStacks;
 
         /// <summary>
+        /// The cards by id.
+        /// </summary>
+        private Dictionary<int, CardData> cardsById;
+
+        /// <summary>
         /// The deviation to help.
         /// </summary>
         [SerializeField]
@@ -97,11 +102,7 @@ namespace Content.Scripts
         [SerializeField]
         private float thresholdAngle = 10f;
 
-        private string cardTextL;
-
-        private string cardTextR;
-
-        private string cardText;
+        private CardAttributes currentCard;
 
         /// <summary>
         /// Gets the chosen policy.
@@ -198,18 +199,19 @@ namespace Content.Scripts
 
         private void ShowCardText()
         {
-            this.cardTextUIComponent.text = this.cardText;
+            this.cardTextUIComponent.text = this.currentCard.Text;
         }
 
         private void ShowCardSwipeText()
         {
+            // left positive, right negative
             if (this.EulerZ > this.thresholdAngle)
             {
-                this.cardTextUIComponent.text = this.cardTextL;
+                this.cardTextUIComponent.text = this.currentCard.TextL;
             }
             else if (this.EulerZ < -this.thresholdAngle)
             {
-                this.cardTextUIComponent.text = this.cardTextR;
+                this.cardTextUIComponent.text = this.currentCard.TextR;
             }
         }
 
@@ -226,9 +228,36 @@ namespace Content.Scripts
             {
                 this.gameManager.ApplyResults(this.ChosenPolicy);
 
-                // TODO: get follow up cards when swipe was right ("yes") with if (this.EulerZ < 0)
+                // if swipe was left or else if swipe was right
+                if (this.EulerZ > this.thresholdAngle)
+                {
+                    this.CheckForAndInsertFollowUpCard(this.currentCard.FollowUpIdL, this.currentCard.FollowUpStepL);
+                }
+                else if (this.EulerZ < -this.thresholdAngle)
+                {
+                    this.CheckForAndInsertFollowUpCard(this.currentCard.FollowUpIdR, this.currentCard.FollowUpStepR);
+                }
+
                 this.GetNextCard();
                 this.transform.rotation = Quaternion.identity; // TODO: play next card animation
+            }
+        }
+
+        /// <summary>
+        /// The check for and insert follow up card.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <param name="step">
+        /// The step.
+        /// </param>
+        private void CheckForAndInsertFollowUpCard(int id, int step)
+        {
+            if (id > 0 && step >= 0)
+            {
+                this.cardHand.Insert(step, this.cardsById[id]);
+                Debug.LogFormat("Follow Up Card with ID {0} inserted in {1} cards.", id, step + 1);
             }
         }
 
@@ -241,6 +270,7 @@ namespace Content.Scripts
         private void AddToCardLists(CardData card)
         {
             var category = card.CardAttributes.Category;
+            var id = card.CardId;
 
             // if category was not added to dictionary
             if (!this.cardLists.ContainsKey(category))
@@ -251,6 +281,7 @@ namespace Content.Scripts
 
             // add to list for this category
             this.cardLists[category].Add(card);
+            this.cardsById.Add(id, card);
         }
 
         /// <summary>
@@ -356,7 +387,6 @@ namespace Content.Scripts
                 return (PolicyType)index;
             }
 
-            Debug.LogWarningFormat("GetFirstMostDeviatedValue() returns index with {0}, returning PolicyType.Culture instead.", index);
             return PolicyType.Culture;
         }
 
@@ -402,7 +432,7 @@ namespace Content.Scripts
             }
 
             Debug.LogWarning(
-                "You tried to get a card from a category, where no card stack is present (not even an empty one, so that might be a wrong category or your card data is corrupt/incorrect).");
+                "You tried to get a card from a category, where no currentCard stack is present (not even an empty one, so that might be a wrong category or your currentCard data is corrupt/incorrect).");
             return null;
         }
 
@@ -424,23 +454,19 @@ namespace Content.Scripts
                 return;
             }
 
-            var card = this.cardHand[0].CardAttributes;
+            this.currentCard = this.cardHand[0].CardAttributes;
 
-            this.policyValuesL[0] = card.CultureL;
-            this.policyValuesL[1] = card.EconomyL;
-            this.policyValuesL[2] = card.EnvironmentL;
-            this.policyValuesL[3] = card.SecurityL;
-            this.policyValuesL[4] = card.TreasuryL;
+            this.policyValuesL[0] = this.currentCard.CultureL;
+            this.policyValuesL[1] = this.currentCard.EconomyL;
+            this.policyValuesL[2] = this.currentCard.EnvironmentL;
+            this.policyValuesL[3] = this.currentCard.SecurityL;
+            this.policyValuesL[4] = this.currentCard.TreasuryL;
 
-            this.policyValuesR[0] = card.CultureR;
-            this.policyValuesR[1] = card.EconomyR;
-            this.policyValuesR[2] = card.EnvironmentR;
-            this.policyValuesR[3] = card.SecurityR;
-            this.policyValuesR[4] = card.TreasuryR;
-
-            this.cardText = card.Text;
-            this.cardTextL = card.TextL;
-            this.cardTextR = card.TextR;
+            this.policyValuesR[0] = this.currentCard.CultureR;
+            this.policyValuesR[1] = this.currentCard.EconomyR;
+            this.policyValuesR[2] = this.currentCard.EnvironmentR;
+            this.policyValuesR[3] = this.currentCard.SecurityR;
+            this.policyValuesR[4] = this.currentCard.TreasuryR;
 
             this.ShowCardText();
 
@@ -476,8 +502,10 @@ namespace Content.Scripts
         /// </summary>
         private void SetupCardLists()
         {
-            // init dictionary and load card data
+            // init dictionaries
             this.cardLists = new Dictionary<string, List<CardData>>();
+            this.cardsById = new Dictionary<int, CardData>();
+
             var list = CardDataLoader.GetCardDataList();
 
             foreach (var card in list)
@@ -502,7 +530,7 @@ namespace Content.Scripts
         }
 
         /// <summary>
-        /// The add card list to card stack.
+        /// The add card list to currentCard stack.
         /// </summary>
         /// <param name="category">
         /// The category.

@@ -1,63 +1,62 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Content.Scripts
 {
-	[RequireComponent ( typeof ( Image ) )]
+	[RequireComponent(typeof(Image))]
 	public class Policy : MonoBehaviour
 	{
-		/// <summary>
+        /// <summary>
 		/// The Policy type. 
 		/// </summary>
 		/// TODO: Needed?
 		public PolicyType type;
 
-		/// <summary>
-		/// Internal text of the policy.
-		/// </summary>
-		private Text text;
+        /// <summary>
+        /// Internal text of the policy.
+        /// </summary>
+        private Text text;
 
-		/// <summary>
-		/// The external text value. Returns internal text, when != null.
-		/// </summary>
-		public Text Text
-		{
-			get
-			{
-				if (text != null)
-				{
-					return this.text;
-				}
-				return this.text = this.gameObject.GetComponentInChildren<Text> ();
-			}
-		}
+        /// <summary>
+        /// The external text value. Returns internal text, when != null.
+        /// </summary>
+        public Text Text
+        {
+            get
+            {
+                if (text != null)
+                {
+                    return this.text;
+                }
+                return this.text = this.gameObject.GetComponentInChildren<Text>();
+            }
+        }
 
-		/// <summary>
-		/// Internal icon of the policy.
-		/// </summary>
-		private Image icon;
+        /// <summary>
+        /// Internal icon of the policy.
+        /// </summary>
+        private Image icon;
 
-		/// <summary>
-		/// The external Icon. Returns internal icon, when != null.
-		/// </summary>
-		public Image Icon
-		{
-			get
-			{
-				if (text != null)
-				{
-					return this.icon;
-				}
-				return this.icon = this.gameObject.GetComponent<Image>();
-			}
-		}
+        /// <summary>
+        /// The external Icon. Returns internal icon, when != null.
+        /// </summary>
+        public Image Icon
+        {
+            get
+            {
+                if (text != null)
+                {
+                    return this.icon;
+                }
+                return this.icon = this.gameObject.GetComponent<Image>();
+            }
+        }
 
-		/// <summary>
-		/// Internal value of the policy.
-		/// </summary>
-		private int value = 50;
+        /// <summary>
+        /// Internal value of the policy.
+        /// </summary>
+        private int value = 50;
 
 		/// <summary>
 		/// External value of the policy.

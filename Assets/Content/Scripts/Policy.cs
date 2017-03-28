@@ -10,7 +10,6 @@ namespace Content.Scripts
         /// <summary>
 		/// The Policy type. 
 		/// </summary>
-		/// TODO: Needed?
 		public PolicyType type;
 
         /// <summary>
@@ -25,7 +24,7 @@ namespace Content.Scripts
         {
             get
             {
-                if (text != null)
+                if (this.text != null)
                 {
                     return this.text;
                 }
@@ -45,13 +44,20 @@ namespace Content.Scripts
         {
             get
             {
-                if (text != null)
+                if (this.icon != null)
                 {
                     return this.icon;
                 }
                 return this.icon = this.gameObject.GetComponent<Image>();
             }
         }
+
+		/// <summary>
+		/// Start Icon Color.
+		/// </summary>
+		[Tooltip("Start Icon Color.")]
+		[SerializeField]
+		private Color startColor = Color.black;
 
         /// <summary>
         /// Internal value of the policy.
@@ -70,17 +76,64 @@ namespace Content.Scripts
 		}
 
 		/// <summary>
-		/// Sets the value and also update text and icon color
+		/// Adds the summand and also update text and icon color
 		/// </summary>
 		/// <param name="summand">Value to be subtracted/ added to value.</param>
 		/// <param name="minColor">Color a of icon color lerp</param>
 		/// <param name="maxColor">Color b of icon color lerp</param>
-		public void SetValue ( int summand, Color minColor, Color maxColor )
+		public void AddValue ( int summand, Color minColor, Color maxColor )
 		{
-			this.value += summand;
-			this.Text.text = this.Value.ToString ();
-			this.Icon.color = Color.Lerp ( minColor, maxColor, (float)this.Value / 100 );
-			Debug.Log ( this.Value / 100 );
+			this.SetValue( this.value + summand, minColor, maxColor );
+		}
+
+		/// <summary>
+		/// Sets the value and also update text and icon color
+		/// </summary>
+		/// <param name="targetValue">Sets this policies value</param>
+		/// <param name="minColor">Color a of icon color lerp</param>
+		/// <param name="maxColor">Color b of icon color lerp</param>
+		public void SetValue(int targetValue, Color minColor, Color maxColor)
+		{
+			this.value = targetValue;
+			this.Text.text = (this.Value * 1000).ToString();
+			this.Icon.color = Color.Lerp(minColor, maxColor, (float)this.Value / 100);
+		}
+
+		/// <summary>
+		/// Sets Icon Color.
+		/// </summary>
+		/// <param name="targetColor">Target Color</param>
+		public void SetIconColor( Color targetColor )
+		{
+			this.Icon.color = this.Icon.color.GetRGB( targetColor );
+		}
+
+		/// <summary>
+		/// Starts reverting colors;
+		/// </summary>
+		public void RevertPreviewValue( float speed )
+		{
+			Debug.Log( "Revert" );
+			this.StopAllCoroutines();
+			this.StartCoroutine( this.RevertPreviewAnimation( speed ) );
+		}
+
+		/// <summary>
+		/// Lerps image colors back to its init color.
+		/// </summary>
+		/// <returns>
+		/// The <see cref="IEnumerator"/>.
+		/// </returns>
+		private IEnumerator RevertPreviewAnimation( float speed )
+		{
+			float t = 0;
+			var color = this.Icon.color;
+			while (t < 1f)
+			{
+				this.Icon.color = this.Icon.color.GetRGB( Color.Lerp(color, this.startColor, t) );
+				t += speed * Time.deltaTime;
+				yield return null;
+			}
 		}
 
 		/// <summary>
@@ -88,9 +141,7 @@ namespace Content.Scripts
 		/// </summary>
 		private void Start ()
 		{
-			Color targetColor = Color.black;
-			targetColor.a = this.Icon.color.a / 2;
-			this.Icon.color = targetColor;
+			this.startColor = this.Icon.color;
 		}
 	}
 }

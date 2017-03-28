@@ -278,7 +278,7 @@ namespace Content.Scripts
         /// </param>
         private void DeviatedCardHandFill(PolicyType mostDeviatedValue)
         {
-            var card = this.GetCardFromStack(mostDeviatedValue);
+            var card = this.GetCardFromStack(mostDeviatedValue.ToString());
             if (card == null)
             {
                 Debug.LogWarningFormat("DeviatedCardHandFill got null as card, aborting. PolicyType was {0}.", mostDeviatedValue.ToString());
@@ -337,7 +337,7 @@ namespace Content.Scripts
             for (var i = 0; i < this.maxCardsInHand - this.cardHand.Count; i++)
             {
                 var category = (PolicyType)this.LastCategory++;
-                var card = this.GetCardFromStack(category);
+                var card = this.GetCardFromStack(category.ToString());
 
                 if (card != null)
                 {
@@ -349,15 +349,14 @@ namespace Content.Scripts
         /// <summary>
         /// The get card from stack.
         /// </summary>
-        /// <param name="type">
-        /// The type.
+        /// <param name="category">
+        /// The category.
         /// </param>
         /// <returns>
         /// The <see cref="CardData"/>.
         /// </returns>
-        private CardData GetCardFromStack(PolicyType type)
+        private CardData GetCardFromStack(string category)
         {
-            var category = type.ToString();
             if (this.cardStacks.ContainsKey(category))
             {
                 if (this.cardStacks[category].Count != 0)

@@ -13,6 +13,7 @@ namespace Content.Scripts
     using System.Linq;
 
     using UnityEngine;
+    using UnityEngine.UI;
 
     /// <summary>
     /// The card controller.
@@ -53,6 +54,12 @@ namespace Content.Scripts
         private GameManager gameManager;
 
         /// <summary>
+        /// The card text.
+        /// </summary>
+        [SerializeField]
+        private Text cardTextUIComponent;
+
+        /// <summary>
         /// The last category.
         /// </summary>
         private int lastCategory;
@@ -89,6 +96,12 @@ namespace Content.Scripts
         /// </summary>
         [SerializeField]
         private float thresholdAngle = 10f;
+
+        private string cardTextL;
+
+        private string cardTextR;
+
+        private string cardText;
 
         /// <summary>
         /// Gets the chosen policy.
@@ -170,14 +183,33 @@ namespace Content.Scripts
             angle = Mathf.Clamp(angle - 90, -this.maxAngle, this.maxAngle);
             this.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-            // handle threshold angle logic
+            // handle threshold angle logic (left positive, right negative)
             if (Mathf.Abs(this.EulerZ) > this.thresholdAngle)
             {
                 this.gameManager.PreviewResults(this.ChosenPolicy);
+                this.ShowCardSwipeText();
             }
             else
             {
                 this.gameManager.RevertPreview();
+                this.ShowCardText();
+            }
+        }
+
+        private void ShowCardText()
+        {
+            this.cardTextUIComponent.text = this.cardText;
+        }
+
+        private void ShowCardSwipeText()
+        {
+            if (this.EulerZ > this.thresholdAngle)
+            {
+                this.cardTextUIComponent.text = this.cardTextL;
+            }
+            else if (this.EulerZ < -this.thresholdAngle)
+            {
+                this.cardTextUIComponent.text = this.cardTextR;
             }
         }
 
@@ -405,6 +437,12 @@ namespace Content.Scripts
             this.policyValuesR[2] = card.EnvironmentR;
             this.policyValuesR[3] = card.SecurityR;
             this.policyValuesR[4] = card.TreasuryR;
+
+            this.cardText = card.Text;
+            this.cardTextL = card.TextL;
+            this.cardTextR = card.TextR;
+
+            this.ShowCardText();
 
             this.cardHand.RemoveAt(0);
             this.FillCardHand();

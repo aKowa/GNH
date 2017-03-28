@@ -278,15 +278,13 @@ namespace Content.Scripts
         /// </param>
         private void DeviatedCardHandFill(PolicyType mostDeviatedValue)
         {
-            Debug.Log(string.Format("As the value of the policy {0} has deviated too far from the current happiness of {1}, a card from that category was drawn.", mostDeviatedValue, this.gameManager.GetPolicyValue(PolicyType.Happiness)));
-
-            var card = this.GetCardFromStack(mostDeviatedValue.ToString());
+            var card = this.GetCardFromStack(mostDeviatedValue);
             if (card == null)
             {
-                Debug.LogWarning("DeviatedCardHandFill got null as card, aborting.");
+                Debug.LogWarningFormat("DeviatedCardHandFill got null as card, aborting. PolicyType was {0}.", mostDeviatedValue.ToString());
                 return;
             }
-            Debug.Log("DeviatedCardHandFill worked.");
+
             this.cardHand.Insert(0, card);
             this.NormalCardHandFill();
         }
@@ -321,7 +319,13 @@ namespace Content.Scripts
                 }
             }
 
-            return (PolicyType)index;
+            if (index != -1)
+            {
+                return (PolicyType)index;
+            }
+
+            Debug.LogWarningFormat("GetFirstMostDeviatedValue() returns index with {0}, returning PolicyType.Culture instead.", index);
+            return PolicyType.Culture;
         }
 
         /// <summary>
@@ -332,7 +336,7 @@ namespace Content.Scripts
 
             for (var i = 0; i < this.maxCardsInHand - this.cardHand.Count; i++)
             {
-                var category = this.theFourCardCategories[this.LastCategory++];
+                var category = (PolicyType)this.LastCategory++;
                 var card = this.GetCardFromStack(category);
 
                 if (card != null)
@@ -345,14 +349,15 @@ namespace Content.Scripts
         /// <summary>
         /// The get card from stack.
         /// </summary>
-        /// <param name="category">
-        /// The category.
+        /// <param name="type">
+        /// The type.
         /// </param>
         /// <returns>
         /// The <see cref="CardData"/>.
         /// </returns>
-        private CardData GetCardFromStack(string category)
+        private CardData GetCardFromStack(PolicyType type)
         {
+            var category = type.ToString();
             if (this.cardStacks.ContainsKey(category))
             {
                 if (this.cardStacks[category].Count != 0)
@@ -362,7 +367,7 @@ namespace Content.Scripts
 
                 this.PrepareCardList(category);
                 this.AddCardListToCardStack(category);
-                return null;
+                return this.cardStacks[category].Pop();
             }
 
             Debug.LogWarning(
@@ -388,7 +393,6 @@ namespace Content.Scripts
                 return;
             }
 
-            Debug.Log(string.Format("Getting card with id {0}", this.cardHand[0].CardId));
             var card = this.cardHand[0].CardAttributes;
 
             this.policyValuesL[0] = card.CultureL;

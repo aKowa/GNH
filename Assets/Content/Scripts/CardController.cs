@@ -13,6 +13,7 @@ namespace Content.Scripts
     using System.Linq;
 
     using UnityEngine;
+    using UnityEngine.UI;
 
     /// <summary>
     /// The card controller.
@@ -41,6 +42,11 @@ namespace Content.Scripts
         private Dictionary<string, Stack<CardData>> cardStacks;
 
         /// <summary>
+        /// The cards by id.
+        /// </summary>
+        private Dictionary<int, CardData> cardsById;
+
+        /// <summary>
         /// The deviation to help.
         /// </summary>
         [SerializeField]
@@ -51,6 +57,12 @@ namespace Content.Scripts
         /// </summary>
         [SerializeField]
         private GameManager gameManager;
+
+        /// <summary>
+        /// The card text.
+        /// </summary>
+        [SerializeField]
+        private Text cardTextUIComponent;
 
         /// <summary>
         /// The last category.
@@ -89,6 +101,8 @@ namespace Content.Scripts
         /// </summary>
         [SerializeField]
         private float thresholdAngle = 10f;
+
+        private CardAttributes currentCard;
 
         /// <summary>
         /// Gets the chosen policy.
@@ -170,14 +184,34 @@ namespace Content.Scripts
             angle = Mathf.Clamp(angle - 90, -this.maxAngle, this.maxAngle);
             this.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-            // handle threshold angle logic
+            // handle threshold angle logic (left positive, right negative)
             if (Mathf.Abs(this.EulerZ) > this.thresholdAngle)
             {
                 this.gameManager.PreviewResults(this.ChosenPolicy);
+                this.ShowCardSwipeText();
             }
             else
             {
                 this.gameManager.RevertPreview();
+                this.ShowCardText();
+            }
+        }
+
+        private void ShowCardText()
+        {
+            this.cardTextUIComponent.text = this.currentCard.Text;
+        }
+
+        private void ShowCardSwipeText()
+        {
+            // left positive, right negative
+            if (this.EulerZ > this.thresholdAngle)
+            {
+                this.cardTextUIComponent.text = this.currentCard.TextL;
+            }
+            else if (this.EulerZ < -this.thresholdAngle)
+            {
+                this.cardTextUIComponent.text = this.currentCard.TextR;
             }
         }
 
@@ -194,9 +228,36 @@ namespace Content.Scripts
             {
                 this.gameManager.ApplyResults(this.ChosenPolicy);
 
-                // TODO: get follow up cards when swipe was right ("yes") with if (this.EulerZ < 0)
+                // if swipe was left or else if swipe was right
+                if (this.EulerZ > this.thresholdAngle)
+                {
+                    this.CheckForAndInsertFollowUpCard(this.currentCard.FollowUpIdL, this.currentCard.FollowUpStepL);
+                }
+                else if (this.EulerZ < -this.thresholdAngle)
+                {
+                    this.CheckForAndInsertFollowUpCard(this.currentCard.FollowUpIdR, this.currentCard.FollowUpStepR);
+                }
+
                 this.GetNextCard();
                 this.transform.rotation = Quaternion.identity; // TODO: play next card animation
+            }
+        }
+
+        /// <summary>
+        /// The check for and insert follow up card.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <param name="step">
+        /// The step.
+        /// </param>
+        private void CheckForAndInsertFollowUpCard(int id, int step)
+        {
+            if (id > 0 && step >= 0)
+            {
+                this.cardHand.Insert(step, this.cardsById[id]);
+                Debug.LogFormat("Follow Up Card with ID {0} inserted in {1} cards.", id, step + 1);
             }
         }
 
@@ -209,6 +270,7 @@ namespace Content.Scripts
         private void AddToCardLists(CardData card)
         {
             var category = card.CardAttributes.Category;
+            var id = card.CardId;
 
             // if category was not added to dictionary
             if (!this.cardLists.ContainsKey(category))
@@ -219,6 +281,7 @@ namespace Content.Scripts
 
             // add to list for this category
             this.cardLists[category].Add(card);
+            this.cardsById.Add(id, card);
         }
 
         /// <summary>
@@ -278,15 +341,13 @@ namespace Content.Scripts
         /// </param>
         private void DeviatedCardHandFill(PolicyType mostDeviatedValue)
         {
-            Debug.Log(string.Format("As the value of the policy {0} has deviated too far from the current happiness of {1}, a card from that category was drawn.", mostDeviatedValue, this.gameManager.GetPolicyValue(PolicyType.Happiness)));
-
             var card = this.GetCardFromStack(mostDeviatedValue.ToString());
             if (card == null)
             {
-                Debug.LogWarning("DeviatedCardHandFill got null as card, aborting.");
+                Debug.LogWarningFormat("DeviatedCardHandFill got null as card, aborting. PolicyType was {0}.", mostDeviatedValue.ToString());
                 return;
             }
-            Debug.Log("DeviatedCardHandFill worked.");
+
             this.cardHand.Insert(0, card);
             this.NormalCardHandFill();
         }
@@ -321,7 +382,12 @@ namespace Content.Scripts
                 }
             }
 
-            return (PolicyType)index;
+            if (index != -1)
+            {
+                return (PolicyType)index;
+            }
+
+            return PolicyType.Culture;
         }
 
         /// <summary>
@@ -332,8 +398,8 @@ namespace Content.Scripts
 
             for (var i = 0; i < this.maxCardsInHand - this.cardHand.Count; i++)
             {
-                var category = this.theFourCardCategories[this.LastCategory++];
-                var card = this.GetCardFromStack(category);
+                var category = (PolicyType)this.LastCategory++;
+                var card = this.GetCardFromStack(category.ToString());
 
                 if (card != null)
                 {
@@ -362,11 +428,11 @@ namespace Content.Scripts
 
                 this.PrepareCardList(category);
                 this.AddCardListToCardStack(category);
-                return null;
+                return this.cardStacks[category].Pop();
             }
 
             Debug.LogWarning(
-                "You tried to get a card from a category, where no card stack is present (not even an empty one, so that might be a wrong category or your card data is corrupt/incorrect).");
+                "You tried to get a card from a category, where no currentCard stack is present (not even an empty one, so that might be a wrong category or your currentCard data is corrupt/incorrect).");
             return null;
         }
 
@@ -388,20 +454,21 @@ namespace Content.Scripts
                 return;
             }
 
-            Debug.Log(string.Format("Getting card with id {0}", this.cardHand[0].CardId));
-            var card = this.cardHand[0].CardAttributes;
+            this.currentCard = this.cardHand[0].CardAttributes;
 
-            this.policyValuesL[0] = card.CultureL;
-            this.policyValuesL[1] = card.EconomyL;
-            this.policyValuesL[2] = card.EnvironmentL;
-            this.policyValuesL[3] = card.SecurityL;
-            this.policyValuesL[4] = card.TreasuryL;
+            this.policyValuesL[0] = this.currentCard.CultureL;
+            this.policyValuesL[1] = this.currentCard.EconomyL;
+            this.policyValuesL[2] = this.currentCard.EnvironmentL;
+            this.policyValuesL[3] = this.currentCard.SecurityL;
+            this.policyValuesL[4] = this.currentCard.TreasuryL;
 
-            this.policyValuesR[0] = card.CultureR;
-            this.policyValuesR[1] = card.EconomyR;
-            this.policyValuesR[2] = card.EnvironmentR;
-            this.policyValuesR[3] = card.SecurityR;
-            this.policyValuesR[4] = card.TreasuryR;
+            this.policyValuesR[0] = this.currentCard.CultureR;
+            this.policyValuesR[1] = this.currentCard.EconomyR;
+            this.policyValuesR[2] = this.currentCard.EnvironmentR;
+            this.policyValuesR[3] = this.currentCard.SecurityR;
+            this.policyValuesR[4] = this.currentCard.TreasuryR;
+
+            this.ShowCardText();
 
             this.cardHand.RemoveAt(0);
             this.FillCardHand();
@@ -435,8 +502,10 @@ namespace Content.Scripts
         /// </summary>
         private void SetupCardLists()
         {
-            // init dictionary and load card data
+            // init dictionaries
             this.cardLists = new Dictionary<string, List<CardData>>();
+            this.cardsById = new Dictionary<int, CardData>();
+
             var list = CardDataLoader.GetCardDataList();
 
             foreach (var card in list)
@@ -461,7 +530,7 @@ namespace Content.Scripts
         }
 
         /// <summary>
-        /// The add card list to card stack.
+        /// The add card list to currentCard stack.
         /// </summary>
         /// <param name="category">
         /// The category.

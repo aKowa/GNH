@@ -11,7 +11,10 @@ attributes:
   - EconomyR: 10
   - EnvironmentL: 5
   - EnvironmentR: -5
-  - FollowUpId: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
   - Text: A gang of artists occupies a highly profitable area in the city. Several companies showed interest in buying it.
@@ -34,7 +37,10 @@ attributes:
   - EconomyR: -10
   - EnvironmentL: 0
   - EnvironmentR: 0
-  - FollowUpId: 2000
+  - FollowUpIdL: 0
+  - FollowUpIdR: 2000
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
   - Text: Researches show that working 35 hours a week doesn't only leave employees with more time for themselves but also increases productivity long term.
@@ -57,7 +63,10 @@ attributes:
   - EconomyR: 10
   - EnvironmentL: 0
   - EnvironmentR: -10
-  - FollowUpId: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: -10
   - Text: The Olympus Games want our country to be the next host! People from all over the world will come to watch!
@@ -80,7 +89,10 @@ attributes:
   - EconomyR: 10
   - EnvironmentL: 0
   - EnvironmentR: 0
-  - FollowUpId: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
   - Text: We should offer higher taxation benefits for charity donations.
@@ -103,7 +115,10 @@ attributes:
   - EconomyR: 10
   - EnvironmentL: 0
   - EnvironmentR: 0
-  - FollowUpId: 2001
+  - FollowUpIdL: 0
+  - FollowUpIdR: 2001
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
   - Text: We should build a new phillarmonic hall in the city that will put all others to shame. It will take a year but when its finished the people will love it.
@@ -126,7 +141,10 @@ attributes:
   - EconomyR: 0
   - EnvironmentL: 0
   - EnvironmentR: 0
-  - FollowUpId: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
   - Text: The bill to legalize same sex marriage is ready for your signature.
@@ -149,7 +167,10 @@ attributes:
   - EconomyR: -10
   - EnvironmentL: -5
   - EnvironmentR: 10
-  - FollowUpId: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
   - Text: New studies found out that global warming is in fact real!
@@ -172,7 +193,10 @@ attributes:
   - EconomyR: 0
   - EnvironmentL: -10
   - EnvironmentR: 20
-  - FollowUpId: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
   - Text: Green Power offered to raise the amount of clean energy to over 90.00 percent, given the right funding.
@@ -195,7 +219,10 @@ attributes:
   - EconomyR: 0
   - EnvironmentL: 15
   - EnvironmentR: 15
-  - FollowUpId: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
   - Text: Pollution from traffic keeps increasing in all areas.
@@ -218,7 +245,10 @@ attributes:
   - EconomyR: -10
   - EnvironmentL: -10
   - EnvironmentR: 15
-  - FollowUpId: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: -10
   - Text: The big pharma does questionable things with their waste. If we spoil their business they might increase insurance cost for the people though.
@@ -241,7 +271,10 @@ attributes:
   - EconomyR: 10
   - EnvironmentL: 0
   - EnvironmentR: 0
-  - FollowUpId: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: -5
   - SecurityR: 5
   - Text: Some companies complain about too high taxes and threaten to relocate their business.
@@ -264,7 +297,10 @@ attributes:
   - EconomyR: 15
   - EnvironmentL: 0
   - EnvironmentR: 0
-  - FollowUpId: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: 10
   - SecurityR: -10
   - Text: Open the boarders so the trade can flow more freely.
@@ -287,7 +323,10 @@ attributes:
   - EconomyR: 15
   - EnvironmentL: 10
   - EnvironmentR: -15
-  - FollowUpId: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
   - Text: Companies would be willing to pay more taxes if there was more tolerance in regards of pollution.
@@ -310,7 +349,10 @@ attributes:
   - EconomyR: 15
   - EnvironmentL: 0
   - EnvironmentR: 0
-  - FollowUpId: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: 10
   - SecurityR: 5
   - Text: Our neighbours start to produce and sell wares similar to ours, we expect there are industry spies.
@@ -333,7 +375,10 @@ attributes:
   - EconomyR: 0
   - EnvironmentL: 0
   - EnvironmentR: 0
-  - FollowUpId: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 5
   - Text: There have been some accidents, some believe it was terrorist attacks.
@@ -356,7 +401,10 @@ attributes:
   - EconomyR: 0
   - EnvironmentL: 0
   - EnvironmentR: 0
-  - FollowUpId: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: 15
   - SecurityR: 10
   - Text: People fear about their living standard after the crisis. If there are no raises they will ask us to lower the taxes.
@@ -379,7 +427,10 @@ attributes:
   - EconomyR: 0
   - EnvironmentL: 0
   - EnvironmentR: 0
-  - FollowUpId: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 10
   - Text: We need to rework our health insurance system.
@@ -402,7 +453,10 @@ attributes:
   - EconomyR: 0
   - EnvironmentL: -10
   - EnvironmentR: 15
-  - FollowUpId: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: -10
   - Text: The introduction of the reformed recycling and waste disposal costs, contrary to our calculation, more than we can afford.
@@ -425,7 +479,10 @@ attributes:
   - EconomyR: 0
   - EnvironmentL: 0
   - EnvironmentR: 0
-  - FollowUpId: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: -15
   - SecurityR: 15
   - Text: Another bank files for insolvency. We need to help them out or a lot of people will lose their money.
@@ -448,7 +505,10 @@ attributes:
   - EconomyR: 0
   - EnvironmentL: 0
   - EnvironmentR: 0
-  - FollowUpId: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: 10
   - SecurityR: 10
   - Text: The Great Celebration of Happiness draws near and our secret service found hints of a potential terrorist attack.
@@ -471,7 +531,10 @@ attributes:
   - EconomyR: 10
   - EnvironmentL: 0
   - EnvironmentR: 0
-  - FollowUpId: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
   - Text: Companies who introduced the 35 hours week register an increased productivity.
@@ -494,7 +557,10 @@ attributes:
   - EconomyR: 10
   - EnvironmentL: 0
   - EnvironmentR: 0
-  - FollowUpId: 2002
+  - FollowUpIdL: 0
+  - FollowUpIdR: 2002
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
   - Text: The phillarmonic hall we are building takes longer than anticipated. We need more funds to continue the construction.
@@ -517,7 +583,10 @@ attributes:
   - EconomyR: 5
   - EnvironmentL: 0
   - EnvironmentR: 0
-  - FollowUpId: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
   - Text: The phillarmonic hall is done!

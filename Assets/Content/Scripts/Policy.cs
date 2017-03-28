@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +11,7 @@ namespace Content.Scripts
 		/// <summary>
 		/// The Policy type. 
 		/// </summary>
-		/// TODO: Needed?
+		/// TODO: Needed? (at least for card controller! :P)
 		public PolicyType type;
 
 		/// <summary>

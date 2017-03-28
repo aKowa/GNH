@@ -1026,6 +1026,7 @@ MonoBehaviour:
   backRotationSpeed: 2
   deviationToHelp: 20
   gameManager: {fileID: 1715703455}
+  cardTextUIComponent: {fileID: 1127767392}
   maxAngle: 15
   maxCardsInHand: 20
   thresholdAngle: 10
@@ -1925,7 +1926,7 @@ MonoBehaviour:
   gameOverObject: {fileID: 966244895}
   happinessThresholdLose: 20
   happinessThresholdWin: 90
-  HideValues: 1
+  hideValues: 1
   maxColor: {r: 0, g: 0, b: 0, a: 1}
   minColor: {r: 0, g: 0, b: 0, a: 0}
   previewColorNegative: {r: 1, g: 0, b: 0, a: 1}

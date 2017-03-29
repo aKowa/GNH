@@ -88,10 +88,18 @@ namespace Content.Scripts
         [SerializeField]
         private float revertSpeed = 1f;
 
-        /// <summary>
-        /// Gets a policyType indicating whether to block input.
-        /// </summary>
-        public bool BlockInput
+
+		[SerializeField]
+		private bool enableConsole = false;
+
+		[SerializeField]
+		private GameObject console;
+
+
+		/// <summary>
+		/// Gets a policyType indicating whether to block input.
+		/// </summary>
+		public bool BlockInput
         {
             get
             {
@@ -138,6 +146,8 @@ namespace Content.Scripts
         /// </param>
         public void ApplyResults(int[] values)
         {
+			this.AddToConsole("ApplyResults");
+
 			// TODO: Implement turn count to determine time passed
 			this.RevertPreview( this.revertSpeed );
 	        var targetHappiness = 0;
@@ -207,6 +217,9 @@ namespace Content.Scripts
 	        {
 				policy.SetValue(50, this.minColor, this.maxColor);
 			}
+
+			this.console.SetActive(enableConsole);
+			console.GetComponentInChildren<Text>().text = "";
 		}
 
 		public void HideValues( bool state )
@@ -223,8 +236,10 @@ namespace Content.Scripts
         /// </summary>
         private void CheckforGameOver()
         {
-            // Check for victory by happiness
-            if (this.policies[5].Value >= this.happinessThresholdWin && this.happinessThresholdWin > 0)
+			//this.AddToConsole("CheckForGameOver");
+
+			// Check for victory by happiness
+			if (this.policies[5].Value >= this.happinessThresholdWin && this.happinessThresholdWin > 0)
             {
                 this.GetGameOverText(5).text =
                     "Victory! \n \n Your happiness exceeds all expectations! \n \n Party hard!!!";
@@ -275,5 +290,17 @@ namespace Content.Scripts
 			gameOverText.text = "You Lost! \n \n Your " + policyName;
             return gameOverText;
         }
-    }
+
+		/// <summary>
+		/// Adds text to debug console
+		/// </summary>
+		/// <param name="targetText"></param>
+		public void AddToConsole(string targetText)
+		{
+			if (enableConsole)
+			{
+				this.console.GetComponentInChildren<Text>().text += "\n " + targetText;
+			}
+		}
+	}
 }

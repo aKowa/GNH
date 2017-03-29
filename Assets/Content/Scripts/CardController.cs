@@ -228,6 +228,8 @@ namespace Content.Scripts
             {
                 this.gameManager.ApplyResults(this.ChosenPolicy);
 
+				this.gameManager.AddToConsole( "OnEndDrag" );
+
                 // if swipe was left or else if swipe was right
                 if (this.EulerZ > this.thresholdAngle)
                 {

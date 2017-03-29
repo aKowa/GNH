@@ -138,8 +138,6 @@ namespace Content.Scripts
         /// </param>
         public void ApplyResults(int[] values)
         {
-			AConsoleController.Instance.AddToConsole("Test");
-
 			// TODO: Implement turn count to determine time passed
 	        var targetHappiness = 0;
             for (var i = 0; i < values.Length; i++)

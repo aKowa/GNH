@@ -5,113 +5,45 @@ using UnityEngine.UI;
 namespace Content.Scripts
 {
 	[RequireComponent(typeof(Image))]
-	public class Policy : MonoBehaviour
+	public class Policy : APolicy
 	{
-        /// <summary>
-		/// The Policy type. 
-		/// </summary>
-		public PolicyType type;
-
-        /// <summary>
-        /// Internal text of the policy.
-        /// </summary>
-        private Text text;
-
-        /// <summary>
-        /// The external text value. Returns internal text, when != null.
-        /// </summary>
-        public Text Text
-        {
-            get
-            {
-                if (this.text != null)
-                {
-                    return this.text;
-                }
-                return this.text = this.gameObject.GetComponentInChildren<Text>();
-            }
-        }
-
-        /// <summary>
-        /// Internal icon of the policy.
-        /// </summary>
-        private Image icon;
-
-        /// <summary>
-        /// The external Icon. Returns internal icon, when != null.
-        /// </summary>
-        public Image Icon
-        {
-            get
-            {
-                if (this.icon != null)
-                {
-                    return this.icon;
-                }
-                return this.icon = this.gameObject.GetComponent<Image>();
-            }
-        }
-
-		/// <summary>
-		/// Start Icon Color.
-		/// </summary>
-		[Tooltip("Start Icon Color.")]
-		[SerializeField]
-		private Color startColor = Color.black;
-
-        /// <summary>
-        /// Internal value of the policy.
-        /// </summary>
-        private int value = 50;
-
-		/// <summary>
-		/// External value of the policy.
-		/// </summary>
-		public int Value
-		{
-			get
-			{
-				return this.value;
-			}
-		}
-
 		/// <summary>
 		/// Adds the summand and also update text and icon color
 		/// </summary>
 		/// <param name="summand">Value to be subtracted/ added to value.</param>
 		/// <param name="minColor">Color a of icon color lerp</param>
 		/// <param name="maxColor">Color b of icon color lerp</param>
-		public void AddValue ( int summand, Color minColor, Color maxColor )
+		public override void AddValue ( int summand, Color minColor, Color maxColor )
 		{
-			this.SetValue( this.value + summand, minColor, maxColor );
+			this.SetValue( base.value + summand, minColor, maxColor );
 		}
-
+		
 		/// <summary>
 		/// Sets the value and also update text and icon color
 		/// </summary>
 		/// <param name="targetValue">Sets this policies value</param>
 		/// <param name="minColor">Color a of icon color lerp</param>
 		/// <param name="maxColor">Color b of icon color lerp</param>
-		public void SetValue(int targetValue, Color minColor, Color maxColor)
+		public override void SetValue(int targetValue, Color minColor, Color maxColor)
 		{
-			this.value = targetValue;
-			this.Text.text = this.type == PolicyType.Treasury ? (this.Value * 1000).ToString() : this.Value.ToString();
-			this.Icon.color = Color.Lerp(minColor, maxColor, (float)this.Value / 100);
+			base.value = targetValue;
+			base.Text.text = base.type == PolicyType.Treasury ? (base.Value * 1000).ToString() : base.Value.ToString();
+			base.Icon.color = Color.Lerp(minColor, maxColor, (float)base.Value / 100);
 		}
 
 		/// <summary>
 		/// Sets Icon Color.
 		/// </summary>
 		/// <param name="targetColor">Target Color</param>
-		public void SetIconColor( Color targetColor )
+		public override void SetIconColor( Color targetColor )
 		{
-			this.Icon.color = this.Icon.color.GetRGB( targetColor );
+			base.Icon.color = base.Icon.color.GetRGB( targetColor );
 		}
 
 		/// <summary>
 		/// Starts reverting colors;
 		/// </summary>
-		public void RevertPreviewValue( float speed )
+		public override void RevertPreviewValue( float speed )
 		{
 			this.StopAllCoroutines();
 			this.StartCoroutine( this.RevertPreviewAnimation( speed ) );
@@ -123,24 +55,16 @@ namespace Content.Scripts
 		/// <returns>
 		/// The <see cref="IEnumerator"/>.
 		/// </returns>
-		private IEnumerator RevertPreviewAnimation( float speed )
+		protected override IEnumerator RevertPreviewAnimation( float speed )
 		{
 			float t = 0;
-			var color = this.Icon.color;
+			var color = base.Icon.color;
 			while (t < 1f)
 			{
-				this.Icon.color = this.Icon.color.GetRGB( Color.Lerp(color, this.startColor, t) );
+				base.Icon.color = base.Icon.color.GetRGB( Color.Lerp(color, base.StartColor, t) );
 				t += speed * Time.deltaTime;
 				yield return null;
 			}
-		}
-
-		/// <summary>
-		/// Start setting init param.
-		/// </summary>
-		private void Start ()
-		{
-			this.startColor = this.Icon.color;
 		}
 	}
 }

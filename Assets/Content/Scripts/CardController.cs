@@ -451,15 +451,23 @@ namespace Content.Scripts
 			if (this.cardHand == null)
             {
                 Debug.LogWarning("The cardHand list is null, aborting GetNextCard()");
-				this.gameManager.AddToConsole("The cardHand list is null, aborting GetNextCard()");
-                return;
+				if (Debug.isDebugBuild)
+				{
+					this.SetRandomPolicyValues();
+					AConsoleController.Instance.AddToConsole("The cardHand list is null, aborting GetNextCard()");
+				}
+				return;
             }
 
 			// TODO @Bent: cardHand is always empty in a build
             if (this.cardHand.Count == 0)
             {
                 Debug.LogWarning("The cardHand list is empty, aborting GetNextCard()");
-				this.gameManager.AddToConsole("The cardHand list is empty, aborting GetNextCard()");
+	            if (Debug.isDebugBuild)
+	            {
+		            this.SetRandomPolicyValues();
+					AConsoleController.Instance.AddToConsole("The cardHand list is empty, aborting GetNextCard()");
+				}
 				return;
             }
 
@@ -483,16 +491,28 @@ namespace Content.Scripts
             this.FillCardHand();
         }
 
-        /// <summary>
-        /// Rotates the card smoothly back, when drag ended.
-        /// </summary>
-        /// <param name="currentRotation">
-        /// The current Rotation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="IEnumerator"/>.
-        /// </returns>
-        private IEnumerator RotateBack(float currentRotation)
+		/// <summary>
+		/// Sets policy values to random integer. Can be used as a default, but removed in real builds.
+		/// </summary>
+	    private void SetRandomPolicyValues()
+	    {
+		    for (int i = 0; i < 5; i++)
+		    {
+			    this.policyValuesL[i] = (int)Random.Range(-10, 10);
+				this.policyValuesR[i] = (int)Random.Range(-10, 10);
+			}
+	    }
+
+		/// <summary>
+		/// Rotates the card smoothly back, when drag ended.
+		/// </summary>
+		/// <param name="currentRotation">
+		/// The current Rotation.
+		/// </param>
+		/// <returns>
+		/// The <see cref="IEnumerator"/>.
+		/// </returns>
+		private IEnumerator RotateBack(float currentRotation)
         {
             float t = 0;
             while (t < 1f)

@@ -1323,6 +1323,8 @@ GameObject:
   - component: {fileID: 971197082}
   - component: {fileID: 971197084}
   - component: {fileID: 971197083}
+  - component: {fileID: 971197086}
+  - component: {fileID: 971197085}
   m_Layer: 5
   m_Name: Console
   m_TagString: Untagged
@@ -1382,6 +1384,47 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 971197081}
+--- !u!114 &971197085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 971197081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dadc90df299ae964faad20b5444b4c90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &971197086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 971197081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 971197085}
+          m_MethodName: OnDown
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &1027135299
 GameObject:
   m_ObjectHideFlags: 0
@@ -1976,7 +2019,6 @@ MonoBehaviour:
   negativPreviewColor: {r: 1, g: 0, b: 0, a: 1}
   positivePreviewColor: {r: 0, g: 1, b: 0, a: 1}
   revertSpeed: 2
-  enableConsole: 1
   console: {fileID: 971197081}
 --- !u!1 &1794012712
 GameObject:
@@ -2287,7 +2329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

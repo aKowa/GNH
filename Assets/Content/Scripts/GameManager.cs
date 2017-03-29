@@ -88,10 +88,6 @@ namespace Content.Scripts
         [SerializeField]
         private float revertSpeed = 1f;
 
-		[SerializeField]
-		private GameObject console;
-
-
 		/// <summary>
 		/// Gets a policyType indicating whether to block input.
 		/// </summary>
@@ -167,7 +163,6 @@ namespace Content.Scripts
         {
             for (var i = 0; i < values.Length; i++)
             {
-				//this.AddToConsole( this.policies[i].type + " Value: " + values[i] );
 				if ( values[i] > 0 )
 	            {
 					this.policies[i].SetIconColor( this.positivePreviewColor );
@@ -206,28 +201,23 @@ namespace Content.Scripts
         {
             this.gameOverObject.SetActive(false);
             this.BlockInput = false;
-			HideValues( this.hideValues );
+			this.SetValuesActive( !this.hideValues );
 
 	        foreach ( var policy in this.policies )
 	        {
 				policy.SetValue(50, this.minColor, this.maxColor);
 			}
-
-	        if (Debug.isDebugBuild)
-	        {
-		        Destroy( this.console );
-	        }
-	        else
-	        {
-				console.GetComponentInChildren<Text>().text = "";
-			}
 		}
 
-		public void HideValues( bool state )
+		/// <summary>
+		/// Shows/ hides values on interface
+		/// </summary>
+		/// <param name="state"></param>
+		public void SetValuesActive( bool state )
 		{
-			foreach ( var policy in this.policies )
+			foreach (var policy in this.policies)
 			{
-				policy.Text.enabled = !state;
+				policy.Text.enabled = state;
 			}
 		}
 
@@ -237,8 +227,6 @@ namespace Content.Scripts
         /// </summary>
         private void CheckforGameOver()
         {
-			//this.AddToConsole("CheckForGameOver");
-
 			// Check for victory by happiness
 			if (this.policies[5].Value >= this.happinessThresholdWin && this.happinessThresholdWin > 0)
             {
@@ -291,20 +279,5 @@ namespace Content.Scripts
 			gameOverText.text = "You Lost! \n \n Your " + policyName;
             return gameOverText;
         }
-
-		/// <summary>
-		/// Adds text to debug console
-		/// </summary>
-		/// <param name="targetText">Text to be added on top of console.</param>
-		public void AddToConsole(string targetText)
-		{
-			if (!Debug.isDebugBuild)
-			{
-				return;
-			}
-
-			var text = this.console.GetComponentInChildren<Text>();
-			text.text = targetText + "\n " + text.text;
-		}
 	}
 }

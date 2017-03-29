@@ -95,7 +95,7 @@ namespace Content.Scripts
 		public void SetValue(int targetValue, Color minColor, Color maxColor)
 		{
 			this.value = targetValue;
-			this.Text.text = (this.Value * 1000).ToString();
+			this.Text.text = this.type == PolicyType.Treasury ? (this.Value * 1000).ToString() : this.Value.ToString();
 			this.Icon.color = Color.Lerp(minColor, maxColor, (float)this.Value / 100);
 		}
 

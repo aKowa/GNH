@@ -113,7 +113,6 @@ namespace Content.Scripts
 		/// </summary>
 		public void RevertPreviewValue( float speed )
 		{
-			Debug.Log( "Revert" );
 			this.StopAllCoroutines();
 			this.StartCoroutine( this.RevertPreviewAnimation( speed ) );
 		}

@@ -88,10 +88,6 @@ namespace Content.Scripts
         [SerializeField]
         private float revertSpeed = 1f;
 
-
-		[SerializeField]
-		private bool enableConsole = false;
-
 		[SerializeField]
 		private GameObject console;
 
@@ -146,10 +142,7 @@ namespace Content.Scripts
         /// </param>
         public void ApplyResults(int[] values)
         {
-			this.AddToConsole("ApplyResults");
-
 			// TODO: Implement turn count to determine time passed
-			this.RevertPreview( this.revertSpeed );
 	        var targetHappiness = 0;
             for (var i = 0; i < values.Length; i++)
             {
@@ -160,6 +153,7 @@ namespace Content.Scripts
 			// set happiness to average of 4 main policies.
 			this.policies[(int)PolicyType.Happiness].SetValue( targetHappiness / 4, this.minColor, this.maxColor );
 
+			this.RevertPreview(this.revertSpeed);
 			this.CheckforGameOver();
         }
 
@@ -173,7 +167,8 @@ namespace Content.Scripts
         {
             for (var i = 0; i < values.Length; i++)
             {
-	            if ( values[i] > 0 )
+				//this.AddToConsole( this.policies[i].type + " Value: " + values[i] );
+				if ( values[i] > 0 )
 	            {
 					this.policies[i].SetIconColor( this.positivePreviewColor );
 	            }
@@ -218,8 +213,14 @@ namespace Content.Scripts
 				policy.SetValue(50, this.minColor, this.maxColor);
 			}
 
-			this.console.SetActive(enableConsole);
-			console.GetComponentInChildren<Text>().text = "";
+	        if (Debug.isDebugBuild)
+	        {
+		        Destroy( this.console );
+	        }
+	        else
+	        {
+				console.GetComponentInChildren<Text>().text = "";
+			}
 		}
 
 		public void HideValues( bool state )
@@ -294,13 +295,16 @@ namespace Content.Scripts
 		/// <summary>
 		/// Adds text to debug console
 		/// </summary>
-		/// <param name="targetText"></param>
+		/// <param name="targetText">Text to be added on top of console.</param>
 		public void AddToConsole(string targetText)
 		{
-			if (enableConsole)
+			if (!Debug.isDebugBuild)
 			{
-				this.console.GetComponentInChildren<Text>().text += "\n " + targetText;
+				return;
 			}
+
+			var text = this.console.GetComponentInChildren<Text>();
+			text.text = targetText + "\n " + text.text;
 		}
 	}
 }

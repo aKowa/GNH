@@ -187,7 +187,7 @@ namespace Content.Scripts
             // handle threshold angle logic (left positive, right negative)
             if (Mathf.Abs(this.EulerZ) > this.thresholdAngle)
             {
-                this.gameManager.PreviewResults(this.ChosenPolicy);
+                this.gameManager.PreviewResults( this.ChosenPolicy );
                 this.ShowCardSwipeText();
             }
             else
@@ -228,8 +228,7 @@ namespace Content.Scripts
             {
                 this.gameManager.ApplyResults(this.ChosenPolicy);
 
-				this.gameManager.AddToConsole( "OnEndDrag" );
-
+				/*
                 // if swipe was left or else if swipe was right
                 if (this.EulerZ > this.thresholdAngle)
                 {
@@ -239,10 +238,15 @@ namespace Content.Scripts
                 {
                     this.CheckForAndInsertFollowUpCard(this.currentCard.FollowUpIdR, this.currentCard.FollowUpStepR);
                 }
+				*/
 
-                this.GetNextCard();
-                this.transform.rotation = Quaternion.identity; // TODO: play next card animation
-            }
+				// TODO @Bent: when commented out code is executed the code below is not reached. 
+				// Strangly there are no errors or craching, it just does not go any further... A peculiar powerful dark magic is at work here :P
+
+				this.StopAllCoroutines();
+				this.GetNextCard();			//TODO @Bent: does not set the next card, because its null
+				this.transform.rotation = Quaternion.identity; // TODO @Andre: play next card animation
+			}
         }
 
         /// <summary>
@@ -444,21 +448,24 @@ namespace Content.Scripts
         /// TODO: integrate happiness parameter and set overwrite card text
         private void GetNextCard()
         {
-            if (this.cardHand == null)
+			if (this.cardHand == null)
             {
                 Debug.LogWarning("The cardHand list is null, aborting GetNextCard()");
+				this.gameManager.AddToConsole("The cardHand list is null, aborting GetNextCard()");
                 return;
             }
 
+			// TODO @Bent: cardHand is always empty in a build
             if (this.cardHand.Count == 0)
             {
                 Debug.LogWarning("The cardHand list is empty, aborting GetNextCard()");
-                return;
+				this.gameManager.AddToConsole("The cardHand list is empty, aborting GetNextCard()");
+				return;
             }
 
             this.currentCard = this.cardHand[0].CardAttributes;
 
-            this.policyValuesL[0] = this.currentCard.CultureL;
+			this.policyValuesL[0] = this.currentCard.CultureL;
             this.policyValuesL[1] = this.currentCard.EconomyL;
             this.policyValuesL[2] = this.currentCard.EnvironmentL;
             this.policyValuesL[3] = this.currentCard.SecurityL;
@@ -470,7 +477,7 @@ namespace Content.Scripts
             this.policyValuesR[3] = this.currentCard.SecurityR;
             this.policyValuesR[4] = this.currentCard.TreasuryR;
 
-            this.ShowCardText();
+			this.ShowCardText();
 
             this.cardHand.RemoveAt(0);
             this.FillCardHand();

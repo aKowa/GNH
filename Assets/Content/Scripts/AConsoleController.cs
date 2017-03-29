@@ -36,7 +36,7 @@ namespace Content.Scripts
 		private void Awake()
 		{
 			AConsoleController.instance = this;
-			this.Disable();
+			this.ToggleActive();
 		}
 
 		/// <summary>
@@ -74,10 +74,10 @@ namespace Content.Scripts
 		/// <summary>
 		/// Disabels console and empties debug message
 		/// </summary>
-		protected void Disable()
+		protected void ToggleActive()
 		{
 			this.DebugMessage.text = "";
-			this.gameObject.SetActive(false);
+			this.gameObject.SetActive(!this.gameObject.activeSelf);
 		}
 	}
 }

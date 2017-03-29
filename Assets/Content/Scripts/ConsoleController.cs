@@ -18,14 +18,18 @@ namespace Content.Scripts
 				return;
 			}
 
-			this.gameObject.SetActive(true);
 			var text = this.gameObject.GetComponentInChildren<Text>();
-			text.text = targetText + "\n " + text.text;
+			text.text = targetText + "\n" + text.text;
 		}
 
 		public override void OnDown()
 		{
-			base.Disable();
+			if (!Debug.isDebugBuild)
+			{
+				return;
+			}
+
+			base.ToggleActive();
 		}
 	}
 }

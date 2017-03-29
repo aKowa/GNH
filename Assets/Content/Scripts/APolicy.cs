@@ -14,7 +14,8 @@ namespace Content.Scripts
 		/// <summary>
 		/// The Policy type. 
 		/// </summary>
-		[SerializeField] public readonly PolicyType type;
+		[SerializeField]
+		public PolicyType type;
 
 		/// <summary>
 		/// Internal text of the policy.

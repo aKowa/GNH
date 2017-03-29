@@ -26,9 +26,17 @@ namespace Content.Scripts
 		/// <param name="maxColor">Color b of icon color lerp</param>
 		public override void SetValue(int targetValue, Color minColor, Color maxColor)
 		{
+			Debug.Log( base.type );
 			base.value = targetValue;
 			base.Text.text = base.type == PolicyType.Treasury ? (base.Value * 1000).ToString() : base.Value.ToString();
-			base.Icon.color = Color.Lerp(minColor, maxColor, (float)base.Value / 100);
+			if (base.type == PolicyType.Security)
+			{
+				base.Icon.fillAmount = (float)base.Value / 100;
+			}
+			else
+			{
+				base.Icon.color = Color.Lerp(minColor, maxColor, (float)base.Value / 100);
+			}
 		}
 
 		/// <summary>

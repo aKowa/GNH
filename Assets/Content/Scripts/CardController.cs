@@ -37,14 +37,25 @@ namespace Content.Scripts
         private Dictionary<string, List<CardData>> cardLists;
 
         /// <summary>
+        /// The cards by id.
+        /// </summary>
+        private Dictionary<int, CardData> cardsById;
+
+        /// <summary>
         /// The card stacks.
         /// </summary>
         private Dictionary<string, Stack<CardData>> cardStacks;
 
         /// <summary>
-        /// The cards by id.
+        /// The card text.
         /// </summary>
-        private Dictionary<int, CardData> cardsById;
+        [SerializeField]
+        private Text cardTextUIComponent;
+
+        /// <summary>
+        /// The current card.
+        /// </summary>
+        private CardAttributes currentCard;
 
         /// <summary>
         /// The deviation to help.
@@ -57,12 +68,6 @@ namespace Content.Scripts
         /// </summary>
         [SerializeField]
         private GameManager gameManager;
-
-        /// <summary>
-        /// The card text.
-        /// </summary>
-        [SerializeField]
-        private Text cardTextUIComponent;
 
         /// <summary>
         /// The last category.
@@ -101,8 +106,6 @@ namespace Content.Scripts
         /// </summary>
         [SerializeField]
         private float thresholdAngle = 10f;
-
-        private CardAttributes currentCard;
 
         /// <summary>
         /// Gets the chosen policy.
@@ -187,31 +190,13 @@ namespace Content.Scripts
             // handle threshold angle logic (left positive, right negative)
             if (Mathf.Abs(this.EulerZ) > this.thresholdAngle)
             {
-                this.gameManager.PreviewResults( this.ChosenPolicy );
+                this.gameManager.PreviewResults(this.ChosenPolicy);
                 this.ShowCardSwipeText();
             }
             else
             {
                 this.gameManager.RevertPreview();
                 this.ShowCardText();
-            }
-        }
-
-        private void ShowCardText()
-        {
-            this.cardTextUIComponent.text = this.currentCard.Text;
-        }
-
-        private void ShowCardSwipeText()
-        {
-            // left positive, right negative
-            if (this.EulerZ > this.thresholdAngle)
-            {
-                this.cardTextUIComponent.text = this.currentCard.TextL;
-            }
-            else if (this.EulerZ < -this.thresholdAngle)
-            {
-                this.cardTextUIComponent.text = this.currentCard.TextR;
             }
         }
 
@@ -228,7 +213,7 @@ namespace Content.Scripts
             {
                 this.gameManager.ApplyResults(this.ChosenPolicy);
 
-				/*
+                /*
                 // if swipe was left or else if swipe was right
                 if (this.EulerZ > this.thresholdAngle)
                 {
@@ -238,32 +223,27 @@ namespace Content.Scripts
                 {
                     this.CheckForAndInsertFollowUpCard(this.currentCard.FollowUpIdR, this.currentCard.FollowUpStepR);
                 }
-				*/
+                */
 
-				// TODO @Bent: when commented out code is executed the code below is not reached. 
-				// Strangly there are no errors or craching, it just does not go any further... A peculiar powerful dark magic is at work here :P
-
-				this.StopAllCoroutines();
-				this.GetNextCard();			//TODO @Bent: does not set the next card, because its null
-				this.transform.rotation = Quaternion.identity; // TODO @Andre: play next card animation
-			}
+                // TODO @Bent: when commented out code is executed the code below is not reached. 
+                // Strangly there are no errors or craching, it just does not go any further... A peculiar powerful dark magic is at work here :P
+                this.StopAllCoroutines();
+                this.GetNextCard(); // TODO @Bent: does not set the next card, because its null
+                this.transform.rotation = Quaternion.identity; // TODO @Andre: play next card animation
+            }
         }
 
         /// <summary>
-        /// The check for and insert follow up card.
+        /// The add card list to currentCard stack.
         /// </summary>
-        /// <param name="id">
-        /// The id.
+        /// <param name="category">
+        /// The category.
         /// </param>
-        /// <param name="step">
-        /// The step.
-        /// </param>
-        private void CheckForAndInsertFollowUpCard(int id, int step)
+        private void AddCardListToCardStack(string category)
         {
-            if (id > 0 && step >= 0)
+            foreach (var card in this.cardLists[category])
             {
-                this.cardHand.Insert(step, this.cardsById[id]);
-                Debug.LogFormat("Follow Up Card with ID {0} inserted in {1} cards.", id, step + 1);
+                this.AddToCardStacks(card);
             }
         }
 
@@ -312,6 +292,45 @@ namespace Content.Scripts
         }
 
         /// <summary>
+        /// The check for and insert follow up card.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <param name="step">
+        /// The step.
+        /// </param>
+        private void CheckForAndInsertFollowUpCard(int id, int step)
+        {
+            if (id > 0 && step >= 0)
+            {
+                this.cardHand.Insert(step, this.cardsById[id]);
+                Debug.LogFormat("Follow Up Card with ID {0} inserted in {1} cards.", id, step + 1);
+            }
+        }
+
+        /// <summary>
+        /// The deviated card hand fill.
+        /// </summary>
+        /// <param name="mostDeviatedValue">
+        /// The most deviated value.
+        /// </param>
+        private void DeviatedCardHandFill(PolicyType mostDeviatedValue)
+        {
+            var card = this.GetCardFromStack(mostDeviatedValue.ToString());
+            if (card == null)
+            {
+                Debug.LogWarningFormat(
+                    "DeviatedCardHandFill got null as card, aborting. PolicyType was {0}.", 
+                    mostDeviatedValue.ToString());
+                return;
+            }
+
+            this.cardHand.Insert(0, card);
+            this.NormalCardHandFill();
+        }
+
+        /// <summary>
         /// The fill card hand.
         /// </summary>
         private void FillCardHand()
@@ -340,22 +359,31 @@ namespace Content.Scripts
         }
 
         /// <summary>
-        /// The deviated card hand fill.
+        /// The get card from stack.
         /// </summary>
-        /// <param name="mostDeviatedValue">
-        /// The most deviated value.
+        /// <param name="category">
+        /// The category.
         /// </param>
-        private void DeviatedCardHandFill(PolicyType mostDeviatedValue)
+        /// <returns>
+        /// The <see cref="CardData"/>.
+        /// </returns>
+        private CardData GetCardFromStack(string category)
         {
-            var card = this.GetCardFromStack(mostDeviatedValue.ToString());
-            if (card == null)
+            if (this.cardStacks.ContainsKey(category))
             {
-                Debug.LogWarningFormat("DeviatedCardHandFill got null as card, aborting. PolicyType was {0}.", mostDeviatedValue.ToString());
-                return;
+                if (this.cardStacks[category].Count != 0)
+                {
+                    return this.cardStacks[category].Pop();
+                }
+
+                this.PrepareCardList(category);
+                this.AddCardListToCardStack(category);
+                return this.cardStacks[category].Pop();
             }
 
-            this.cardHand.Insert(0, card);
-            this.NormalCardHandFill();
+            Debug.LogWarning(
+                "You tried to get a card from a category, where no currentCard stack is present (not even an empty one, so that might be a wrong category or your currentCard data is corrupt/incorrect).");
+            return null;
         }
 
         /// <summary>
@@ -397,11 +425,61 @@ namespace Content.Scripts
         }
 
         /// <summary>
+        /// Gets next card.
+        /// </summary>
+        /// TODO: integrate happiness parameter and set overwrite card text
+        private void GetNextCard()
+        {
+            if (this.cardHand == null)
+            {
+                Debug.LogWarning("The cardHand list is null, aborting GetNextCard()");
+                if (Debug.isDebugBuild)
+                {
+                    this.SetRandomPolicyValues();
+                    AConsoleController.Instance.AddToConsole("The cardHand list is null, aborting GetNextCard()");
+                }
+
+                return;
+            }
+
+            // TODO @Bent: cardHand is always empty in a build
+            if (this.cardHand.Count == 0)
+            {
+                Debug.LogWarning("The cardHand list is empty, aborting GetNextCard()");
+                if (Debug.isDebugBuild)
+                {
+                    this.SetRandomPolicyValues();
+                    AConsoleController.Instance.AddToConsole("The cardHand list is empty, aborting GetNextCard()");
+                }
+
+                return;
+            }
+
+            this.currentCard = this.cardHand[0].CardAttributes;
+
+            this.policyValuesL[0] = this.currentCard.CultureL;
+            this.policyValuesL[1] = this.currentCard.EconomyL;
+            this.policyValuesL[2] = this.currentCard.EnvironmentL;
+            this.policyValuesL[3] = this.currentCard.SecurityL;
+            this.policyValuesL[4] = this.currentCard.TreasuryL;
+
+            this.policyValuesR[0] = this.currentCard.CultureR;
+            this.policyValuesR[1] = this.currentCard.EconomyR;
+            this.policyValuesR[2] = this.currentCard.EnvironmentR;
+            this.policyValuesR[3] = this.currentCard.SecurityR;
+            this.policyValuesR[4] = this.currentCard.TreasuryR;
+
+            this.ShowCardText();
+
+            this.cardHand.RemoveAt(0);
+            this.FillCardHand();
+        }
+
+        /// <summary>
         /// The normal card hand fill.
         /// </summary>
         private void NormalCardHandFill()
         {
-
             for (var i = 0; i < this.maxCardsInHand - this.cardHand.Count; i++)
             {
                 var category = (PolicyType)this.LastCategory++;
@@ -415,104 +493,37 @@ namespace Content.Scripts
         }
 
         /// <summary>
-        /// The get card from stack.
+        /// The prepare card list.
         /// </summary>
         /// <param name="category">
         /// The category.
         /// </param>
-        /// <returns>
-        /// The <see cref="CardData"/>.
-        /// </returns>
-        private CardData GetCardFromStack(string category)
+        private void PrepareCardList(string category)
         {
-            if (this.cardStacks.ContainsKey(category))
+            // if the category is one of the big four
+            if (this.theFourCardCategories.Contains(category))
             {
-                if (this.cardStacks[category].Count != 0)
-                {
-                    return this.cardStacks[category].Pop();
-                }
-
-                this.PrepareCardList(category);
-                this.AddCardListToCardStack(category);
-                return this.cardStacks[category].Pop();
+                // shuffle cards
+                this.cardLists[category].Shuffle();
             }
-
-            Debug.LogWarning(
-                "You tried to get a card from a category, where no currentCard stack is present (not even an empty one, so that might be a wrong category or your currentCard data is corrupt/incorrect).");
-            return null;
+            else
+            {
+                // sort list by descending id, because they are later pushed to a stack in order. the big ones need to go down first
+                this.cardLists[category] =
+                    new List<CardData>(this.cardLists[category].OrderByDescending(card => card.CardId));
+            }
         }
 
         /// <summary>
-        /// Gets next card.
+        /// Rotates the card smoothly back, when drag ended.
         /// </summary>
-        /// TODO: integrate happiness parameter and set overwrite card text
-        private void GetNextCard()
-        {
-			if (this.cardHand == null)
-            {
-                Debug.LogWarning("The cardHand list is null, aborting GetNextCard()");
-				if (Debug.isDebugBuild)
-				{
-					this.SetRandomPolicyValues();
-					AConsoleController.Instance.AddToConsole("The cardHand list is null, aborting GetNextCard()");
-				}
-				return;
-            }
-
-			// TODO @Bent: cardHand is always empty in a build
-            if (this.cardHand.Count == 0)
-            {
-                Debug.LogWarning("The cardHand list is empty, aborting GetNextCard()");
-	            if (Debug.isDebugBuild)
-	            {
-		            this.SetRandomPolicyValues();
-					AConsoleController.Instance.AddToConsole("The cardHand list is empty, aborting GetNextCard()");
-				}
-				return;
-            }
-
-            this.currentCard = this.cardHand[0].CardAttributes;
-
-			this.policyValuesL[0] = this.currentCard.CultureL;
-            this.policyValuesL[1] = this.currentCard.EconomyL;
-            this.policyValuesL[2] = this.currentCard.EnvironmentL;
-            this.policyValuesL[3] = this.currentCard.SecurityL;
-            this.policyValuesL[4] = this.currentCard.TreasuryL;
-
-            this.policyValuesR[0] = this.currentCard.CultureR;
-            this.policyValuesR[1] = this.currentCard.EconomyR;
-            this.policyValuesR[2] = this.currentCard.EnvironmentR;
-            this.policyValuesR[3] = this.currentCard.SecurityR;
-            this.policyValuesR[4] = this.currentCard.TreasuryR;
-
-			this.ShowCardText();
-
-            this.cardHand.RemoveAt(0);
-            this.FillCardHand();
-        }
-
-		/// <summary>
-		/// Sets policy values to random integer. Can be used as a default, but removed in real builds.
-		/// </summary>
-	    private void SetRandomPolicyValues()
-	    {
-		    for (int i = 0; i < 5; i++)
-		    {
-			    this.policyValuesL[i] = (int)Random.Range(-10, 10);
-				this.policyValuesR[i] = (int)Random.Range(-10, 10);
-			}
-	    }
-
-		/// <summary>
-		/// Rotates the card smoothly back, when drag ended.
-		/// </summary>
-		/// <param name="currentRotation">
-		/// The current Rotation.
-		/// </param>
-		/// <returns>
-		/// The <see cref="IEnumerator"/>.
-		/// </returns>
-		private IEnumerator RotateBack(float currentRotation)
+        /// <param name="currentRotation">
+        /// The current Rotation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="IEnumerator"/>.
+        /// </returns>
+        private IEnumerator RotateBack(float currentRotation)
         {
             float t = 0;
             while (t < 1f)
@@ -524,6 +535,18 @@ namespace Content.Scripts
             }
 
             this.transform.rotation = Quaternion.identity;
+        }
+
+        /// <summary>
+        /// Sets policy values to random integer. Can be used as a default, but removed in real builds.
+        /// </summary>
+        private void SetRandomPolicyValues()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                this.policyValuesL[i] = (int)Random.Range(-10, 10);
+                this.policyValuesR[i] = (int)Random.Range(-10, 10);
+            }
         }
 
         /// <summary>
@@ -559,38 +582,27 @@ namespace Content.Scripts
         }
 
         /// <summary>
-        /// The add card list to currentCard stack.
+        /// The show card swipe text.
         /// </summary>
-        /// <param name="category">
-        /// The category.
-        /// </param>
-        private void AddCardListToCardStack(string category)
+        private void ShowCardSwipeText()
         {
-            foreach (var card in this.cardLists[category])
+            // left positive, right negative
+            if (this.EulerZ > this.thresholdAngle)
             {
-                this.AddToCardStacks(card);
+                this.cardTextUIComponent.text = this.currentCard.TextL;
+            }
+            else if (this.EulerZ < -this.thresholdAngle)
+            {
+                this.cardTextUIComponent.text = this.currentCard.TextR;
             }
         }
 
         /// <summary>
-        /// The prepare card list.
+        /// The show card text.
         /// </summary>
-        /// <param name="category">
-        /// The category.
-        /// </param>
-        private void PrepareCardList(string category)
+        private void ShowCardText()
         {
-            // if the category is one of the big four
-            if (this.theFourCardCategories.Contains(category))
-            {
-                // shuffle cards
-                this.cardLists[category].Shuffle();
-            }
-            else
-            {
-                // sort list by descending id, because they are later pushed to a stack in order. the big ones need to go down first
-                this.cardLists[category] = new List<CardData>(this.cardLists[category].OrderByDescending(card => card.CardId));
-            }
+            this.cardTextUIComponent.text = this.currentCard.Text;
         }
 
         /// <summary>

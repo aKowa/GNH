@@ -6,6 +6,9 @@
 //   Defines the GameManager type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+
 namespace Content.Scripts
 {
     using System.Collections;
@@ -48,6 +51,27 @@ namespace Content.Scripts
         [Tooltip("Threshold policyType of happines used to determine when player lost! Use negative policyType to disable.")]
         [SerializeField]
         private int happinessThresholdWin = 90;
+
+		/// <summary>
+		/// Win screen sprite.
+		/// </summary>
+		[Tooltip("This Screen is set on Game Over, if the player has won.")]
+		[SerializeField]
+		private Sprite winScreen;
+
+		/// <summary>
+		/// Lose screens, when policy is too high.
+		/// </summary>
+		[Tooltip("ID determines which screen is shown, when corresponding policy value is too high.")]
+		[SerializeField]
+		private Sprite[] loseToHighScreens;
+
+		/// <summary>
+		/// Lose screens, when policy is too low.
+		/// </summary>
+		[Tooltip("ID determines which screen is shown, when corresponding policy value is too low.")]
+		[SerializeField]
+		private Sprite[] loseToLowScreens;
 
 		/// <summary>
 		/// Fales, when values on policies should be shown.
@@ -223,7 +247,8 @@ namespace Content.Scripts
 
         /// <summary>
         /// Checks policy values and determines as well as executes a game over. 
-        /// NOTE: reload logic is on the GameOverScreenObject 
+        /// NOTE: reload logic is on the GameOverScreenObject
+        /// TODO: refine win logic, when card count is implemented
         /// </summary>
         private void CheckforGameOver()
         {
@@ -232,6 +257,7 @@ namespace Content.Scripts
             {
                 this.GetGameOverText(5).text =
                     "Victory! \n \n Your happiness exceeds all expectations! \n \n Party hard!!!";
+				this.SetWinImage();
                 return;
             }
 
@@ -239,6 +265,7 @@ namespace Content.Scripts
             if (this.policies[5].Value <= this.happinessThresholdLose && this.happinessThresholdLose > 0)
             {
                 this.GetGameOverText(5).text += " was too damn low!";
+	            this.SetLoseToLowImage(5);
                 return;
             }
 
@@ -249,6 +276,7 @@ namespace Content.Scripts
                 if (this.policies[i].Value <= 0)
                 {
                     this.GetGameOverText(i).text += " was too damn low!";
+					this.SetLoseToLowImage(i);
                     return;
                 }
 
@@ -256,6 +284,7 @@ namespace Content.Scripts
                 if (this.policies[i].Value >= 100)
                 {
                     this.GetGameOverText(i).text += " was too damn high!";
+					this.SetLoseToHighImage(i);
                     return;
                 }
             }
@@ -274,10 +303,58 @@ namespace Content.Scripts
         {
             this.BlockInput = true;
             this.gameOverObject.SetActive(true);
-            var gameOverText = this.gameOverObject.GetComponentInChildren<Text>();
+            var gameOverText = this.gameOverObject.GetComponentInChildren<Text>(true);
 	        var policyName = this.policies[policyId].type.ToString();
 			gameOverText.text = "You Lost! \n \n Your " + policyName;
             return gameOverText;
         }
+
+		/// <summary>
+		/// Sets the win screen
+		/// </summary>
+	    private void SetWinImage()
+	    {
+		    this.gameOverObject.SetActive(true);
+		    var gameOverImage = this.gameOverObject.GetComponent<Image>();
+		    gameOverImage.sprite = this.winScreen;
+	    }
+
+		/// <summary>
+		/// Sets the lose screen to the correxponding too high policy
+		/// </summary>
+		/// <param name="id">Policy id</param>
+	    private void SetLoseToHighImage( int id )
+	    {
+			this.gameOverObject.SetActive(true);
+			var gameOverImage = this.gameOverObject.GetComponent<Image>();
+		    try
+		    {
+				gameOverImage.sprite = this.loseToHighScreens[id];
+			}
+		    catch (IndexOutOfRangeException e)
+		    {
+				Debug.LogWarning("No loseToHighScreen set at id: " + id);
+			    gameOverImage.sprite = this.winScreen;
+		    }
+		}
+
+		/// <summary>
+		/// Sets the lose screen to the correxponding too low policy
+		/// </summary>
+		/// <param name="id">Policy id</param>
+		private void SetLoseToLowImage(int id)
+		{
+			this.gameOverObject.SetActive(true);
+			var gameOverImage = this.gameOverObject.GetComponent<Image>();
+			try
+			{
+				gameOverImage.sprite = this.loseToLowScreens[id];
+			}
+			catch (IndexOutOfRangeException e)
+			{
+				Debug.LogWarning("No loseToLowScreen set at id: " + id);
+				gameOverImage.sprite = this.winScreen;
+			}
+		}
 	}
 }

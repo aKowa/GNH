@@ -88,10 +88,10 @@ namespace Content.Scripts
         [SerializeField]
         private float revertSpeed = 1f;
 
-        /// <summary>
-        /// Gets a policyType indicating whether to block input.
-        /// </summary>
-        public bool BlockInput
+		/// <summary>
+		/// Gets a policyType indicating whether to block input.
+		/// </summary>
+		public bool BlockInput
         {
             get
             {
@@ -139,7 +139,6 @@ namespace Content.Scripts
         public void ApplyResults(int[] values)
         {
 			// TODO: Implement turn count to determine time passed
-			this.RevertPreview( this.revertSpeed );
 	        var targetHappiness = 0;
             for (var i = 0; i < values.Length; i++)
             {
@@ -150,6 +149,7 @@ namespace Content.Scripts
 			// set happiness to average of 4 main policies.
 			this.policies[(int)PolicyType.Happiness].SetValue( targetHappiness / 4, this.minColor, this.maxColor );
 
+			this.RevertPreview(this.revertSpeed);
 			this.CheckforGameOver();
         }
 
@@ -163,7 +163,7 @@ namespace Content.Scripts
         {
             for (var i = 0; i < values.Length; i++)
             {
-	            if ( values[i] > 0 )
+				if ( values[i] > 0 )
 	            {
 					this.policies[i].SetIconColor( this.positivePreviewColor );
 	            }
@@ -201,7 +201,7 @@ namespace Content.Scripts
         {
             this.gameOverObject.SetActive(false);
             this.BlockInput = false;
-			HideValues( this.hideValues );
+			this.SetValuesActive( !this.hideValues );
 
 	        foreach ( var policy in this.policies )
 	        {
@@ -209,11 +209,15 @@ namespace Content.Scripts
 			}
 		}
 
-		public void HideValues( bool state )
+		/// <summary>
+		/// Shows/ hides values on interface
+		/// </summary>
+		/// <param name="state"></param>
+		public void SetValuesActive( bool state )
 		{
-			foreach ( var policy in this.policies )
+			foreach (var policy in this.policies)
 			{
-				policy.Text.enabled = !state;
+				policy.Text.enabled = state;
 			}
 		}
 
@@ -223,8 +227,8 @@ namespace Content.Scripts
         /// </summary>
         private void CheckforGameOver()
         {
-            // Check for victory by happiness
-            if (this.policies[5].Value >= this.happinessThresholdWin && this.happinessThresholdWin > 0)
+			// Check for victory by happiness
+			if (this.policies[5].Value >= this.happinessThresholdWin && this.happinessThresholdWin > 0)
             {
                 this.GetGameOverText(5).text =
                     "Victory! \n \n Your happiness exceeds all expectations! \n \n Party hard!!!";
@@ -275,5 +279,5 @@ namespace Content.Scripts
 			gameOverText.text = "You Lost! \n \n Your " + policyName;
             return gameOverText;
         }
-    }
+	}
 }

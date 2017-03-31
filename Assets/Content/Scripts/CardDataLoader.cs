@@ -198,11 +198,32 @@ namespace Content.Scripts
             output.AppendLine(string.Format("Environment R: {0}", cardAttributes.EnvironmentR));
 
             /*
-             * FOLLOW UP ID
+             * FOLLOW UP ID L
              */
             line = streamReader.ReadLine();
-            cardAttributes.FollowUpId = GetIntegerValue(line, 5);
-            output.AppendLine(string.Format("Follow Up Id: {0}", cardAttributes.SecurityL));
+            cardAttributes.FollowUpIdL = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Follow Up Id L: {0}", cardAttributes.FollowUpIdL));
+
+            /*
+             * FOLLOW UP ID R
+             */
+            line = streamReader.ReadLine();
+            cardAttributes.FollowUpIdR = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Follow Up Id R: {0}", cardAttributes.FollowUpIdR));
+
+            /*
+             * FOLLOW UP STEP L
+            */
+            line = streamReader.ReadLine();
+            cardAttributes.FollowUpStepL = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Follow Up Step L: {0}", cardAttributes.FollowUpStepL));
+
+            /*
+             * FOLLOW UP STEP R
+            */
+            line = streamReader.ReadLine();
+            cardAttributes.FollowUpStepR = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Follow Up Step R: {0}", cardAttributes.FollowUpStepR));
 
             /*
              * SECURITY L
@@ -318,7 +339,7 @@ namespace Content.Scripts
                 text.Append(splittedLine[i]);
                 text.Append(" ");
             }
-            return text.ToString();
+            return text.ToString().Trim();
         }
 
         /// <summary>

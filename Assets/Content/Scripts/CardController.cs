@@ -26,6 +26,12 @@ namespace Content.Scripts
         [SerializeField]
         private float backRotationSpeed = 1f;
 
+        [SerializeField]
+        private float moveAwaySpeed = 1f;
+
+        [SerializeField]
+        private float moveAwayDistance = 900f;
+
         /// <summary>
         /// The card hand.
         /// </summary>
@@ -106,6 +112,8 @@ namespace Content.Scripts
         /// </summary>
         [SerializeField]
         private float thresholdAngle = 10f;
+
+        private Vector3 initPosition;
 
         /// <summary>
         /// Gets the chosen policy.
@@ -222,12 +230,17 @@ namespace Content.Scripts
                 {
                     this.CheckForAndInsertFollowUpCard(this.currentCard.FollowUpIdR, this.currentCard.FollowUpStepR);
                 }
-                
-                
-                this.StopAllCoroutines();
-                this.GetNextCard();
-                this.transform.rotation = Quaternion.identity; // TODO @Andre: play next card animation
             }
+
+            StartCoroutine(this.MoveAway());
+        }
+
+        public void OnAppliedCardAnimationOver()
+        {
+            this.StopAllCoroutines();
+            this.GetNextCard();
+            this.transform.rotation = Quaternion.identity; // TODO @Andre: play next card animation
+            this.transform.position = this.initPosition;
         }
 
         /// <summary>
@@ -532,6 +545,28 @@ namespace Content.Scripts
             this.transform.rotation = Quaternion.identity;
         }
 
+        private IEnumerator MoveAway()
+        {
+            float t = 0;
+            while ( t <= 1 )
+            {
+                if (this.EulerZ > 0)
+                {
+                    this.transform.position += Vector3.left * (this.moveAwayDistance * t);
+                }
+                else
+                {
+                    this.transform.position += Vector3.right * (this.moveAwayDistance * t);
+                }
+
+                t += this.moveAwaySpeed * Time.deltaTime;
+
+                yield return null;
+            }
+
+            this.OnAppliedCardAnimationOver();
+        }
+
         /// <summary>
         /// Sets policy values to random integer. Can be used as a default, but removed in real builds.
         /// </summary>
@@ -609,6 +644,7 @@ namespace Content.Scripts
             this.SetupCardStacks();
             this.FillCardHand();
             this.GetNextCard();
+            this.initPosition = this.transform.position;
         }
     }
 }

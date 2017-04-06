@@ -1128,8 +1128,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.082, y: 0.15100001}
   m_AnchorMax: {x: 0.9055556, y: 0.9038961}
-  m_AnchoredPosition: {x: 4.5, y: -1}
-  m_SizeDelta: {x: -6, y: 5}
+  m_AnchoredPosition: {x: 0, y: -1}
+  m_SizeDelta: {x: 0, y: 5}
   m_Pivot: {x: 0.5, y: -0.0000000037252903}
 --- !u!114 &795344641
 MonoBehaviour:
@@ -1176,6 +1176,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backRotationSpeed: 2
+  moveAwaySpeed: 1.5
+  moveAwayDistance: 40
   cardTextUIComponent: {fileID: 1127767392}
   deviationToHelp: 20
   gameManager: {fileID: 1715703455}

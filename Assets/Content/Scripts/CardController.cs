@@ -27,6 +27,18 @@ namespace Content.Scripts
         private float backRotationSpeed = 1f;
 
         /// <summary>
+        /// How fast the card moves away
+        /// </summary>
+        [SerializeField]
+        private float moveAwaySpeed = 1f;
+
+        /// <summary>
+        /// How far the card should move away
+        /// </summary>
+        [SerializeField]
+        private float moveAwayDistance = 900f;
+
+        /// <summary>
         /// The card hand.
         /// </summary>
         private List<CardData> cardHand;
@@ -106,6 +118,8 @@ namespace Content.Scripts
         /// </summary>
         [SerializeField]
         private float thresholdAngle = 10f;
+
+        private Vector3 initPosition;
 
         /// <summary>
         /// Gets the chosen policy.
@@ -213,7 +227,6 @@ namespace Content.Scripts
             {
                 this.gameManager.ApplyResults(this.ChosenPolicy);
 
-                /*
                 // if swipe was left or else if swipe was right
                 if (this.EulerZ > this.thresholdAngle)
                 {
@@ -223,14 +236,17 @@ namespace Content.Scripts
                 {
                     this.CheckForAndInsertFollowUpCard(this.currentCard.FollowUpIdR, this.currentCard.FollowUpStepR);
                 }
-                */
-
-                // TODO @Bent: when commented out code is executed the code below is not reached. 
-                // Strangly there are no errors or craching, it just does not go any further... A peculiar powerful dark magic is at work here :P
-                this.StopAllCoroutines();
-                this.GetNextCard(); // TODO @Bent: does not set the next card, because its null
-                this.transform.rotation = Quaternion.identity; // TODO @Andre: play next card animation
             }
+
+            StartCoroutine(this.MoveAway());
+        }
+
+        public void OnAppliedCardAnimationOver()
+        {
+            this.StopAllCoroutines();
+            this.GetNextCard();
+            this.transform.rotation = Quaternion.identity; // TODO @Andre: play next card animation
+            this.transform.position = this.initPosition;
         }
 
         /// <summary>
@@ -427,7 +443,6 @@ namespace Content.Scripts
         /// <summary>
         /// Gets next card.
         /// </summary>
-        /// TODO: integrate happiness parameter and set overwrite card text
         private void GetNextCard()
         {
             if (this.cardHand == null)
@@ -537,6 +552,31 @@ namespace Content.Scripts
         }
 
         /// <summary>
+        /// Moves the card away into the chosen direction
+        /// </summary>
+        private IEnumerator MoveAway()
+        {
+            float t = 0;
+            while ( t <= 1 )
+            {
+                if (this.EulerZ > 0)
+                {
+                    this.transform.position += Vector3.left * (this.moveAwayDistance * t);
+                }
+                else
+                {
+                    this.transform.position += Vector3.right * (this.moveAwayDistance * t);
+                }
+
+                t += this.moveAwaySpeed * Time.deltaTime;
+
+                yield return null;
+            }
+
+            this.OnAppliedCardAnimationOver();
+        }
+
+        /// <summary>
         /// Sets policy values to random integer. Can be used as a default, but removed in real builds.
         /// </summary>
         private void SetRandomPolicyValues()
@@ -613,6 +653,7 @@ namespace Content.Scripts
             this.SetupCardStacks();
             this.FillCardHand();
             this.GetNextCard();
+            this.initPosition = this.transform.position;
         }
     }
 }

@@ -213,7 +213,6 @@ namespace Content.Scripts
             {
                 this.gameManager.ApplyResults(this.ChosenPolicy);
 
-                /*
                 // if swipe was left or else if swipe was right
                 if (this.EulerZ > this.thresholdAngle)
                 {
@@ -223,12 +222,10 @@ namespace Content.Scripts
                 {
                     this.CheckForAndInsertFollowUpCard(this.currentCard.FollowUpIdR, this.currentCard.FollowUpStepR);
                 }
-                */
-
-                // TODO @Bent: when commented out code is executed the code below is not reached. 
-                // Strangly there are no errors or craching, it just does not go any further... A peculiar powerful dark magic is at work here :P
+                
+                
                 this.StopAllCoroutines();
-                this.GetNextCard(); // TODO @Bent: does not set the next card, because its null
+                this.GetNextCard(); 
                 this.transform.rotation = Quaternion.identity; // TODO @Andre: play next card animation
             }
         }

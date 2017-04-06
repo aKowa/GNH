@@ -1177,7 +1177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backRotationSpeed: 2
   moveAwaySpeed: 2
-  moveAwayDistance: 40
+  moveAwayDistance: 50
   cardTextUIComponent: {fileID: 1127767392}
   deviationToHelp: 20
   gameManager: {fileID: 1715703455}

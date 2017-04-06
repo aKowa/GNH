@@ -26,9 +26,15 @@ namespace Content.Scripts
         [SerializeField]
         private float backRotationSpeed = 1f;
 
+        /// <summary>
+        /// How fast the card moves away
+        /// </summary>
         [SerializeField]
         private float moveAwaySpeed = 1f;
 
+        /// <summary>
+        /// How far the card should move away
+        /// </summary>
         [SerializeField]
         private float moveAwayDistance = 900f;
 
@@ -545,6 +551,9 @@ namespace Content.Scripts
             this.transform.rotation = Quaternion.identity;
         }
 
+        /// <summary>
+        /// Moves the card away into the chosen direction
+        /// </summary>
         private IEnumerator MoveAway()
         {
             float t = 0;

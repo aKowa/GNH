@@ -441,8 +441,7 @@ namespace Content.Scripts
 
                 return;
             }
-
-            // TODO @Bent: cardHand is always empty in a build
+            
             if (this.cardHand.Count == 0)
             {
                 Debug.LogWarning("The cardHand list is empty, aborting GetNextCard()");

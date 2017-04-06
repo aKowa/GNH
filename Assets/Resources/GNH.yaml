@@ -1,0 +1,598 @@
+--- 
+id: 1000
+parent: 
+attributes:
+  - BackgroundColor: #9177AC
+  - Category: Culture
+  - Character: Character1
+  - CultureL: 15
+  - CultureR: -15
+  - EconomyL: -10
+  - EconomyR: 10
+  - EnvironmentL: 5
+  - EnvironmentR: -5
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: 0
+  - SecurityR: 0
+  - Text: A gang of artists occupies a highly profitable area in the city. Several companies showed interest in buying it.
+  - TextL: Support the artists
+  - TextR: Remove artists and sell it
+  - TreasuryL: -5
+  - TreasuryR: 5
+components:
+  - CardAttributes
+--- 
+id: 1001
+parent: 
+attributes:
+  - BackgroundColor: #9177AC
+  - Category: Culture
+  - Character: Character1
+  - CultureL: -5
+  - CultureR: 10
+  - EconomyL: 5
+  - EconomyR: -10
+  - EnvironmentL: 0
+  - EnvironmentR: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 2000
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: 0
+  - SecurityR: 0
+  - Text: Researches show that working 35 hours a week doesn't only leave employees with more time for themselves but also increases productivity long term.
+  - TextL: Haha, that's half of what I did working in games.
+  - TextR: Encourage companies to introduce it
+  - TreasuryL: 0
+  - TreasuryR: -10
+components:
+  - CardAttributes
+--- 
+id: 1002
+parent: 
+attributes:
+  - BackgroundColor: #9177AC
+  - Category: Culture
+  - Character: Character1
+  - CultureL: -10
+  - CultureR: 20
+  - EconomyL: 0
+  - EconomyR: 10
+  - EnvironmentL: 0
+  - EnvironmentR: -10
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: 0
+  - SecurityR: -10
+  - Text: The Olympus Games want our country to be the next host! People from all over the world will come to watch!
+  - TextL: I have no time for games.
+  - TextR: You can never have enough stadiums!
+  - TreasuryL: 0
+  - TreasuryR: -15
+components:
+  - CardAttributes
+--- 
+id: 1003
+parent: 
+attributes:
+  - BackgroundColor: #9177AC
+  - Category: Culture
+  - Character: Character1
+  - CultureL: -5
+  - CultureR: 10
+  - EconomyL: 0
+  - EconomyR: 10
+  - EnvironmentL: 0
+  - EnvironmentR: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: 0
+  - SecurityR: 0
+  - Text: We should offer higher taxation benefits for charity donations.
+  - TextL: We can't afford that
+  - TextR: Sounds good.
+  - TreasuryL: 0
+  - TreasuryR: -10
+components:
+  - CardAttributes
+--- 
+id: 1004
+parent: 
+attributes:
+  - BackgroundColor: #9177AC
+  - Category: Culture
+  - Character: Character1
+  - CultureL: 0
+  - CultureR: 0
+  - EconomyL: 0
+  - EconomyR: 10
+  - EnvironmentL: 0
+  - EnvironmentR: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 2001
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: 0
+  - SecurityR: 0
+  - Text: We should build a new phillarmonic hall in the city that will put all others to shame. It will take a year but when its finished the people will love it.
+  - TextL: I'm not sure about your calculations here ...
+  - TextR: Yes, the City needs a new landmark.
+  - TreasuryL: 0
+  - TreasuryR: -15
+components:
+  - CardAttributes
+--- 
+id: 1005
+parent: 
+attributes:
+  - BackgroundColor: #9177AC
+  - Category: Culture
+  - Character: Character1
+  - CultureL: 10
+  - CultureR: 10
+  - EconomyL: 0
+  - EconomyR: 0
+  - EnvironmentL: 0
+  - EnvironmentR: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: 0
+  - SecurityR: 0
+  - Text: The bill to legalize same sex marriage is ready for your signature.
+  - TextL: Why would I not sign that?
+  - TextR: It's about time
+  - TreasuryL: 0
+  - TreasuryR: 0
+components:
+  - CardAttributes
+--- 
+id: 1100
+parent: 
+attributes:
+  - BackgroundColor: #88CC88
+  - Category: Environment
+  - Character: Character2
+  - CultureL: 0
+  - CultureR: 5
+  - EconomyL: 0
+  - EconomyR: -10
+  - EnvironmentL: -5
+  - EnvironmentR: 10
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: 0
+  - SecurityR: 0
+  - Text: New studies found out that global warming is in fact real!
+  - TextL: The scientists must be conspirators too
+  - TextR: Release lower emission standard
+  - TreasuryL: 0
+  - TreasuryR: -5
+components:
+  - CardAttributes
+--- 
+id: 1101
+parent: 
+attributes:
+  - BackgroundColor: #88CC88
+  - Category: Environment
+  - Character: Character2
+  - CultureL: 10
+  - CultureR: -5
+  - EconomyL: 0
+  - EconomyR: 0
+  - EnvironmentL: -10
+  - EnvironmentR: 20
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: 0
+  - SecurityR: 0
+  - Text: Green Power offered to raise the amount of clean energy to over 90.00 percent, given the right funding.
+  - TextL: Other countries don't care about clean energy either
+  - TextR: Let's raise some wind turbines!
+  - TreasuryL: 0
+  - TreasuryR: -15
+components:
+  - CardAttributes
+--- 
+id: 1102
+parent: 
+attributes:
+  - BackgroundColor: #88CC88
+  - Category: Environment
+  - Character: Character2
+  - CultureL: 0
+  - CultureR: -10
+  - EconomyL: -20
+  - EconomyR: 0
+  - EnvironmentL: 15
+  - EnvironmentR: 15
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: 0
+  - SecurityR: 0
+  - Text: Pollution from traffic keeps increasing in all areas.
+  - TextL: Raise a toll on commercial transport
+  - TextR: No more driving on sunday
+  - TreasuryL: -5
+  - TreasuryR: -5
+components:
+  - CardAttributes
+--- 
+id: 1103
+parent: 
+attributes:
+  - BackgroundColor: #88CC88
+  - Category: Environment
+  - Character: Character2
+  - CultureL: 0
+  - CultureR: 0
+  - EconomyL: 10
+  - EconomyR: -10
+  - EnvironmentL: -10
+  - EnvironmentR: 15
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: 0
+  - SecurityR: -10
+  - Text: The big pharma does questionable things with their waste. If we spoil their business they might increase insurance cost for the people though.
+  - TextL: Meddling with them isn't worth it
+  - TextR: Fines are always good
+  - TreasuryL: 0
+  - TreasuryR: 10
+components:
+  - CardAttributes
+--- 
+id: 1200
+parent: 
+attributes:
+  - BackgroundColor: #D4CE6A
+  - Category: Economy
+  - Character: Character3
+  - CultureL: 5
+  - CultureR: -5
+  - EconomyL: -10
+  - EconomyR: 10
+  - EnvironmentL: 0
+  - EnvironmentR: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: -5
+  - SecurityR: 5
+  - Text: Some companies complain about too high taxes and threaten to relocate their business.
+  - TextL: They're bluffing
+  - TextR: Lower the taxes
+  - TreasuryL: 0
+  - TreasuryR: -10
+components:
+  - CardAttributes
+--- 
+id: 1201
+parent: 
+attributes:
+  - BackgroundColor: #D4CE6A
+  - Category: Economy
+  - Character: Character3
+  - CultureL: 5
+  - CultureR: -5
+  - EconomyL: -10
+  - EconomyR: 15
+  - EnvironmentL: 0
+  - EnvironmentR: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: 10
+  - SecurityR: -10
+  - Text: Open the boarders so the trade can flow more freely.
+  - TextL: We need to focus on ourselves
+  - TextR: Open borders
+  - TreasuryL: 0
+  - TreasuryR: 0
+components:
+  - CardAttributes
+--- 
+id: 1202
+parent: 
+attributes:
+  - BackgroundColor: #D4CE6A
+  - Category: Economy
+  - Character: Character3
+  - CultureL: 0
+  - CultureR: 0
+  - EconomyL: -10
+  - EconomyR: 15
+  - EnvironmentL: 10
+  - EnvironmentR: -15
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: 0
+  - SecurityR: 0
+  - Text: Companies would be willing to pay more taxes if there was more tolerance in regards of pollution.
+  - TextL: I have little tolerance for that
+  - TextR: We don't have to be so nitpicky
+  - TreasuryL: 0
+  - TreasuryR: 10
+components:
+  - CardAttributes
+--- 
+id: 1203
+parent: 
+attributes:
+  - BackgroundColor: #D4CE6A
+  - Category: Economy
+  - Character: Character3
+  - CultureL: 10
+  - CultureR: -5
+  - EconomyL: 15
+  - EconomyR: 15
+  - EnvironmentL: 0
+  - EnvironmentR: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: 10
+  - SecurityR: 5
+  - Text: Our neighbours start to produce and sell wares similar to ours, we expect there are industry spies.
+  - TextL: Prosecute theft of IP more thoroughly
+  - TextR: Allow for more surveillance at work
+  - TreasuryL: -15
+  - TreasuryR: -5
+components:
+  - CardAttributes
+--- 
+id: 1300
+parent: 
+attributes:
+  - BackgroundColor: #D46A6A
+  - Category: Security
+  - Character: Character4
+  - CultureL: 0
+  - CultureR: -5
+  - EconomyL: 0
+  - EconomyR: 0
+  - EnvironmentL: 0
+  - EnvironmentR: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: 0
+  - SecurityR: 5
+  - Text: There have been some accidents, some believe it was terrorist attacks.
+  - TextL: No reason to overreact...
+  - TextR: Raise police presence
+  - TreasuryL: 0
+  - TreasuryR: -5
+components:
+  - CardAttributes
+--- 
+id: 1301
+parent: 
+attributes:
+  - BackgroundColor: #D46A6A
+  - Category: Security
+  - Character: Character4
+  - CultureL: 5
+  - CultureR: 5
+  - EconomyL: -10
+  - EconomyR: 0
+  - EnvironmentL: 0
+  - EnvironmentR: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: 15
+  - SecurityR: 10
+  - Text: People fear about their living standard after the crisis. If there are no raises they will ask us to lower the taxes.
+  - TextL: Some of the taxes can be shifted towards the employers
+  - TextR: We can lower the taxes a bit
+  - TreasuryL: 0
+  - TreasuryR: -10
+components:
+  - CardAttributes
+--- 
+id: 1302
+parent: 
+attributes:
+  - BackgroundColor: #D46A6A
+  - Category: Security
+  - Character: Character4
+  - CultureL: 0
+  - CultureR: 0
+  - EconomyL: 0
+  - EconomyR: 0
+  - EnvironmentL: 0
+  - EnvironmentR: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: 0
+  - SecurityR: 10
+  - Text: We need to rework our health insurance system.
+  - TextL: No we don't
+  - TextR: If you say so
+  - TreasuryL: 0
+  - TreasuryR: -15
+components:
+  - CardAttributes
+--- 
+id: 1303
+parent: 
+attributes:
+  - BackgroundColor: #D46A6A
+  - Category: Security
+  - Character: Character4
+  - CultureL: 0
+  - CultureR: 0
+  - EconomyL: 0
+  - EconomyR: 0
+  - EnvironmentL: -10
+  - EnvironmentR: 15
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: 0
+  - SecurityR: -10
+  - Text: The introduction of the reformed recycling and waste disposal costs, contrary to our calculation, more than we can afford.
+  - TextL: Cut the recycling
+  - TextR: Raise the fee for waste disposal
+  - TreasuryL: -5
+  - TreasuryR: -5
+components:
+  - CardAttributes
+--- 
+id: 1304
+parent: 
+attributes:
+  - BackgroundColor: #D46A6A
+  - Category: Security
+  - Character: Character4
+  - CultureL: 0
+  - CultureR: 0
+  - EconomyL: 0
+  - EconomyR: 0
+  - EnvironmentL: 0
+  - EnvironmentR: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: -15
+  - SecurityR: 15
+  - Text: Another bank files for insolvency. We need to help them out or a lot of people will lose their money.
+  - TextL: We can't afford that
+  - TextR: We have no choice
+  - TreasuryL: 0
+  - TreasuryR: -15
+components:
+  - CardAttributes
+--- 
+id: 1305
+parent: 
+attributes:
+  - BackgroundColor: #D46A6A
+  - Category: Security
+  - Character: Character4
+  - CultureL: 10
+  - CultureR: -10
+  - EconomyL: 0
+  - EconomyR: 0
+  - EnvironmentL: 0
+  - EnvironmentR: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: 10
+  - SecurityR: 10
+  - Text: The Great Celebration of Happiness draws near and our secret service found hints of a potential terrorist attack.
+  - TextL: The celebration can't be canceled anymore. Increase safety measures
+  - TextR: The celebration must be canceled
+  - TreasuryL: -10
+  - TreasuryR: 0
+components:
+  - CardAttributes
+--- 
+id: 2000
+parent: 
+attributes:
+  - BackgroundColor: #9177AC
+  - Category: FollowUp
+  - Character: Character1
+  - CultureL: 0
+  - CultureR: 0
+  - EconomyL: 10
+  - EconomyR: 10
+  - EnvironmentL: 0
+  - EnvironmentR: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: 0
+  - SecurityR: 0
+  - Text: Companies who introduced the 35 hours week register an increased productivity.
+  - TextL: How is that still not a thing?
+  - TextR: Great!
+  - TreasuryL: 0
+  - TreasuryR: 0
+components:
+  - CardAttributes
+--- 
+id: 2001
+parent: 
+attributes:
+  - BackgroundColor: #9177AC
+  - Category: FollowUp
+  - Character: Character1
+  - CultureL: 0
+  - CultureR: 0
+  - EconomyL: -10
+  - EconomyR: 10
+  - EnvironmentL: 0
+  - EnvironmentR: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 2002
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: 0
+  - SecurityR: 0
+  - Text: The phillarmonic hall we are building takes longer than anticipated. We need more funds to continue the construction.
+  - TextL: Cancel the project and salvage what's possible
+  - TextR: It will pay off eventually
+  - TreasuryL: 0
+  - TreasuryR: -15
+components:
+  - CardAttributes
+--- 
+id: 2002
+parent: 
+attributes:
+  - BackgroundColor: #9177AC
+  - Category: FollowUp
+  - Character: Character1
+  - CultureL: 10
+  - CultureR: 10
+  - EconomyL: 5
+  - EconomyR: 5
+  - EnvironmentL: 0
+  - EnvironmentR: 0
+  - FollowUpIdL: 0
+  - FollowUpIdR: 0
+  - FollowUpStepL: 0
+  - FollowUpStepR: 0
+  - SecurityL: 0
+  - SecurityR: 0
+  - Text: The phillarmonic hall is done!
+  - TextL: Didn't think that day would come
+  - TextR: Terrific!
+  - TreasuryL: 0
+  - TreasuryR: 0
+components:
+  - CardAttributes

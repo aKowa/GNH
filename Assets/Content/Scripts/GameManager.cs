@@ -8,6 +8,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Runtime.CompilerServices;
+using PolyDev.UI;
 
 namespace Content.Scripts
 {
@@ -39,11 +41,17 @@ namespace Content.Scripts
         private GameObject gameOverObject = null;
 
         /// <summary>
-        /// The happiness threshold lose.
+        /// Bound round count
         /// </summary>
-        [Tooltip("Threshold policyType of happines used to determine when player lost! Use negative policyType to disable.")]
         [SerializeField]
-        private int happinessThresholdLose = 20;
+        public BindInt round;
+
+        /// <summary>
+        /// Checks Happiness Threshold Win every set round.
+        /// </summary>
+        [Tooltip("Checks Happiness Threshold Win every set round.")]
+        [SerializeField]
+        private int winCheck = 5;
 
         /// <summary>
         /// The happiness threshold win.
@@ -51,6 +59,13 @@ namespace Content.Scripts
         [Tooltip("Threshold policyType of happines used to determine when player lost! Use negative policyType to disable.")]
         [SerializeField]
         private int happinessThresholdWin = 90;
+
+        /// <summary>
+        /// The happiness threshold lose.
+        /// </summary>
+        [Tooltip("Threshold policyType of happines used to determine when player lost! Use negative policyType to disable.")]
+        [SerializeField]
+        private int happinessThresholdLose = 20;
 
 		/// <summary>
 		/// Win screen sprite.
@@ -64,14 +79,14 @@ namespace Content.Scripts
 		/// </summary>
 		[Tooltip("ID determines which screen is shown, when corresponding policy value is too high.")]
 		[SerializeField]
-		private Sprite[] loseToHighScreens;
+		private Sprite[] loseTooHighScreens;
 
 		/// <summary>
 		/// Lose screens, when policy is too low.
 		/// </summary>
 		[Tooltip("ID determines which screen is shown, when corresponding policy value is too low.")]
 		[SerializeField]
-		private Sprite[] loseToLowScreens;
+		private Sprite[] loseTooLowScreens;
 
 		/// <summary>
 		/// Fales, when values on policies should be shown.
@@ -174,7 +189,8 @@ namespace Content.Scripts
 			this.policies[(int)PolicyType.Happiness].SetValue( targetHappiness / 4, this.minColor, this.maxColor );
 
 			this.RevertPreview(this.revertSpeed);
-			this.CheckforGameOver();
+            this.round.Value ++;
+            this.CheckforGameOver();
         }
 
         /// <summary>
@@ -243,6 +259,7 @@ namespace Content.Scripts
 			{
 				policy.Text.enabled = state;
 			}
+		    this.round.targetGameObject.GetComponent<Text>().enabled = state;
 		}
 
         /// <summary>
@@ -252,13 +269,16 @@ namespace Content.Scripts
         /// </summary>
         private void CheckforGameOver()
         {
-			// Check for victory by happiness
-			if (this.policies[5].Value >= this.happinessThresholdWin && this.happinessThresholdWin > 0)
+            if (this.round.valueUnbound % this.winCheck == 0)
             {
-                this.GetGameOverText(5).text =
-                    "Victory! \n \n Your happiness exceeds all expectations! \n \n Party hard!!!";
-				this.SetWinImage();
-                return;
+                // Check for victory by happiness
+                if (this.policies[5].Value >= this.happinessThresholdWin && this.happinessThresholdWin > 0)
+                {
+                    this.GetGameOverText(5).text =
+                        "Victory! \n \n Your happiness exceeds all expectations! \n \n Party hard!!!";
+                    this.SetWinImage();
+                    return;
+                }
             }
 
             // Check for lose by happines
@@ -329,9 +349,9 @@ namespace Content.Scripts
 			var gameOverImage = this.gameOverObject.GetComponent<Image>();
 		    try
 		    {
-				gameOverImage.sprite = this.loseToHighScreens[id];
+				gameOverImage.sprite = this.loseTooHighScreens[id];
 			}
-		    catch (IndexOutOfRangeException e)
+		    catch (IndexOutOfRangeException)
 		    {
 				Debug.LogWarning("No loseToHighScreen set at id: " + id);
 			    gameOverImage.sprite = this.winScreen;
@@ -348,9 +368,9 @@ namespace Content.Scripts
 			var gameOverImage = this.gameOverObject.GetComponent<Image>();
 			try
 			{
-				gameOverImage.sprite = this.loseToLowScreens[id];
+				gameOverImage.sprite = this.loseTooLowScreens[id];
 			}
-			catch (IndexOutOfRangeException e)
+			catch (IndexOutOfRangeException)
 			{
 				Debug.LogWarning("No loseToLowScreen set at id: " + id);
 				gameOverImage.sprite = this.winScreen;

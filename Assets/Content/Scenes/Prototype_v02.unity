@@ -409,6 +409,80 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &288695456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 288695457}
+  - component: {fileID: 288695459}
+  - component: {fileID: 288695458}
+  m_Layer: 5
+  m_Name: RoundText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &288695457
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 288695456}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1715703454}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.03375, y: 0.020781556}
+  m_AnchorMax: {x: 0.18, y: 0.11043689}
+  m_AnchoredPosition: {x: 0.7000122, y: -0.099975586}
+  m_SizeDelta: {x: -2.0999756, y: -0.099998474}
+  m_Pivot: {x: 0, y: 0}
+--- !u!114 &288695458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 288695456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 1
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 0
+--- !u!222 &288695459
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 288695456}
 --- !u!1 &341516884
 GameObject:
   m_ObjectHideFlags: 0
@@ -2053,6 +2127,7 @@ RectTransform:
   m_Children:
   - {fileID: 467648495}
   - {fileID: 1458683640}
+  - {fileID: 288695457}
   m_Father: {fileID: 823761080}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2080,12 +2155,18 @@ MonoBehaviour:
   - {fileID: 1349639703}
   - {fileID: 745386112}
   gameOverObject: {fileID: 966244895}
+  round:
+    targetGameObject: {fileID: 288695456}
+    componentID: 2
+    targetComponent: {fileID: 0}
+    propertyID: 4
+    valueUnbound: 0
   happinessThresholdLose: 20
   happinessThresholdWin: 90
   winScreen: {fileID: 21300000, guid: bd7087a173f18e64e81050ca8414db01, type: 3}
   loseToHighScreens: []
   loseToLowScreens: []
-  hideValues: 1
+  hideValues: 0
   maxColor: {r: 0, g: 0, b: 0, a: 1}
   minColor: {r: 0, g: 0, b: 0, a: 0}
   negativPreviewColor: {r: 1, g: 0, b: 0, a: 1}

@@ -35,19 +35,12 @@ namespace Content.Scripts
         /// </returns>
         public static List<CardData> GetCardDataList()
         {
-            var fileName = Application.dataPath + "/Resources/GNH.yaml";
-            
-            /*
-            var tempPath = System.IO.Path.Combine(Application.dataPath, "GNH.yaml");
-            var reader = new WWW(tempPath);
-            */
-
             var cardDataList = new List<CardData>();
 
             try
             {
-                var streamReader = new StreamReader(fileName, Encoding.UTF8);
-
+                Stream reader = new MemoryStream((Resources.Load("GNH") as TextAsset).bytes);
+                var streamReader = new StreamReader(reader);
                 using (streamReader)
                 {
                     string line;

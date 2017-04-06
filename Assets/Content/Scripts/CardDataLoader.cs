@@ -40,7 +40,7 @@ namespace Content.Scripts
             try
             {
                 Stream reader = new MemoryStream((Resources.Load("GNH") as TextAsset).bytes);
-                var streamReader = new StreamReader(reader);
+                var streamReader = new StreamReader(reader, Encoding.UTF8);
                 using (streamReader)
                 {
                     string line;

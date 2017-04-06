@@ -225,7 +225,7 @@ namespace Content.Scripts
                 
                 
                 this.StopAllCoroutines();
-                this.GetNextCard(); 
+                this.GetNextCard();
                 this.transform.rotation = Quaternion.identity; // TODO @Andre: play next card animation
             }
         }
@@ -424,7 +424,6 @@ namespace Content.Scripts
         /// <summary>
         /// Gets next card.
         /// </summary>
-        /// TODO: integrate happiness parameter and set overwrite card text
         private void GetNextCard()
         {
             if (this.cardHand == null)

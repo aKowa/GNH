@@ -11,7 +11,6 @@ namespace Content.Scripts
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-
     using UnityEngine;
     using UnityEngine.UI;
 
@@ -121,6 +120,14 @@ namespace Content.Scripts
 
         private Vector3 initPosition;
 
+        [SerializeField]
+        private float nextCardDegrees = 720;
+
+        [SerializeField]
+        private float nextCardAnimationSpeed = 1;
+
+        private Image image;
+
         /// <summary>
         /// Gets the chosen policy.
         /// </summary>
@@ -190,7 +197,7 @@ namespace Content.Scripts
         public void OnDrag()
         {
             // early out
-            if (this.gameManager.BlockInput)
+            if (this.gameManager.blockInput)
             {
                 return;
             }
@@ -222,6 +229,7 @@ namespace Content.Scripts
             if (Mathf.Abs(this.EulerZ) < this.thresholdAngle)
             {
                 this.StartCoroutine(this.RotateBack(this.EulerZ));
+                return;
             }
             else
             {
@@ -236,17 +244,15 @@ namespace Content.Scripts
                 {
                     this.CheckForAndInsertFollowUpCard(this.currentCard.FollowUpIdR, this.currentCard.FollowUpStepR);
                 }
-            }
 
-            StartCoroutine(this.MoveAway());
+                StartCoroutine(this.MoveAway());
+            }
         }
 
         public void OnAppliedCardAnimationOver()
         {
             this.StopAllCoroutines();
             this.GetNextCard();
-            this.transform.rotation = Quaternion.identity; // TODO @Andre: play next card animation
-            this.transform.position = this.initPosition;
         }
 
         /// <summary>
@@ -556,6 +562,7 @@ namespace Content.Scripts
         /// </summary>
         private IEnumerator MoveAway()
         {
+            this.image.raycastTarget = false;
             float t = 0;
             while ( t <= 1 )
             {
@@ -573,7 +580,31 @@ namespace Content.Scripts
                 yield return null;
             }
 
-            this.OnAppliedCardAnimationOver();
+            this.GetNextCard();
+            StartCoroutine(this.NextCardAnimation());
+        }
+
+        private IEnumerator NextCardAnimation()
+        {
+            this.transform.position = this.initPosition;
+            this.transform.rotation = Quaternion.identity;
+
+            var targetTransform = this.transform.parent;
+
+            float t = 0;
+            while (t <= 1)
+            {
+                targetTransform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, t);
+                var targetZ = Mathf.Lerp(this.nextCardDegrees, 0, t);
+                targetTransform.rotation = Quaternion.Euler(0,0,targetZ);
+                t += this.nextCardAnimationSpeed * Time.deltaTime;
+             
+                yield return null;
+            }
+
+            targetTransform.rotation = Quaternion.identity;
+            this.image.raycastTarget = true;
+            this.StopAllCoroutines();
         }
 
         /// <summary>
@@ -654,6 +685,7 @@ namespace Content.Scripts
             this.FillCardHand();
             this.GetNextCard();
             this.initPosition = this.transform.position;
+            this.image = this.GetComponent<Image>();
         }
     }
 }

@@ -1176,7 +1176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backRotationSpeed: 2
-  moveAwaySpeed: 1.5
+  moveAwaySpeed: 2
   moveAwayDistance: 40
   cardTextUIComponent: {fileID: 1127767392}
   deviationToHelp: 20
@@ -1184,6 +1184,8 @@ MonoBehaviour:
   maxAngle: 15
   maxCardsInHand: 20
   thresholdAngle: 10
+  nextCardDegrees: 720
+  nextCardAnimationSpeed: 1.5
 --- !u!114 &795344644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2221,6 +2223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67fb4437eab0bf341993b0a26cb72dd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blockInput: 0
   policies:
   - {fileID: 497749266}
   - {fileID: 1112820108}

@@ -26,7 +26,7 @@ namespace Content.Scripts
         /// The block input.
         /// </summary>
         [HideInInspector]
-        private bool blockInput = false;
+        public bool blockInput = false;
 	
 		/// <summary>
 		/// The bound policy values.
@@ -127,22 +127,6 @@ namespace Content.Scripts
         [SerializeField]
         private float revertSpeed = 1f;
 
-		/// <summary>
-		/// Gets a policyType indicating whether to block input.
-		/// </summary>
-		public bool BlockInput
-        {
-            get
-            {
-                return this.blockInput;
-            }
-
-            private set
-            {
-                this.blockInput = value;
-            }
-        }
-
         /// <summary>
         /// The get policy value.
         /// </summary>
@@ -239,7 +223,7 @@ namespace Content.Scripts
 		public void Start()
         {
             this.gameOverObject.SetActive(false);
-            this.BlockInput = false;
+            this.blockInput = false;
 			this.SetValuesActive( !this.hideValues );
 
 	        foreach ( var policy in this.policies )
@@ -320,7 +304,7 @@ namespace Content.Scripts
         /// </returns>
         private Text GetGameOverText(int policyId)
         {
-            this.BlockInput = true;
+            this.blockInput = true;
             this.gameOverObject.SetActive(true);
             var gameOverText = this.gameOverObject.GetComponentInChildren<Text>(true);
 	        var policyName = this.policies[policyId].type.ToString();

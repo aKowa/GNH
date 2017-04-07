@@ -1180,12 +1180,12 @@ MonoBehaviour:
   deviationToHelp: 20
   maxCardsInHand: 20
   maxAngle: 15
+  thresholdAngle: 10
   animationRevertRotationSpeed: 2
   animationMoveSpeed: 1
   animationMoveDistance: 900
-  thresholdAngle: 10
-  nextCardDegrees: 720
-  nextCardAnimationSpeed: 1.5
+  animationNextCardDegree: 720
+  aniamtionNextCardSpeed: 1
 --- !u!114 &795344644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2223,6 +2223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67fb4437eab0bf341993b0a26cb72dd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showValues: 1
   blockInput: 0
   policies:
   - {fileID: 497749266}
@@ -2232,24 +2233,13 @@ MonoBehaviour:
   - {fileID: 1349639703}
   - {fileID: 745386112}
   gameOverObject: {fileID: 966244895}
-  round:
-    targetGameObject: {fileID: 288695456}
-    componentID: 2
-    targetComponent: {fileID: 0}
-    propertyID: 4
-    valueUnbound: 0
-  winCheck: 5
-  happinessThresholdWin: 90
-  happinessThresholdLose: 20
   winScreen: {fileID: 21300000, guid: bd7087a173f18e64e81050ca8414db01, type: 3}
-  loseTooHighScreens: []
-  loseTooLowScreens: []
-  hideValues: 1
-  maxColor: {r: 0, g: 0, b: 0, a: 1}
-  minColor: {r: 0, g: 0, b: 0, a: 0}
-  negativPreviewColor: {r: 1, g: 0, b: 0, a: 1}
-  positivePreviewColor: {r: 0, g: 1, b: 0, a: 1}
-  revertSpeed: 2
+  loseScreens: []
+  winCheck: 5
+  winThreshold: 90
+  minPreviewColor: {r: 0.68235296, g: 0.92549026, b: 0.90196085, a: 1}
+  maxPreviewColor: {r: 0.1764706, g: 0.53333336, b: 0.5058824, a: 1}
+  revertSpeed: 1.5
 --- !u!1 &1794012712
 GameObject:
   m_ObjectHideFlags: 0

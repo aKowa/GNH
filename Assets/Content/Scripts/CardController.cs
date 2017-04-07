@@ -20,22 +20,81 @@ namespace Content.Scripts
     public class CardController : MonoBehaviour
     {
         /// <summary>
-        /// The back rotation speed.
+        /// The game manager.
         /// </summary>
         [SerializeField]
-        private float backRotationSpeed = 1f;
+        private GameManager gameManager;
+
+        /// <summary>
+        /// The card text.
+        /// </summary>
+        [SerializeField]
+        private Text cardTextUIComponent;
+
+        /// <summary>
+        /// The deviation to help.
+        /// </summary>
+        [SerializeField]
+        private int deviationToHelp = 20;
+
+        /// <summary>
+        /// The max cards in hand.
+        /// </summary>
+        [SerializeField]
+        private int maxCardsInHand = 20;
+
+        /// <summary>
+        /// The max angle.
+        /// </summary>
+        [Tooltip("The maximum angle in degrees the card rotates, when dragged.")]
+        [SerializeField]
+        private float maxAngle = 15f;
+
+        /// <summary>
+        /// The threshold angle.
+        /// </summary>
+        [Tooltip("Angle in degrees when a card is marked as chosen.")]
+        [SerializeField]
+        private float thresholdAngle = 10f;
+
+        /// <summary>
+        /// The aniamtions back rotation speed.
+        /// </summary>
+        [Tooltip("The speed used for rotating the card back, when it was not choosen.")]
+        [SerializeField]
+        private float animationRevertRotationSpeed = 1f;
 
         /// <summary>
         /// How fast the card moves away
         /// </summary>
+        [Tooltip("The speed used for moving the card away after choosing.")]
         [SerializeField]
-        private float moveAwaySpeed = 1f;
+        private float animationMoveSpeed = 1f;
 
         /// <summary>
         /// How far the card should move away
         /// </summary>
+        [Tooltip("The target distance to move away after chossing")]
         [SerializeField]
-        private float moveAwayDistance = 900f;
+        private float animationMoveDistance = 900f;
+        
+        /// <summary>
+        /// Degrees to start with when next card rotate animation is being played.
+        /// </summary>
+        [Tooltip("Degrees to start with when next card rotate animation is being played.")]
+        [SerializeField]
+        private float animationNextCardDegree = 720;
+
+        /// <summary>
+        /// The speed at which the next card rotation animation is being played.
+        /// </summary>
+        [SerializeField]
+        private float aniamtionNextCardSpeed = 1;
+
+        /// <summary>
+        /// This cards inital position.
+        /// </summary>
+        private Vector3 initPosition;
 
         /// <summary>
         /// The card hand.
@@ -58,44 +117,14 @@ namespace Content.Scripts
         private Dictionary<string, Stack<CardData>> cardStacks;
 
         /// <summary>
-        /// The card text.
-        /// </summary>
-        [SerializeField]
-        private Text cardTextUIComponent;
-
-        /// <summary>
         /// The current card.
         /// </summary>
         private CardAttributes currentCard;
 
         /// <summary>
-        /// The deviation to help.
-        /// </summary>
-        [SerializeField]
-        private int deviationToHelp = 20;
-
-        /// <summary>
-        /// The game manager.
-        /// </summary>
-        [SerializeField]
-        private GameManager gameManager;
-
-        /// <summary>
         /// The last category.
         /// </summary>
         private int lastCategory;
-
-        /// <summary>
-        /// The max angle.
-        /// </summary>
-        [SerializeField]
-        private float maxAngle = 15f;
-
-        /// <summary>
-        /// The max cards in hand.
-        /// </summary>
-        [SerializeField]
-        private int maxCardsInHand = 20;
 
         /// <summary>
         /// The policy values l.
@@ -111,20 +140,6 @@ namespace Content.Scripts
         /// The the four card categories.
         /// </summary>
         private string[] theFourCardCategories = { "Culture", "Economy", "Environment", "Security" };
-
-        /// <summary>
-        /// The threshold angle.
-        /// </summary>
-        [SerializeField]
-        private float thresholdAngle = 10f;
-
-        private Vector3 initPosition;
-
-        [SerializeField]
-        private float nextCardDegrees = 720;
-
-        [SerializeField]
-        private float nextCardAnimationSpeed = 1;
 
         private Image image;
 
@@ -229,7 +244,6 @@ namespace Content.Scripts
             if (Mathf.Abs(this.EulerZ) < this.thresholdAngle)
             {
                 this.StartCoroutine(this.RotateBack(this.EulerZ));
-                return;
             }
             else
             {
@@ -245,10 +259,13 @@ namespace Content.Scripts
                     this.CheckForAndInsertFollowUpCard(this.currentCard.FollowUpIdR, this.currentCard.FollowUpStepR);
                 }
 
-                StartCoroutine(this.MoveAway());
+                this.StartCoroutine(this.MoveAway());
             }
         }
 
+        /// <summary>
+        /// Callback from animation system, when NextCardAnimation is over.
+        /// </summary>
         public void OnAppliedCardAnimationOver()
         {
             this.StopAllCoroutines();
@@ -550,7 +567,7 @@ namespace Content.Scripts
             {
                 var angle = Mathf.Lerp(currentRotation, 0.0f, t);
                 this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle);
-                t += this.backRotationSpeed * Time.deltaTime;
+                t += animationRevertRotationSpeed * Time.deltaTime;
                 yield return null;
             }
 
@@ -568,14 +585,14 @@ namespace Content.Scripts
             {
                 if (this.EulerZ > 0)
                 {
-                    this.transform.position += Vector3.left * (this.moveAwayDistance * t);
+                    this.transform.position += Vector3.left * (this.animationMoveDistance * t);
                 }
                 else
                 {
-                    this.transform.position += Vector3.right * (this.moveAwayDistance * t);
+                    this.transform.position += Vector3.right * (this.animationMoveDistance * t);
                 }
 
-                t += this.moveAwaySpeed * Time.deltaTime;
+                t += this.animationMoveSpeed * Time.deltaTime;
 
                 yield return null;
             }
@@ -595,9 +612,9 @@ namespace Content.Scripts
             while (t <= 1)
             {
                 targetTransform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, t);
-                var targetZ = Mathf.Lerp(this.nextCardDegrees, 0, t);
+                var targetZ = Mathf.Lerp(this.animationNextCardDegree, 0, t);
                 targetTransform.rotation = Quaternion.Euler(0,0,targetZ);
-                t += this.nextCardAnimationSpeed * Time.deltaTime;
+                t += this.aniamtionNextCardSpeed * Time.deltaTime;
              
                 yield return null;
             }

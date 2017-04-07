@@ -23,18 +23,30 @@ namespace Content.Scripts
         /// The game manager.
         /// </summary>
         [SerializeField]
-        private GameManager gameManager;
+        private GameManager gameManager = null;
 
         /// <summary>
         /// The card text.
         /// </summary>
         [SerializeField]
-        private Text cardTextUIComponent;
+        private Text cardTextUIComponent = null;
 
-        /// <summary>
-        /// The deviation to help.
-        /// </summary>
-        [SerializeField]
+		/// <summary>
+		/// The adress text.
+		/// </summary>
+		[SerializeField]
+		private Text textAdressee = null;
+
+		/// <summary>
+		/// Adressee name
+		/// </summary>
+		[SerializeField]
+	    private string[] adresseeNames;
+
+		/// <summary>
+		/// The deviation to help.
+		/// </summary>
+		[SerializeField]
         private int deviationToHelp = 20;
 
         /// <summary>
@@ -70,7 +82,7 @@ namespace Content.Scripts
         [Tooltip("The speed used for moving the card away after choosing.")]
         [SerializeField]
         private float animationMoveSpeed = 1f;
-
+		
         /// <summary>
         /// How far the card should move away
         /// </summary>
@@ -224,15 +236,17 @@ namespace Content.Scripts
             this.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
             // handle threshold angle logic (left positive, right negative)
-            if (Mathf.Abs(this.EulerZ) > this.thresholdAngle)
+            if ( Mathf.Abs(this.EulerZ) > this.thresholdAngle )
             {
                 this.gameManager.PreviewResults(this.ChosenPolicy);
-                this.ShowCardSwipeText();
+	            this.textAdressee.text = "Dear " + this.adresseeNames[1] + ',';
+				this.ShowCardSwipeText(); 
             }
             else
             {
                 this.gameManager.RevertPreview();
-                this.ShowCardText();
+				this.textAdressee.text = "Dear " + this.adresseeNames[0] + ',';
+				this.ShowCardText();
             }
         }
 

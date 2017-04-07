@@ -23,7 +23,7 @@ namespace Content.Scripts
 		/// </summary>
 		[Tooltip ( "Fales, when values on policies should be shown." )]
 		[SerializeField]
-		private bool showValues = true;
+		private bool showValues = false;
 
 		/// <summary>
 		/// The block input.
@@ -156,7 +156,6 @@ namespace Content.Scripts
 		/// <param name="values">
 		/// The values.
 		/// </param>
-		/// TODO: Add new preview logic
 		public void PreviewResults ( int[] values )
 		{
 			for ( var i = 0; i < values.Length; i++ )

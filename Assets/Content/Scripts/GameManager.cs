@@ -8,26 +8,29 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.Runtime.CompilerServices;
-using PolyDev.UI;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace Content.Scripts
 {
-    using System.Collections;
-    using UnityEngine;
-    using UnityEngine.UI;
+	/// <summary>
+	///     The game manager.
+	/// </summary>
+	public class GameManager : MonoBehaviour
+	{
+		/// <summary>
+		/// Fales, when values on policies should be shown.
+		/// </summary>
+		[Tooltip ( "Fales, when values on policies should be shown." )]
+		[SerializeField]
+		private bool showValues = true;
 
-    /// <summary>
-    /// The game manager.
-    /// </summary>
-    public class GameManager : MonoBehaviour
-    {
-        /// <summary>
-        /// The block input.
-        /// </summary>
-        [HideInInspector]
-        public bool blockInput = false;
-	
+		/// <summary>
+		/// The block input.
+		/// </summary>
+		[HideInInspector]
+		public bool blockInput;
+
 		/// <summary>
 		/// The bound policy values.
 		/// </summary>
@@ -38,324 +41,260 @@ namespace Content.Scripts
 		/// The game over object.
 		/// </summary>
 		[SerializeField]
-        private GameObject gameOverObject = null;
-
-        /// <summary>
-        /// Bound round count
-        /// </summary>
-        [SerializeField]
-        public BindInt round;
-
-        /// <summary>
-        /// Checks Happiness Threshold Win every set round.
-        /// </summary>
-        [Tooltip("Checks Happiness Threshold Win every set round.")]
-        [SerializeField]
-        private int winCheck = 5;
-
-        /// <summary>
-        /// The happiness threshold win.
-        /// </summary>
-        [Tooltip("Threshold policyType of happines used to determine when player lost! Use negative policyType to disable.")]
-        [SerializeField]
-        private int happinessThresholdWin = 90;
-
-        /// <summary>
-        /// The happiness threshold lose.
-        /// </summary>
-        [Tooltip("Threshold policyType of happines used to determine when player lost! Use negative policyType to disable.")]
-        [SerializeField]
-        private int happinessThresholdLose = 20;
+		private GameObject gameOverObject = null;
 
 		/// <summary>
-		/// Win screen sprite.
+		///  Win screen sprite.
 		/// </summary>
-		[Tooltip("This Screen is set on Game Over, if the player has won.")]
+		[Tooltip ( "This Screen is set on Game Over, if the player has won." )]
 		[SerializeField]
-		private Sprite winScreen;
+		private Sprite winScreen = null;
 
 		/// <summary>
-		/// Lose screens, when policy is too high.
-		/// </summary>
-		[Tooltip("ID determines which screen is shown, when corresponding policy value is too high.")]
-		[SerializeField]
-		private Sprite[] loseTooHighScreens;
-
-		/// <summary>
-		/// Lose screens, when policy is too low.
+		///  Lose screens, when policy is too low.
 		/// </summary>
 		[Tooltip("ID determines which screen is shown, when corresponding policy value is too low.")]
 		[SerializeField]
-		private Sprite[] loseTooLowScreens;
+		private Sprite[] loseScreens;
 
 		/// <summary>
-		/// Fales, when values on policies should be shown.
+		/// Checks Happiness Threshold Win every set round.
 		/// </summary>
-		[Tooltip ( "Fales, when values on policies should be shown." )]
+		[Tooltip ( "Checks Happiness Threshold Win every set round." )]
 		[SerializeField]
-		private bool hideValues = true;
+		private int winCheck = 5;
 
 		/// <summary>
-		/// An policy icons target color, when reaching its max value.
+		///  The happiness threshold win.
 		/// </summary>
-		[Tooltip( "An policy icons target color, when reaching its max value." )]
+		[Tooltip ( "Threshold policyType of happines used to determine when player lost! Use negative policyType to disable.")]
 		[SerializeField]
-		private Color maxColor = Color.black;
+		private int winThreshold = 90;
 
 		/// <summary>
-		/// An policy icons target color, when reaching its min value.
+		/// The happiness threshold lose.
 		/// </summary>
-		[Tooltip ( "An policy icons target color, when reaching its min value." )]
+		[Tooltip ( "Threshold policyType of happines used to determine when player lost! Use negative policyType to disable.")]
 		[SerializeField]
-		private Color minColor = Color.black;
+		private readonly int loseThreshold = 20;
 
 		/// <summary>
-		/// The preview color negative.
+		/// Round count
+		/// </summary>
+		private int round;
+
+		/// <summary>
+		/// The min preview color.
 		/// </summary>
 		[SerializeField]
-        private Color negativPreviewColor = Color.red;
+		private Color minPreviewColor = Color.white;
 
-        /// <summary>
-        /// The preview color positive.
-        /// </summary>
-        [SerializeField]
-        private Color positivePreviewColor = Color.green;
+		/// <summary>
+		/// The max preview color.
+		/// </summary>
+		[SerializeField]
+		private Color maxPreviewColor = Color.blue;
 
-        /// <summary>
-        /// The revert speed.
-        /// </summary>
-        [SerializeField]
-        private float revertSpeed = 1f;
+		/// <summary>
+		///     The revert speed.
+		/// </summary>
+		[SerializeField]
+		private float revertSpeed = 1f;
 
-        /// <summary>
-        /// The get policy value.
-        /// </summary>
-        /// <param name="policyType">
-        /// The policy value.
-        /// </param>
-        /// <returns>
-        /// The <see cref="int"/>.
-        /// </returns>
-        public int GetPolicyValue( PolicyType policyType )
-        {
-            switch (policyType)
-            {
-                case PolicyType.Culture:
-                case PolicyType.Economy:
-                case PolicyType.Environment:
-                case PolicyType.Security:
-                case PolicyType.Treasury:
+		/// <summary>
+		/// The get policy value.
+		/// </summary>
+		/// <param name="policyType">
+		/// The policy value.
+		/// </param>
+		/// <returns>
+		/// The <see cref="int" />.
+		/// </returns>
+		public int GetPolicyValue ( PolicyType policyType )
+		{
+			switch ( policyType )
+			{
+				case PolicyType.Culture:
+				case PolicyType.Economy:
+				case PolicyType.Environment:
+				case PolicyType.Security:
+				case PolicyType.Treasury:
 				case PolicyType.Happiness:
-					return this.policies[(int)policyType].Value;
-                default:
-                    Debug.LogWarning("passed PolicyValue enum not valid, please think about what you are doing here. returned 0.");
-                    return 0;
-            }
-        }
+					return this.policies[(int) policyType].Value;
+				default:
+					Debug.LogWarning ( "passed PolicyValue enum not valid, please think about what you are doing here. returned 0." );
+					return 0;
+			}
+		}
 
-        /// <summary>
-        /// The apply results.
-        /// </summary>
-        /// <param name="values">
-        /// The values.
-        /// </param>
-        public void ApplyResults(int[] values)
-        {
-	        var targetHappiness = 0;
-            for (var i = 0; i < values.Length; i++)
-            {
-                this.policies[i].AddValue(values[i], minColor, maxColor);
-	            targetHappiness += this.policies[i].Value;
-            }
+		/// <summary>
+		/// The apply results.
+		/// </summary>
+		/// <param name="values">
+		/// The values.
+		/// </param>
+		public void ApplyResults ( int[] values )
+		{
+			var targetHappiness = 0;
+			for ( var i = 0; i < values.Length; i++ )
+			{
+				this.policies[i].AddValue ( values[i] );
+				targetHappiness += this.policies[i].Value;
+			}
 
 			// set happiness to average of 4 main policies.
-			this.policies[(int)PolicyType.Happiness].SetValue( targetHappiness / 4, this.minColor, this.maxColor );
+			this.policies[(int) PolicyType.Happiness].SetValue ( targetHappiness / 4 );
 
-			this.RevertPreview(this.revertSpeed);
-            this.round.Value ++;
-            this.CheckforGameOver();
-        }
+			this.RevertPreview ( this.revertSpeed );
+			++this.round;
+			this.CheckforGameOver ();
+		}
 
-        /// <summary>
-        /// Shows a preview of the possible result.
-        /// </summary>
-        /// <param name="values">
-        /// The values.
-        /// </param>
-        public void PreviewResults( int[] values )
-        {
-            for (var i = 0; i < values.Length; i++)
-            {
-				if ( values[i] > 0 )
-	            {
-					this.policies[i].SetIconColor( this.positivePreviewColor );
-	            }
-	            else if ( values[i] < 0 )
-	            {
-					this.policies[i].SetIconColor( this.negativPreviewColor );
+		/// <summary>
+		/// Shows a preview of the possible result.
+		/// </summary>
+		/// <param name="values">
+		/// The values.
+		/// </param>
+		/// TODO: Add new preview logic
+		public void PreviewResults ( int[] values )
+		{
+			for ( var i = 0; i < values.Length; i++ )
+			{
+				var valueAbs = Mathf.Abs ( values[i] );
+				if ( valueAbs > 0 )
+				{
+					this.policies[i].Preview ( valueAbs, this.minPreviewColor, this.maxPreviewColor);
 				}
-            }
-        }
+			}
+		}
 
 		/// <summary>
 		/// Starts reverting colors;
 		/// </summary>
-		public void RevertPreview()
-        {
-	        this.RevertPreview( this.revertSpeed );
-        }
+		public void RevertPreview ()
+		{
+			this.RevertPreview ( this.revertSpeed );
+		}
 
 		/// <summary>
 		/// Overload. Starts reverting preview color.
 		/// </summary>
 		/// <param name="speed">The speed at which the color lerps back</param>
-		public void RevertPreview( float speed )
+		public void RevertPreview ( float speed )
 		{
-			foreach (var policy in this.policies)
-			{
-				policy.RevertPreviewValue( speed );
-			}
+			foreach ( var policy in this.policies )
+				policy.RevertPreviewValue ( speed );
 		}
 
 		/// <summary>
 		/// The start. Sets initial parameter
 		/// </summary>
-		public void Start()
-        {
-            this.gameOverObject.SetActive(false);
-            this.blockInput = false;
-			this.SetValuesActive( !this.hideValues );
+		public void Start ()
+		{
+			this.gameOverObject.SetActive ( false );
+			this.blockInput = false;
 
-	        foreach ( var policy in this.policies )
-	        {
-				policy.SetValue(50, this.minColor, this.maxColor);
+			this.SetValuesActive ( Debug.isDebugBuild && this.showValues );
+
+			foreach ( var policy in this.policies )
+			{
+				policy.SetValue ( 50 );
 			}
 		}
 
 		/// <summary>
-		/// Shows/ hides values on interface
+		///  Shows/ hides values on interface
 		/// </summary>
-		/// <param name="state"></param>
-		public void SetValuesActive( bool state )
+		/// <param name="state">The target active state</param>
+		public void SetValuesActive ( bool state )
 		{
-			foreach (var policy in this.policies)
+			foreach ( var policy in this.policies )
 			{
 				policy.Text.enabled = state;
 			}
-		    this.round.targetGameObject.GetComponent<Text>().enabled = state;
-		}
-
-        /// <summary>
-        /// Checks policy values and determines as well as executes a game over. 
-        /// NOTE: reload logic is on the GameOverScreenObject
-        /// TODO: refine win logic, when card count is implemented
-        /// </summary>
-        private void CheckforGameOver()
-        {
-            if (this.round.valueUnbound % this.winCheck == 0)
-            {
-                // Check for victory by happiness
-                if (this.policies[5].Value >= this.happinessThresholdWin && this.happinessThresholdWin > 0)
-                {
-                    this.GetGameOverText(5).text =
-                        "Victory! \n \n Your happiness exceeds all expectations! \n \n Party hard!!!";
-                    this.SetWinImage();
-                    return;
-                }
-            }
-
-            // Check for lose by happines
-            if (this.policies[5].Value <= this.happinessThresholdLose && this.happinessThresholdLose > 0)
-            {
-                this.GetGameOverText(5).text += " was too damn low!";
-	            this.SetLoseToLowImage(5);
-                return;
-            }
-
-            // check policy bounds
-            for (var i = 0; i < 4; i++)
-            {
-                // Check if policy is too low
-                if (this.policies[i].Value <= 0)
-                {
-                    this.GetGameOverText(i).text += " was too damn low!";
-					this.SetLoseToLowImage(i);
-                    return;
-                }
-
-                // Check if policy is too high
-                if (this.policies[i].Value >= 100)
-                {
-                    this.GetGameOverText(i).text += " was too damn high!";
-					this.SetLoseToHighImage(i);
-                    return;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Returns GameOver text object and sets parameter for blocking input.
-        /// </summary>
-        /// <param name="policyId">
-        /// The policyID responsible for the game over.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Text"/>.
-        /// </returns>
-        private Text GetGameOverText(int policyId)
-        {
-            this.blockInput = true;
-            this.gameOverObject.SetActive(true);
-            var gameOverText = this.gameOverObject.GetComponentInChildren<Text>(true);
-	        var policyName = this.policies[policyId].type.ToString();
-			gameOverText.text = "You Lost! \n \n Your " + policyName;
-            return gameOverText;
-        }
-
-		/// <summary>
-		/// Sets the win screen
-		/// </summary>
-	    private void SetWinImage()
-	    {
-		    this.gameOverObject.SetActive(true);
-		    var gameOverImage = this.gameOverObject.GetComponent<Image>();
-		    gameOverImage.sprite = this.winScreen;
-	    }
-
-		/// <summary>
-		/// Sets the lose screen to the correxponding too high policy
-		/// </summary>
-		/// <param name="id">Policy id</param>
-	    private void SetLoseToHighImage( int id )
-	    {
-			this.gameOverObject.SetActive(true);
-			var gameOverImage = this.gameOverObject.GetComponent<Image>();
-		    try
-		    {
-				gameOverImage.sprite = this.loseTooHighScreens[id];
-			}
-		    catch (IndexOutOfRangeException)
-		    {
-				Debug.LogWarning("No loseToHighScreen set at id: " + id);
-			    gameOverImage.sprite = this.winScreen;
-		    }
 		}
 
 		/// <summary>
-		/// Sets the lose screen to the correxponding too low policy
+		/// Checks policy values and determines as well as executes a game over.
+		/// NOTE: reload logic is on the GameOverScreenObject
+		/// TODO: Add New elections card at this count
 		/// </summary>
-		/// <param name="id">Policy id</param>
-		private void SetLoseToLowImage(int id)
+		private void CheckforGameOver ()
 		{
-			this.gameOverObject.SetActive(true);
-			var gameOverImage = this.gameOverObject.GetComponent<Image>();
+			if ( this.round % this.winCheck == 0 )
+			{
+				if ( this.policies[5].Value >= this.winThreshold && this.winThreshold > 0 )
+				{
+					this.GetGameOverText ( 5 ).text =
+						"Victory! \n \n Your happiness exceeds all expectations! \n \n Party hard!!!";
+					this.SetWinImage ();
+					return;
+				}
+			}
+
+			// Check for lose by happines
+			if ( this.policies[5].Value <= this.loseThreshold && this.loseThreshold > 0 )
+			{
+				this.GetGameOverText ( 5 ).text += " was too damn low!";
+				this.SetLoseScreen ( 5 );
+				return;
+			}
+
+			// check policy bounds
+			for ( var i = 0; i < 4; i++ )
+				if ( this.policies[i].Value <= 0 )
+				{
+					this.GetGameOverText ( i ).text += " was too damn low!";
+					this.SetLoseScreen ( i );
+					return;
+				}
+		}
+
+		/// <summary>
+		///     Returns GameOver text object and sets parameter for blocking input.
+		/// </summary>
+		/// <param name="policyId">
+		///     The policyID responsible for the game over.
+		/// </param>
+		/// <returns>
+		///     The <see cref="Text" />.
+		/// </returns>
+		private Text GetGameOverText ( int policyId )
+		{
+			this.blockInput = true;
+			this.gameOverObject.SetActive ( true );
+			var gameOverText = this.gameOverObject.GetComponentInChildren <Text> ( true );
+			var policyName = this.policies[policyId].type.ToString ();
+			gameOverText.text = "You Lost! \n \n Your " + policyName;
+			return gameOverText;
+		}
+
+		/// <summary>
+		///     Sets the win screen
+		/// </summary>
+		private void SetWinImage ()
+		{
+			this.gameOverObject.SetActive ( true );
+			var gameOverImage = this.gameOverObject.GetComponent <Image> ();
+			gameOverImage.sprite = this.winScreen;
+		}
+
+		/// <summary>
+		///     Sets the lose screen to the correxponding too low policy
+		/// </summary>
+		/// <param name="id">Policy id</param>
+		private void SetLoseScreen ( int id )
+		{
+			this.gameOverObject.SetActive ( true );
+			var gameOverImage = this.gameOverObject.GetComponent <Image> ();
 			try
 			{
-				gameOverImage.sprite = this.loseTooLowScreens[id];
+				gameOverImage.sprite = this.loseScreens[id];
 			}
-			catch (IndexOutOfRangeException)
+			catch ( IndexOutOfRangeException )
 			{
-				Debug.LogWarning("No loseToLowScreen set at id: " + id);
+				Debug.LogWarning ( "No loseToLowScreen set at id: " + id );
 				gameOverImage.sprite = this.winScreen;
 			}
 		}

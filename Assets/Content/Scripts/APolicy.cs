@@ -94,9 +94,9 @@ namespace Content.Scripts
 			this.startColor = this.Icon.color;
 		}
 
-		public abstract void AddValue(int summand, Color minColor, Color maxColor);
-		public abstract void SetValue(int targetValue, Color minColor, Color maxColor);
-		public abstract void SetIconColor(Color targetColor);
+		public abstract void AddValue(int summand);
+		public abstract void SetValue(int targetValue);
+		public abstract void Preview( int value, Color minColor,  Color maxColor );
 		public abstract void RevertPreviewValue(float speed);
 		protected abstract IEnumerator RevertPreviewAnimation(float speed);
 	}

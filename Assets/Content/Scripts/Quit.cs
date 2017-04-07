@@ -1,10 +1,17 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Quit : MonoBehaviour
+
+namespace Content.Scripts
 {
-	public void QuitGame()
+	public class Quit : MonoBehaviour
 	{
-		Application.Quit ();
+		/// <summary>
+		/// Quits the game on click
+		/// </summary>
+		public void OnClick ()
+		{
+			Application.Quit ();
+		}
 	}
 }

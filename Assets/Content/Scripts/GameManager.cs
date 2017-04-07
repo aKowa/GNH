@@ -156,7 +156,6 @@ namespace Content.Scripts
 		/// <param name="values">
 		/// The values.
 		/// </param>
-		/// TODO: Add new preview logic
 		public void PreviewResults ( int[] values )
 		{
 			for ( var i = 0; i < values.Length; i++ )

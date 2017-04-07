@@ -37,6 +37,7 @@ namespace Content.Scripts
 		{
 			AConsoleController.instance = this;
 			this.ToggleActive();
+			this.transform.parent.gameObject.SetActive ( Debug.isDebugBuild );
 		}
 
 		/// <summary>

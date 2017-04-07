@@ -23,7 +23,7 @@ namespace Content.Scripts
 		/// </summary>
 		[Tooltip ( "Fales, when values on policies should be shown." )]
 		[SerializeField]
-		private bool showValues = true;
+		private bool showValues = false;
 
 		/// <summary>
 		/// The block input.

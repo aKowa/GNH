@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -53,25 +54,33 @@ namespace Content.Scripts
 				{
 					return this.icon;
 				}
-				return this.icon = this.gameObject.GetComponent<Image>();
+
+				var images = this.gameObject.GetComponentsInChildren <Image> ();
+				return images.FirstOrDefault ( image => image.tag == "OverlayIcon" );
 			}
 		}
 
 		/// <summary>
-		/// Start Icon Color.
+		/// The preview Icon
 		/// </summary>
-		[Tooltip("Start Icon Color.")]
-		[SerializeField]
-		private Color startColor = Color.black;
+		private Image previewIcon;
 
 		/// <summary>
-		/// External start color (readonly)
+		/// External preview Icon.
 		/// </summary>
-		public Color StartColor
+		public Image PreviewIcon
 		{
-			get { return this.startColor; }
-		}
+			get
+			{
+				if ( this.previewIcon != null )
+				{
+					return this.previewIcon;
+				}
 
+				var images = this.gameObject.GetComponentsInChildren<Image>();
+				return images.FirstOrDefault(image => image.tag == "PreviewIcon");
+			}
+		}
 
 		/// <summary>
 		/// Internal value of the policy.
@@ -91,13 +100,15 @@ namespace Content.Scripts
 		/// </summary>
 		private void Start()
 		{
-			this.startColor = this.Icon.color;
+			this.icon = this.gameObject.GetComponentsInChildren<Image>()[1];
+			this.PreviewIcon.color = Color.clear;
+			this.text = this.gameObject.GetComponentInChildren<Text>();
 		}
 
-		public abstract void AddValue(int summand);
-		public abstract void SetValue(int targetValue);
+		public abstract void AddValue( int summand );
+		public abstract void SetValue( int targetValue );
 		public abstract void Preview( int value, Color minColor,  Color maxColor );
-		public abstract void RevertPreviewValue(float speed);
-		protected abstract IEnumerator RevertPreviewAnimation(float speed);
+		public abstract void RevertPreviewValue( float speed );
+		protected abstract IEnumerator RevertPreviewAnimation(Image icon, float speed );
 	}
 }

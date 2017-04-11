@@ -28,6 +28,7 @@ namespace Content.Scripts
 		{
 			base.value = targetValue;
 			base.Text.text = base.type == PolicyType.Treasury ? (base.Value * 1000).ToString() : base.Value.ToString();
+
 			base.Icon.fillAmount = (float)base.Value / 100;
 		}
 
@@ -42,7 +43,7 @@ namespace Content.Scripts
 			this.StopAllCoroutines ();
 			var normalizedValue = (float)Mathf.Abs ( value ) / 20 ;
 			var targetColor = Color.Lerp ( minColor, maxColor, normalizedValue );
-			base.Icon.color = targetColor;
+			base.PreviewIcon.color = targetColor;
 		}
 		
 		/// <summary>
@@ -51,7 +52,7 @@ namespace Content.Scripts
 		public override void RevertPreviewValue( float speed )
 		{
 			this.StopAllCoroutines();
-			this.StartCoroutine( this.RevertPreviewAnimation( speed ) );
+			this.StartCoroutine( this.RevertPreviewAnimation( base.PreviewIcon, speed ) );
 		}
 
 		/// <summary>
@@ -60,16 +61,17 @@ namespace Content.Scripts
 		/// <returns>
 		/// The <see cref="IEnumerator"/>.
 		/// </returns>
-		protected override IEnumerator RevertPreviewAnimation( float speed )
+		protected override IEnumerator RevertPreviewAnimation( Image icon, float speed )
 		{
 			float t = 0;
-			var color = base.Icon.color;
+			var initColor = icon.color;
 			while (t < 1f)
 			{
-				base.Icon.color = base.Icon.color.GetRGB( Color.Lerp(color, base.StartColor, t) );
+				icon.color = Color.Lerp ( initColor, Color.clear, t );
 				t += speed * Time.deltaTime;
 				yield return null;
 			}
+			icon.color = Color.clear;
 		}
 	}
 }

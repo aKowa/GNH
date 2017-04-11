@@ -225,8 +225,7 @@ namespace Content.Scripts
 			{
 				if ( this.policies[5].Value >= this.winThreshold && this.winThreshold > 0 )
 				{
-					this.GetGameOverText ( 5 ).text =
-						"Victory! \n \n Your happiness exceeds all expectations! \n \n Party hard!!!";
+					this.GetGameOverText ( 5 ).text = "Victory! \n \n Your happiness exceeds all expectations! \n \n Party hard!!!";
 					this.SetWinImage ();
 					return;
 				}
@@ -293,8 +292,8 @@ namespace Content.Scripts
 			}
 			catch ( IndexOutOfRangeException )
 			{
-				Debug.LogWarning ( "No loseToLowScreen set at id: " + id );
-				gameOverImage.sprite = this.winScreen;
+				Debug.LogWarning ( "IndexOutOfRange! No loseToLowScreen set at id: " + id );
+				gameOverImage.sprite = this.loseScreens[0] ?? this.winScreen;
 			}
 		}
 	}

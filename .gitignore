@@ -35,3 +35,6 @@ Assets/Content/Sounds/ending_happy.wav.meta
 Assets/Content/Sounds/ending_sad.wav
 Assets/Content/Sounds/ending_happy.wav
 Assets/Content/Sounds/background.wav
+Assets/Resources/background.wav
+Assets/Resources/ending_happy.wav
+Assets/Resources/ending_sad.wav

@@ -103,13 +103,18 @@ namespace Content.Scripts
         [SerializeField]
         private float aniamtionNextCardSpeed = 1;
 
+		/// <summary>
+		/// The swipe audio clip
+		/// </summary>
 		[SerializeField]
 		private AudioClip swipeClip = null;
 
+		/// <summary>
+		/// The new card audio clip
+		/// </summary>
 		[SerializeField]
 		private AudioClip newCardClip = null;
-
-
+		
 		/// <summary>
 		/// This cards inital position.
 		/// </summary>
@@ -160,12 +165,20 @@ namespace Content.Scripts
         /// </summary>
         private string[] theFourCardCategories = { "Culture", "Economy", "Environment", "Security" };
 
+		/// <summary>
+		/// This cards image, used as raycasting target
+		/// </summary>
         private Image image;
 
-        /// <summary>
-        /// Gets the chosen policy.
-        /// </summary>
-        private int[] ChosenPolicy
+		/// <summary>
+		/// Flag if angular threshold of card was crossed
+		/// </summary>
+		private bool hasCrossedThreshold = false;
+		
+		/// <summary>
+		/// Gets the chosen policy.
+		/// </summary>
+		private int[] ChosenPolicy
         {
             get
             {
@@ -224,8 +237,6 @@ namespace Content.Scripts
         {
             this.StopAllCoroutines();
         }
-
-	    private bool hasCrossedThreshold = false;
 
         /// <summary>
         /// Rotates the card towards the input position when dragged.

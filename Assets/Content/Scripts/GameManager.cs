@@ -62,7 +62,7 @@ namespace Content.Scripts
 		/// </summary>
 		[Tooltip("ID determines which screen is shown, when corresponding policy value is too low.")]
 		[SerializeField]
-		private Sprite[] loseScreens;
+		private Sprite[] loseScreens = null;
 
 		/// <summary>
 		/// Checks Happiness Threshold Win every set round.
@@ -232,7 +232,7 @@ namespace Content.Scripts
 				if ( this.policies[5].Value <= this.winThreshold )
 				{
 					this.GetGameOverText ( 5 ).text = "Victory! \n \n Your happiness exceeds all expectations! \n \n Party hard!!!";
-					this.SetWinImage ();
+					this.SetWin ();
 					return;
 				}
 			}
@@ -241,7 +241,7 @@ namespace Content.Scripts
 			if ( this.policies[ (int)PolicyType.Happiness ].Value >= this.loseDeviationThreshold && this.loseDeviationThreshold > 0 )
 			{
 				this.GetGameOverText ( 5 ).text += " was too damn low!";
-				this.SetLoseScreen ( 5 );
+				this.SetLose ( 5 );
 				return;
 			}
 			
@@ -250,7 +250,7 @@ namespace Content.Scripts
 				if ( this.policies[i].Value <= 0 )
 				{
 					this.GetGameOverText ( i ).text += " was too damn low!";
-					this.SetLoseScreen ( i );
+					this.SetLose ( i );
 					return;
 				}
 		}
@@ -275,20 +275,25 @@ namespace Content.Scripts
 		}
 
 		/// <summary>
-		///     Sets the win screen
+		/// Sets the win screen
 		/// </summary>
-		private void SetWinImage ()
+		private void SetWin ()
 		{
+			// set screen
 			this.gameOverObject.SetActive ( true );
 			var gameOverImage = this.gameOverObject.GetComponent <Image> ();
 			gameOverImage.sprite = this.winScreen;
+
+			// play audio
+			AudioController.BgMusic.clip = Resources.Load ("ending_happy") as AudioClip;
+			AudioController.BgMusic.Play();
 		}
 
 		/// <summary>
-		///     Sets the lose screen to the correxponding too low policy
+		/// Sets the lose screen to the correxponding too low policy
 		/// </summary>
 		/// <param name="id">Policy id</param>
-		private void SetLoseScreen ( int id )
+		private void SetLose ( int id )
 		{
 			this.gameOverObject.SetActive ( true );
 			var gameOverImage = this.gameOverObject.GetComponent <Image> ();
@@ -301,6 +306,10 @@ namespace Content.Scripts
 				Debug.LogWarning ( "IndexOutOfRange! No loseToLowScreen set at id: " + id );
 				gameOverImage.sprite = this.loseScreens[0] ?? this.winScreen;
 			}
+
+			// play audio
+			AudioController.BgMusic.clip = Resources.Load("ending_sad") as AudioClip;
+			AudioController.BgMusic.Play();
 		}
 
 		/// <summary>

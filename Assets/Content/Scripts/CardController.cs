@@ -103,10 +103,22 @@ namespace Content.Scripts
         [SerializeField]
         private float aniamtionNextCardSpeed = 1;
 
-        /// <summary>
-        /// This cards inital position.
-        /// </summary>
-        private Vector3 initPosition;
+		/// <summary>
+		/// The swipe audio clip
+		/// </summary>
+		[SerializeField]
+		private AudioClip swipeClip = null;
+
+		/// <summary>
+		/// The new card audio clip
+		/// </summary>
+		[SerializeField]
+		private AudioClip newCardClip = null;
+		
+		/// <summary>
+		/// This cards inital position.
+		/// </summary>
+		private Vector3 initPosition;
 
         /// <summary>
         /// The card hand.
@@ -153,12 +165,20 @@ namespace Content.Scripts
         /// </summary>
         private string[] theFourCardCategories = { "Culture", "Economy", "Environment", "Security" };
 
+		/// <summary>
+		/// This cards image, used as raycasting target
+		/// </summary>
         private Image image;
 
-        /// <summary>
-        /// Gets the chosen policy.
-        /// </summary>
-        private int[] ChosenPolicy
+		/// <summary>
+		/// Flag if angular threshold of card was crossed
+		/// </summary>
+		private bool hasCrossedThreshold = false;
+		
+		/// <summary>
+		/// Gets the chosen policy.
+		/// </summary>
+		private int[] ChosenPolicy
         {
             get
             {
@@ -235,19 +255,23 @@ namespace Content.Scripts
             angle = Mathf.Clamp(angle - 90, -this.maxAngle, this.maxAngle);
             this.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-            // handle threshold angle logic (left positive, right negative)
-            if ( Mathf.Abs(this.EulerZ) > this.thresholdAngle )
-            {
-                this.gameManager.PreviewResults(this.ChosenPolicy);
-	            this.textAdressee.text = "Dear " + this.adresseeNames[1] + ',';
-				this.ShowCardSwipeText(); 
-            }
-            else
-            {
-                this.gameManager.RevertPreview();
-				this.textAdressee.text = "Dear " + this.adresseeNames[0] + ',';
-				this.ShowCardText();
-            }
+			// handle threshold angle logic (left positive, right negative)
+	   
+		    if ( Mathf.Abs ( this.EulerZ ) > this.thresholdAngle && !this.hasCrossedThreshold )
+		    {
+			    this.hasCrossedThreshold = true;
+			    this.gameManager.PreviewResults ( this.ChosenPolicy );
+			    this.textAdressee.text = "Dear " + this.adresseeNames[1] + ',';
+			    this.ShowCardSwipeText ();
+				AudioController.Instance.PlaySound ( this.swipeClip );
+		    }
+		    else if (Mathf.Abs(this.EulerZ) <= this.thresholdAngle && this.hasCrossedThreshold)
+			{
+				this.hasCrossedThreshold = false;
+				this.gameManager.RevertPreview ();
+			    this.textAdressee.text = "Dear " + this.adresseeNames[0] + ',';
+			    this.ShowCardText ();
+		    }
         }
 
         /// <summary>
@@ -592,8 +616,9 @@ namespace Content.Scripts
         /// Moves the card away into the chosen direction
         /// </summary>
         private IEnumerator MoveAway()
-        {
-            this.image.raycastTarget = false;
+		{
+			AudioController.Instance.PlaySound(this.newCardClip);
+			this.image.raycastTarget = false;
             float t = 0;
             while ( t <= 1 )
             {

@@ -8,6 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -76,7 +77,7 @@ namespace Content.Scripts
 		/// </summary>
 		[Tooltip ( "Threshold policyType of happines used to determine when player lost! Use negative policyType to disable.")]
 		[SerializeField]
-		private readonly int loseThreshold = 20;
+		private int loseDeviationThreshold = 20;
 
 		/// <summary>
 		/// Round count
@@ -135,15 +136,12 @@ namespace Content.Scripts
 		/// </param>
 		public void ApplyResults ( int[] values )
 		{
-			var targetHappiness = 0;
 			for ( var i = 0; i < values.Length; i++ )
 			{
 				this.policies[i].AddValue ( values[i] );
-				targetHappiness += this.policies[i].Value;
 			}
 
-			// set happiness to average of 4 main policies.
-			this.policies[(int) PolicyType.Happiness].SetValue ( targetHappiness / 4 );
+			this.SetHappiness ();
 
 			this.RevertPreview ( this.revertSpeed );
 			++this.round;
@@ -200,6 +198,8 @@ namespace Content.Scripts
 			{
 				policy.SetValue ( 50 );
 			}
+
+			this.SetHappiness ();
 		}
 
 		/// <summary>
@@ -217,28 +217,28 @@ namespace Content.Scripts
 		/// <summary>
 		/// Checks policy values and determines as well as executes a game over.
 		/// NOTE: reload logic is on the GameOverScreenObject
-		/// TODO: Add New elections card at this count
+		/// TODO: Add new elections card at this count
 		/// </summary>
 		private void CheckforGameOver ()
 		{
 			if ( this.round % this.winCheck == 0 )
 			{
-				if ( this.policies[5].Value >= this.winThreshold && this.winThreshold > 0 )
+				if ( this.policies[5].Value <= this.winThreshold )
 				{
 					this.GetGameOverText ( 5 ).text = "Victory! \n \n Your happiness exceeds all expectations! \n \n Party hard!!!";
 					this.SetWinImage ();
 					return;
 				}
 			}
-
-			// Check for lose by happines
-			if ( this.policies[5].Value <= this.loseThreshold && this.loseThreshold > 0 )
+			
+			// Check for lose by happiness
+			if ( this.policies[ (int)PolicyType.Happiness ].Value >= this.loseDeviationThreshold && this.loseDeviationThreshold > 0 )
 			{
 				this.GetGameOverText ( 5 ).text += " was too damn low!";
 				this.SetLoseScreen ( 5 );
 				return;
 			}
-
+			
 			// check policy bounds
 			for ( var i = 0; i < 4; i++ )
 				if ( this.policies[i].Value <= 0 )
@@ -295,6 +295,37 @@ namespace Content.Scripts
 				Debug.LogWarning ( "IndexOutOfRange! No loseToLowScreen set at id: " + id );
 				gameOverImage.sprite = this.loseScreens[0] ?? this.winScreen;
 			}
+		}
+
+		/// <summary>
+		/// Sets happiness value to max deviation
+		/// </summary>
+		private void SetHappiness ()
+		{
+			// set average
+			var average = 0;
+			for ( var i = 0; i < 4; i++ )
+			{
+				average += this.policies[i].Value;
+			}
+			average = average / 4;
+
+			// set max deviation to average
+			var maxDeviation = 0;
+			var policyID = 0;
+			for ( var j = 0; j < 4; j++ )
+			{
+				var tempDeviation = Math.Abs ( this.policies[j].Value - average );
+				if ( tempDeviation > maxDeviation )
+				{
+					maxDeviation = tempDeviation;
+					policyID = j;
+				}
+			}
+			
+			// set happiness value
+			this.policies[(int)PolicyType.Happiness].SetValue( maxDeviation, this.loseDeviationThreshold );
+			Debug.Log ("Average: " + average +  "  Deviation: " + maxDeviation + "  of " + this.policies[policyID].name );
 		}
 	}
 }

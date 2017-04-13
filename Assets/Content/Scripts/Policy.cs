@@ -22,14 +22,28 @@ namespace Content.Scripts
 		/// Sets the value and also update text and icon maxColor
 		/// </summary>
 		/// <param name="targetValue">Sets this policies value</param>
-		/// <param name="minColor">Color a of icon maxColor lerp</param>
-		/// <param name="maxColor">Color b of icon maxColor lerp</param>
 		public override void SetValue( int targetValue )
+		{
+			this.SetValue ( targetValue, 100 );
+		}
+
+		/// <summary>
+		/// Sets the value and also update text and icon maxColor
+		/// </summary>
+		/// <param name="targetValue">Sets this policies value</param>
+		public override void SetValue( int targetValue, float maximum )
 		{
 			base.value = targetValue;
 			base.Text.text = base.type == PolicyType.Treasury ? (base.Value * 1000).ToString() : base.Value.ToString();
 
-			base.Icon.fillAmount = (float)base.Value / 100;
+			if ( base.type == PolicyType.Happiness )
+			{
+				base.Icon.fillAmount = (float)base.Value / maximum * -1 + 1;
+			}
+			else
+			{
+				base.Icon.fillAmount = (float)base.Value / maximum;
+			}
 		}
 
 		/// <summary>

@@ -8,9 +8,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace Content.Scripts
 {
@@ -37,6 +37,12 @@ namespace Content.Scripts
 		/// </summary>
 		[SerializeField]
 		private Policy[] policies = new Policy[6];
+
+		/// <summary>
+		/// The start value range.
+		/// </summary>
+		[SerializeField]
+		private Vector2 startValueRange = new Vector2( 45f, 55f );
 
 		/// <summary>
 		/// The game over object.
@@ -196,7 +202,7 @@ namespace Content.Scripts
 
 			foreach ( var policy in this.policies )
 			{
-				policy.SetValue ( 50 );
+				policy.SetValue ( (int)Random.Range (  this.startValueRange.x, this.startValueRange.y ) );
 			}
 
 			this.SetHappiness ();
@@ -325,7 +331,7 @@ namespace Content.Scripts
 			
 			// set happiness value
 			this.policies[(int)PolicyType.Happiness].SetValue( maxDeviation, this.loseDeviationThreshold );
-			Debug.Log ("Average: " + average +  "  Deviation: " + maxDeviation + "  of " + this.policies[policyID].name );
+			//Debug.Log ("Average: " + average +  "  Deviation: " + maxDeviation + "  of " + this.policies[policyID].name );
 		}
 	}
 }

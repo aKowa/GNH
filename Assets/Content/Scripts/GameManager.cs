@@ -270,7 +270,7 @@ namespace Content.Scripts
 			this.gameOverObject.SetActive ( true );
 			var gameOverText = this.gameOverObject.GetComponentInChildren <Text> ( true );
 			var policyName = this.policies[policyId].type.ToString ();
-			gameOverText.text = "You Lost! \n \n Your " + policyName;
+			gameOverText.text = "You Lost! \n Your " + policyName;
 			return gameOverText;
 		}
 

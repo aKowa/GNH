@@ -2788,7 +2788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67fb4437eab0bf341993b0a26cb72dd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showValues: 1
+  showValues: 0
   blockInput: 0
   policies:
   - {fileID: 497749266}

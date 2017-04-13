@@ -11,7 +11,14 @@ namespace Content.Scripts
 
 		private void Start ()
 		{
+			this.toggle = this.GetComponent <Toggle> ();
+			this.toggle.isOn = AudioController.IsMuted;
+			this.Mute ();
+		}
 
+		public void Mute ()
+		{
+			AudioController.Instance.Mute ( this.toggle.isOn );
 		}
 	}
 }

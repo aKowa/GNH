@@ -1523,6 +1523,8 @@ MonoBehaviour:
   animationMoveDistance: 900
   animationNextCardDegree: 720
   aniamtionNextCardSpeed: 1
+  swipeClip: {fileID: 8300000, guid: e1e8f5df0d8c2ed40b530c355ae1df14, type: 3}
+  newCardClip: {fileID: 8300000, guid: 4c3120be9abbd2b4f95f19d5e58301e3, type: 3}
 --- !u!114 &795344644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2818,6 +2820,7 @@ GameObject:
   - component: {fileID: 1794012715}
   - component: {fileID: 1794012714}
   - component: {fileID: 1794012713}
+  - component: {fileID: 1794012718}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2893,6 +2896,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1794012718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1794012712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6353a6aa9596b514881fa96af98a76a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioController: {fileID: 1810729363815090, guid: 8b904696cd736284da9910cfa22056c0,
+    type: 2}
 --- !u!1 &1813105013
 GameObject:
   m_ObjectHideFlags: 0

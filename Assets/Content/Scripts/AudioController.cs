@@ -13,15 +13,9 @@ namespace Content.Scripts
 		private AudioSource bgMusic = null;
 
 		/// <summary>
-		/// Sound source
-		/// </summary>
-		[SerializeField]
-		private AudioSource sound = null;
-
-		/// <summary>
 		/// internal instance
 		/// </summary>
-		private static AudioController instance;
+		private static AudioController instance = null;
 
 		/// <summary>
 		/// external instance
@@ -31,18 +25,56 @@ namespace Content.Scripts
 			get { return instance; }
 		}
 
+		private static GameObject soundController = null;
+
+		private static bool isMuted;
+
+		public static bool IsMuted
+		{
+			get { return isMuted; }
+		}
+
 		/// <summary>
 		/// Sets static instance 
 		/// </summary>
-		private void Awake ()
+		private void Start ()
 		{
-			instance = this;
+			if ( instance == null )
+			{
+				instance = this;
+				soundController = Instantiate(new GameObject(), this.transform, false);
+				soundController.name = "SoundController";
+				DontDestroyOnLoad(this.gameObject);
+			}
 		}
 
-
-		private void Mute ( bool state )
+		/// <summary>
+		/// Sets mute state
+		/// </summary>
+		/// <param name="state">Target mute state.</param>
+		public void Mute ( bool state )
 		{
-			this.gameObject.SetActive ( state );
+			isMuted = state;
+			this.bgMusic.mute = state;
+		}
+
+		public void PlaySound ( AudioClip clip )
+		{
+			if ( !isMuted )
+			{
+				var soundInstance = Instantiate ( new GameObject (), soundController.transform, false );
+				soundInstance.name = clip.name;
+				var source = soundInstance.AddComponent <AudioSource> ();
+				source.clip = clip;
+				source.Play ();
+				this.StartCoroutine ( this.DestroySoundInstance ( soundInstance, clip.length ) );
+			}
+		}
+
+		private IEnumerator DestroySoundInstance ( GameObject soundInstance, float time )
+		{
+			yield return new WaitForSeconds ( time );
+			Destroy ( soundInstance );
 		}
 	}
 }

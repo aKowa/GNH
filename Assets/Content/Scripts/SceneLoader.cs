@@ -1,19 +1,23 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoader : MonoBehaviour
+namespace Content.Scripts
 {
-	/// <summary>
-	/// The scene ID to be Loaded.
-	/// </summary>
-	[Tooltip( "The scene ID to be Loaded. Make this " )]
-	public int id = 1;
-
-	/// <summary>
-	/// Loads the scene with the specified ID.
-	/// </summary>
-	public void LoadScene ()
+	public class SceneLoader : MonoBehaviour
 	{
-		SceneManager.LoadScene( id );
-	} 
+		/// <summary>
+		/// The scene ID to be Loaded.
+		/// </summary>
+		[Tooltip ( "The scene ID to be Loaded. Make this " )]
+		public int id = 1;
+
+		/// <summary>
+		/// Loads the scene with the specified ID.
+		/// </summary>
+		public void LoadScene ()
+		{
+			AudioController.Instance.PlaySound ( Resources.Load ( "button" ) as AudioClip );
+			SceneManager.LoadScene ( id );
+		}
+	}
 }

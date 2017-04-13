@@ -283,7 +283,7 @@ namespace Content.Scripts
         public void OnAppliedCardAnimationOver()
         {
             this.StopAllCoroutines();
-            this.GetNextCard();
+			this.GetNextCard();
         }
 
         /// <summary>
@@ -521,8 +521,8 @@ namespace Content.Scripts
             this.policyValuesR[4] = this.currentCard.TreasuryR;
 
             this.ShowCardText();
-
-            this.cardHand.RemoveAt(0);
+			
+			this.cardHand.RemoveAt(0);
             this.FillCardHand();
         }
 
@@ -704,12 +704,13 @@ namespace Content.Scripts
         private void ShowCardText()
         {
             this.cardTextUIComponent.text = this.currentCard.Text;
-        }
+			this.textAdressee.text = "Dear " + this.adresseeNames[0] + ',';
+		}
 
-        /// <summary>
-        /// Sets card values on start.
-        /// </summary>
-        private void Start()
+		/// <summary>
+		/// Sets card values on start.
+		/// </summary>
+		private void Start()
         {
             this.SetupCardLists();
             this.SetupCardStacks();

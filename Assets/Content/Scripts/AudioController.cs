@@ -110,6 +110,9 @@ namespace Content.Scripts
 			}
 		}
 
+		/// <summary>
+		/// Loads the large music clip files async
+		/// </summary>
 		private IEnumerator LoadMusicFiles ()
 		{
 			var asyncLoseClip = Resources.LoadAsync<AudioClip>("ending_sad");

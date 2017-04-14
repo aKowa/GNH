@@ -102,18 +102,6 @@ namespace Content.Scripts
         /// </summary>
         [SerializeField]
         private float aniamtionNextCardSpeed = 1;
-
-		/// <summary>
-		/// The swipe audio clip
-		/// </summary>
-		[SerializeField]
-		private AudioClip swipeClip = null;
-
-		/// <summary>
-		/// The new card audio clip
-		/// </summary>
-		[SerializeField]
-		private AudioClip newCardClip = null;
 		
 		/// <summary>
 		/// This cards inital position.

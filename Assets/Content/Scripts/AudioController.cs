@@ -72,6 +72,7 @@ namespace Content.Scripts
 			{
 				this.Play ( 0 );
 			}
+			StartCoroutine ( this.LoadMusicFiles () );
 		}
 
 		/// <summary>
@@ -107,6 +108,17 @@ namespace Content.Scripts
 				this.soundSource.clip = this.audioClips[id];
 				this.soundSource.Play();
 			}
+		}
+
+		private IEnumerator LoadMusicFiles ()
+		{
+			var asyncLoseClip = Resources.LoadAsync<AudioClip>("ending_sad");
+			yield return asyncLoseClip;
+			yield return this.audioClips[2] = asyncLoseClip.asset as AudioClip;
+
+			var asyncWinClip = Resources.LoadAsync <AudioClip> ( "ending_happy" );
+			yield return asyncWinClip;
+			yield return this.audioClips[1] = asyncWinClip.asset as AudioClip;
 		}
 	}
 }

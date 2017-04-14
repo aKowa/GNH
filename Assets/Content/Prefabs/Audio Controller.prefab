@@ -275,8 +275,8 @@ MonoBehaviour:
   soundSource: {fileID: 82537521819055566}
   audioClips:
   - {fileID: 8300000, guid: 770fda3a022a9bc4981693944f4660d9, type: 3}
-  - {fileID: 8300000, guid: 21acc668225a5c1418586f9a918be260, type: 3}
-  - {fileID: 8300000, guid: e9c991de47a13d84f93fc9f7603c58e8, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 8300000, guid: 4c3120be9abbd2b4f95f19d5e58301e3, type: 3}
   - {fileID: 8300000, guid: e1e8f5df0d8c2ed40b530c355ae1df14, type: 3}
   - {fileID: 8300000, guid: aaa2f21384f6f1443b1fdf46737c89e9, type: 3}

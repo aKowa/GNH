@@ -72,7 +72,7 @@ namespace Content.Scripts
 		private int winCheck = 5;
 
 		/// <summary>
-		///  The happiness threshold win.
+		/// The happiness threshold win.
 		/// </summary>
 		[Tooltip ( "Threshold policyType of happines used to determine when player lost! Use negative policyType to disable.")]
 		[SerializeField]
@@ -107,19 +107,6 @@ namespace Content.Scripts
 		/// </summary>
 		[SerializeField]
 		private float revertSpeed = 1f;
-
-		/// <summary>
-		/// The win music clip
-		/// </summary>
-		[SerializeField]
-		private AudioClip winMusicClip = null;
-
-		/// <summary>
-		/// The win music clip
-		/// </summary>
-		[SerializeField]
-		private AudioClip loseMusicClip = null;
-
 
 		/// <summary>
 		/// The get policy value.

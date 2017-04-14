@@ -36,7 +36,7 @@ namespace Content.Scripts
 		private void Awake()
 		{
 			AConsoleController.instance = this;
-			this.ToggleActive();
+			//this.ToggleActive();
 			this.transform.parent.gameObject.SetActive ( Debug.isDebugBuild );
 		}
 

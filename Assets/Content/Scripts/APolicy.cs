@@ -110,6 +110,7 @@ namespace Content.Scripts
 		public abstract void SetValue( int targetValue, float maximum );
 		public abstract void Preview( int value, Color minColor,  Color maxColor );
 		public abstract void RevertPreviewValue( float speed );
-		protected abstract IEnumerator RevertPreviewAnimation(Image icon, float speed );
+		public abstract void RevertPreviewValue(float speed, Color startColor);
+		protected abstract IEnumerator RevertPreviewAnimation(Image icon, float speed, Color startColor);
 	}
 }

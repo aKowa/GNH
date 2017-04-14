@@ -488,7 +488,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.42352942, g: 0.44313726, b: 0.49019608, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -497,18 +497,18 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 3793ec8a75bad474b8404f5640ee6e25, type: 3}
-    m_FontSize: 65
+    m_FontSize: 100
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 6
-    m_MaxSize: 65
+    m_MinSize: 0
+    m_MaxSize: 100
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: You Lost!
+    m_LineSpacing: 0.5
+  m_Text: "Victory! \n\nYour happiness exceeds all expectations!\n\nParty hard!!!"
 --- !u!222 &130684081
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -927,7 +927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
+  m_Color: {r: 0.68235296, g: 0.9254902, b: 0.9019608, a: 0.653}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1213,7 +1213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
+  m_Color: {r: 0.68235296, g: 0.9254902, b: 0.9019608, a: 0.654902}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1391,7 +1391,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
+  m_Color: {r: 0.68235296, g: 0.9254902, b: 0.9019608, a: 0.654902}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1523,8 +1523,6 @@ MonoBehaviour:
   animationMoveDistance: 900
   animationNextCardDegree: 720
   aniamtionNextCardSpeed: 1
-  swipeClip: {fileID: 8300000, guid: e1e8f5df0d8c2ed40b530c355ae1df14, type: 3}
-  newCardClip: {fileID: 8300000, guid: 4c3120be9abbd2b4f95f19d5e58301e3, type: 3}
 --- !u!114 &795344644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2078,7 +2076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
+  m_Color: {r: 0.68235296, g: 0.9254902, b: 0.9019608, a: 0.654902}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2262,7 +2260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
+  m_Color: {r: 0.68235296, g: 0.9254902, b: 0.9019608, a: 0.654902}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2805,11 +2803,11 @@ MonoBehaviour:
   winCheck: 10
   winThreshold: 10
   loseDeviationThreshold: 40
+  revertSpeed: 0.6
   minPreviewColor: {r: 0.68235296, g: 0.92549026, b: 0.90196085, a: 1}
   maxPreviewColor: {r: 0.1764706, g: 0.53333336, b: 0.5058824, a: 1}
-  revertSpeed: 1.5
-  winMusicClip: {fileID: 8300000, guid: 21acc668225a5c1418586f9a918be260, type: 3}
-  loseMusicClip: {fileID: 8300000, guid: e9c991de47a13d84f93fc9f7603c58e8, type: 3}
+  negativeApplyColor: {r: 0.7827586, g: 0.3830485, b: 0.303, a: 1}
+  positiveApplyColor: {r: 0.54260385, g: 0.6691177, b: 0.1771194, a: 1}
 --- !u!1 &1794012712
 GameObject:
   m_ObjectHideFlags: 0
@@ -3263,7 +3261,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2051478129}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
@@ -3396,7 +3394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
+  m_Color: {r: 0.68235296, g: 0.9254902, b: 0.9019608, a: 0.654902}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:

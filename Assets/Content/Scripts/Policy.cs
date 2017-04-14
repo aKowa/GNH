@@ -65,8 +65,16 @@ namespace Content.Scripts
 		/// </summary>
 		public override void RevertPreviewValue( float speed )
 		{
+			this.RevertPreviewValue ( speed, base.PreviewIcon.color );
+		}
+
+		/// <summary>
+		/// Starts reverting colors and sets start color;
+		/// </summary>
+		public override void RevertPreviewValue(float speed, Color startColor)
+		{
 			this.StopAllCoroutines();
-			this.StartCoroutine( this.RevertPreviewAnimation( base.PreviewIcon, speed ) );
+			this.StartCoroutine(this.RevertPreviewAnimation( base.PreviewIcon, speed, startColor ));
 		}
 
 		/// <summary>
@@ -75,13 +83,12 @@ namespace Content.Scripts
 		/// <returns>
 		/// The <see cref="IEnumerator"/>.
 		/// </returns>
-		protected override IEnumerator RevertPreviewAnimation( Image icon, float speed )
+		protected override IEnumerator RevertPreviewAnimation( Image icon, float speed, Color startColor )
 		{
 			float t = 0;
-			var initColor = icon.color;
 			while (t < 1f)
 			{
-				icon.color = Color.Lerp ( initColor, Color.clear, t );
+				icon.color = Color.Lerp ( startColor, Color.clear, t );
 				t += speed * Time.deltaTime;
 				yield return null;
 			}

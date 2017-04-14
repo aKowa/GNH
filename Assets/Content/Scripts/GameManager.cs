@@ -91,6 +91,12 @@ namespace Content.Scripts
 		private int round;
 
 		/// <summary>
+		/// The revert speed.
+		/// </summary>
+		[SerializeField]
+		private float revertSpeed = 1.5f;
+
+		/// <summary>
 		/// The min preview color.
 		/// </summary>
 		[SerializeField]
@@ -103,10 +109,16 @@ namespace Content.Scripts
 		private Color maxPreviewColor = Color.blue;
 
 		/// <summary>
-		/// The revert speed.
+		/// The negative apply color.
 		/// </summary>
 		[SerializeField]
-		private float revertSpeed = 1f;
+		private Color negativeApplyColor = Color.red;
+
+		/// <summary>
+		/// The positive apply color.
+		/// </summary>
+		[SerializeField]
+		private Color positiveApplyColor = Color.green;
 
 		/// <summary>
 		/// The get policy value.
@@ -149,7 +161,7 @@ namespace Content.Scripts
 
 			this.SetHappiness ();
 
-			this.RevertPreview ( this.revertSpeed );
+			this.RevertPreview ( values, this.revertSpeed );
 			++this.round;
 			this.CheckforGameOver ();
 		}
@@ -187,7 +199,28 @@ namespace Content.Scripts
 		public void RevertPreview ( float speed )
 		{
 			foreach ( var policy in this.policies )
+			{
 				policy.RevertPreviewValue ( speed );
+			}
+		}
+
+		/// <summary>
+		/// Overload. Starts reverting preview color.
+		/// </summary>
+		/// <param name="speed">The speed at which the color lerps back</param>
+		public void RevertPreview( int[] values, float speed)
+		{
+			for ( int i = 0; i < values.Length; i++ )
+			{
+				if ( values[i] > 0 )
+				{
+					this.policies[i].RevertPreviewValue ( speed, this.positiveApplyColor );
+				}
+				else if ( values[i] < 0 )
+				{
+					this.policies[i].RevertPreviewValue( speed, this.negativeApplyColor );
+				}
+			}
 		}
 
 		/// <summary>

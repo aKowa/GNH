@@ -41,7 +41,7 @@ namespace Content.Scripts
 		/// Adressee name
 		/// </summary>
 		[SerializeField]
-	    private string[] adresseeNames;
+	    private string[] adresseeNames = null;
 
 		/// <summary>
 		/// The deviation to help.
@@ -158,11 +158,41 @@ namespace Content.Scripts
 		/// </summary>
         private Image image;
 
-		/// <summary>
+	    public Image Image
+	    {
+		    get
+		    {
+			    if ( this.image != null )
+			    {
+				    return this.image;
+			    }
+			    return this.image = this.GetComponent <Image> ();
+		    }
+	    }
+
+	    /// <summary>
 		/// Flag if angular threshold of card was crossed
 		/// </summary>
 		private bool hasCrossedThreshold = false;
-		
+
+		private Color initTextColor = Color.black;
+
+		[SerializeField]
+		private Color electionTextColor = Color.white;
+
+		// TODO: comments
+		[SerializeField]
+		private Color electionCardColor = Color.black;
+
+		[SerializeField]
+		private string electionCardText = "Congrats!\n\nYou got reelected!";
+
+		[SerializeField]
+		private string electionAnswerText = "Cheers!\nAnd now give me some sweet moneys!";
+
+		[SerializeField]
+		private int electionMoneyBonus = 30;
+
 		/// <summary>
 		/// Gets the chosen policy.
 		/// </summary>
@@ -284,8 +314,7 @@ namespace Content.Scripts
                 {
                     this.CheckForAndInsertFollowUpCard(this.currentCard.FollowUpIdR, this.currentCard.FollowUpStepR);
                 }
-
-                this.StartCoroutine(this.MoveAway());
+                this.StartCoroutine( this.MoveAway() );
             }
         }
 
@@ -385,9 +414,7 @@ namespace Content.Scripts
             var card = this.GetCardFromStack(mostDeviatedValue.ToString());
             if (card == null)
             {
-                Debug.LogWarningFormat(
-                    "DeviatedCardHandFill got null as card, aborting. PolicyType was {0}.", 
-                    mostDeviatedValue.ToString());
+                Debug.LogWarningFormat( "DeviatedCardHandFill got null as card, aborting. PolicyType was {0}.", mostDeviatedValue.ToString());
                 return;
             }
 
@@ -485,7 +512,6 @@ namespace Content.Scripts
             {
                 return (PolicyType)index;
             }
-
             return PolicyType.Culture;
         }
 
@@ -494,49 +520,87 @@ namespace Content.Scripts
         /// </summary>
         private void GetNextCard()
         {
-            if (this.cardHand == null)
-            {
-                Debug.LogWarning("The cardHand list is null, aborting GetNextCard()");
-                if (Debug.isDebugBuild)
-                {
-                    this.SetRandomPolicyValues();
-                    AConsoleController.Instance.AddToConsole("The cardHand list is null, aborting GetNextCard()");
-                }
-
-                return;
-            }
-            
-            if (this.cardHand.Count == 0)
-            {
-                Debug.LogWarning("The cardHand list is empty, aborting GetNextCard()");
-                if (Debug.isDebugBuild)
-                {
-                    this.SetRandomPolicyValues();
-                    AConsoleController.Instance.AddToConsole("The cardHand list is empty, aborting GetNextCard()");
-                }
-
-                return;
-            }
-
-            this.currentCard = this.cardHand[0].CardAttributes;
-
-            this.policyValuesL[0] = this.currentCard.CultureL;
-            this.policyValuesL[1] = this.currentCard.EconomyL;
-            this.policyValuesL[2] = this.currentCard.EnvironmentL;
-            this.policyValuesL[3] = this.currentCard.SecurityL;
-            this.policyValuesL[4] = this.currentCard.TreasuryL;
-
-            this.policyValuesR[0] = this.currentCard.CultureR;
-            this.policyValuesR[1] = this.currentCard.EconomyR;
-            this.policyValuesR[2] = this.currentCard.EnvironmentR;
-            this.policyValuesR[3] = this.currentCard.SecurityR;
-            this.policyValuesR[4] = this.currentCard.TreasuryR;
-
-            this.ShowCardText();
-			
-			this.cardHand.RemoveAt(0);
-            this.FillCardHand();
+	        if ( this.gameManager.IsElection )
+	        {
+		       this.SetElectionCard ();
+	        }
+	        else
+	        {
+				this.GetNextCardFromList ();
+			}
         }
+
+		/// <summary>
+		/// Gets card values for election card
+		/// </summary>
+	    private void SetElectionCard ()
+	    {
+		    for ( int i = 0; i < this.policyValuesL.Length; i++ )
+		    {
+			    this.policyValuesL[i] = 0;
+			    this.policyValuesR[i] = 0;
+		    }
+		    this.policyValuesL[(int) PolicyType.Treasury] = this.electionMoneyBonus;
+			this.policyValuesR[(int)PolicyType.Treasury] = this.electionMoneyBonus;
+			
+		    this.textAdressee.color = this.electionTextColor;
+			this.cardTextUIComponent.text = this.electionCardText;
+		    this.cardTextUIComponent.color = this.electionTextColor;
+			this.Image.color = this.electionCardColor;
+			this.ShowCardText ();
+		}
+
+		/// <summary>
+		/// Gets the next card from list
+		/// </summary>
+		private void GetNextCardFromList ()
+	    {
+			if (this.cardHand == null)
+			{
+				Debug.LogWarning("The cardHand list is null, aborting GetNextCard()");
+				if (Debug.isDebugBuild)
+				{
+					this.SetRandomPolicyValues();
+					AConsoleController.Instance.AddToConsole("The cardHand list is null, aborting GetNextCard()");
+				}
+				return;
+			}
+
+			if (this.cardHand.Count == 0)
+			{
+				Debug.LogWarning("The cardHand list is empty, aborting GetNextCard()");
+				if (Debug.isDebugBuild)
+				{
+					this.SetRandomPolicyValues();
+					AConsoleController.Instance.AddToConsole("The cardHand list is empty, aborting GetNextCard()");
+				}
+
+				return;
+			}
+
+			this.currentCard = this.cardHand[0].CardAttributes;
+
+			this.policyValuesL[0] = this.currentCard.CultureL;
+			this.policyValuesL[1] = this.currentCard.EconomyL;
+			this.policyValuesL[2] = this.currentCard.EnvironmentL;
+			this.policyValuesL[3] = this.currentCard.SecurityL;
+			this.policyValuesL[4] = this.currentCard.TreasuryL;
+
+			this.policyValuesR[0] = this.currentCard.CultureR;
+			this.policyValuesR[1] = this.currentCard.EconomyR;
+			this.policyValuesR[2] = this.currentCard.EnvironmentR;
+			this.policyValuesR[3] = this.currentCard.SecurityR;
+			this.policyValuesR[4] = this.currentCard.TreasuryR;
+
+			// sets text and init color values
+			this.ShowCardText();
+			this.textAdressee.color = this.initTextColor;
+		    this.cardTextUIComponent.color = this.initTextColor;
+			this.Image.color = Color.white;
+
+			this.cardHand.RemoveAt(0);
+			this.FillCardHand();
+		}
 
         /// <summary>
         /// The normal card hand fill.
@@ -593,10 +657,9 @@ namespace Content.Scripts
             {
                 var angle = Mathf.Lerp(currentRotation, 0.0f, t);
                 this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle);
-                t += animationRevertRotationSpeed * Time.deltaTime;
+                t += this.animationRevertRotationSpeed * Time.deltaTime;
                 yield return null;
             }
-
             this.transform.rotation = Quaternion.identity;
         }
 
@@ -606,7 +669,7 @@ namespace Content.Scripts
         private IEnumerator MoveAway()
 		{
 			AudioController.Instance.Play ( 3 );
-			this.image.raycastTarget = false;
+			this.Image.raycastTarget = false;
             float t = 0;
             while ( t <= 1 )
             {
@@ -625,7 +688,7 @@ namespace Content.Scripts
             }
 
             this.GetNextCard();
-            StartCoroutine(this.NextCardAnimation());
+            this.StartCoroutine( this.NextCardAnimation() );
         }
 
         private IEnumerator NextCardAnimation()
@@ -647,7 +710,7 @@ namespace Content.Scripts
             }
 
             targetTransform.rotation = Quaternion.identity;
-            this.image.raycastTarget = true;
+            this.Image.raycastTarget = true;
             this.StopAllCoroutines();
         }
 
@@ -700,8 +763,14 @@ namespace Content.Scripts
         /// </summary>
         private void ShowCardSwipeText()
         {
-            // left positive, right negative
-            if (this.EulerZ > this.thresholdAngle)
+	        if ( this.gameManager.IsElection )
+	        {
+		        this.cardTextUIComponent.text = this.electionAnswerText;
+		        return;
+	        }
+
+			// left positive, right negative
+			if (this.EulerZ > this.thresholdAngle)
             {
                 this.cardTextUIComponent.text = this.currentCard.TextL;
             }
@@ -715,22 +784,27 @@ namespace Content.Scripts
         /// The show card text.
         /// </summary>
         private void ShowCardText()
-        {
-            this.cardTextUIComponent.text = this.currentCard.Text;
+		{
 			this.textAdressee.text = "Dear " + this.adresseeNames[0] + ',';
-		}
+			if ( this.gameManager.IsElection )
+	        {
+		        this.cardTextUIComponent.text = this.electionCardText;
+		        return;
+	        }
+			this.cardTextUIComponent.text = this.currentCard.Text;
+        }
 
 		/// <summary>
 		/// Sets card values on start.
 		/// </summary>
 		private void Start()
         {
-            this.SetupCardLists();
+			this.initPosition = this.transform.position;
+			this.initTextColor = this.cardTextUIComponent.color;
+			this.SetupCardLists();
             this.SetupCardStacks();
             this.FillCardHand();
             this.GetNextCard();
-            this.initPosition = this.transform.position;
-            this.image = this.GetComponent<Image>();
         }
     }
 }

@@ -72,6 +72,14 @@ namespace Content.Scripts
 		private int winCheck = 5;
 
 		/// <summary>
+		/// External win check count
+		/// </summary>
+		public int WinCheck
+		{
+			get { return this.winCheck; }
+		}
+
+		/// <summary>
 		/// The happiness threshold win.
 		/// </summary>
 		[Tooltip ( "Threshold policyType of happines used to determine when player lost! Use negative policyType to disable.")]
@@ -86,10 +94,26 @@ namespace Content.Scripts
 		private int loseDeviationThreshold = 20;
 
 		/// <summary>
-		/// Round count
+		/// Determines if an election takes place
 		/// </summary>
-		private int round;
+		public bool IsElection
+		{
+			get { return this.Round % this.WinCheck == 0; }
+		}
 
+		/// <summary>
+		/// Internal Round count
+		/// </summary>
+		private int round = 1;
+
+		/// <summary>
+		/// External round count
+		/// </summary>
+		public int Round
+		{
+			get { return this.round; }
+		}
+		
 		/// <summary>
 		/// The revert speed.
 		/// </summary>
@@ -260,7 +284,7 @@ namespace Content.Scripts
 		/// </summary>
 		private void CheckforGameOver ()
 		{
-			if ( this.round % this.winCheck == 0 )
+			if ( this.IsElection )
 			{
 				if ( this.policies[5].Value <= this.winThreshold )
 				{

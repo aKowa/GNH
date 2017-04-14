@@ -1523,6 +1523,16 @@ MonoBehaviour:
   animationMoveDistance: 900
   animationNextCardDegree: 720
   aniamtionNextCardSpeed: 1
+  electionTextColor: {r: 1, g: 1, b: 1, a: 1}
+  electionCardColor: {r: 0.5955882, g: 0.5955882, b: 0.5955882, a: 1}
+  electionCardText: 'Congrats!
+
+
+    You got reelected!'
+  electionAnswerText: 'Cheers!
+
+    And now give me some sweet moneys!'
+  electionMoneyBonus: 30
 --- !u!114 &795344644
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -289,13 +289,13 @@ namespace Content.Scripts
 		}
 
 		/// <summary>
-		///     Returns GameOver text object and sets parameter for blocking input.
+		/// Returns GameOver text object and sets parameter for blocking input.
 		/// </summary>
 		/// <param name="policyId">
-		///     The policyID responsible for the game over.
+		/// The policyID responsible for the game over.
 		/// </param>
 		/// <returns>
-		///     The <see cref="Text" />.
+		/// The <see cref="Text" />.
 		/// </returns>
 		private Text GetGameOverText ( int policyId )
 		{

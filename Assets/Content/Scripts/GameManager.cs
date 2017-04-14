@@ -103,10 +103,23 @@ namespace Content.Scripts
 		private Color maxPreviewColor = Color.blue;
 
 		/// <summary>
-		///     The revert speed.
+		/// The revert speed.
 		/// </summary>
 		[SerializeField]
 		private float revertSpeed = 1f;
+
+		/// <summary>
+		/// The win music clip
+		/// </summary>
+		[SerializeField]
+		private AudioClip winMusicClip = null;
+
+		/// <summary>
+		/// The win music clip
+		/// </summary>
+		[SerializeField]
+		private AudioClip loseMusicClip = null;
+
 
 		/// <summary>
 		/// The get policy value.
@@ -285,8 +298,7 @@ namespace Content.Scripts
 			gameOverImage.sprite = this.winScreen;
 
 			// play audio
-			AudioController.BgMusic.clip = Resources.Load ("ending_happy") as AudioClip;
-			AudioController.BgMusic.Play();
+			AudioController.Instance.Play ( 1 );
 		}
 
 		/// <summary>
@@ -308,8 +320,7 @@ namespace Content.Scripts
 			}
 
 			// play audio
-			AudioController.BgMusic.clip = Resources.Load("ending_sad") as AudioClip;
-			AudioController.BgMusic.Play();
+			AudioController.Instance.Play( 2 );
 		}
 
 		/// <summary>
@@ -327,20 +338,17 @@ namespace Content.Scripts
 
 			// set max deviation to average
 			var maxDeviation = 0;
-			var policyID = 0;
 			for ( var j = 0; j < 4; j++ )
 			{
 				var tempDeviation = Math.Abs ( this.policies[j].Value - average );
 				if ( tempDeviation > maxDeviation )
 				{
 					maxDeviation = tempDeviation;
-					policyID = j;
 				}
 			}
 			
 			// set happiness value
 			this.policies[(int)PolicyType.Happiness].SetValue( maxDeviation, this.loseDeviationThreshold );
-			//Debug.Log ("Average: " + average +  "  Deviation: " + maxDeviation + "  of " + this.policies[policyID].name );
 		}
 	}
 }

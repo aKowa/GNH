@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 namespace Content.Scripts
@@ -15,11 +14,15 @@ namespace Content.Scripts
 		/// <summary>
 		/// Sets audio controller instance
 		/// </summary>
-		private void Start ()
+		private void Awake ()
 		{
 			if ( AudioController.Instance == null )
 			{
-				Instantiate ( this.audioController, this.transform.position, Quaternion.identity );
+				if ( this.audioController == null )
+				{
+					throw new NullReferenceException ();
+				}
+				AudioController.Instantiate ( this.audioController );
 			}
 		}
 	}

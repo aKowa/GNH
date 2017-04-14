@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Content.Scripts
@@ -18,7 +16,7 @@ namespace Content.Scripts
 		private void Start ()
 		{
 			this.toggle = this.GetComponent <Toggle> ();
-			this.toggle.isOn = AudioController.IsMuted;
+			this.toggle.isOn = AudioController.Instance.Mute;
 			this.Mute ();
 		}
 
@@ -27,7 +25,7 @@ namespace Content.Scripts
 		/// </summary>
 		public void Mute ()
 		{
-			AudioController.Instance.Mute ( this.toggle.isOn );
+			AudioController.Instance.Mute = this.toggle.isOn;
 		}
 	}
 }

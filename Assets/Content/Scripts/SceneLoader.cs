@@ -16,7 +16,7 @@ namespace Content.Scripts
 		/// </summary>
 		public void LoadScene ()
 		{
-			AudioController.Instance.PlaySound ( Resources.Load ( "button" ) as AudioClip );
+			AudioController.Instance.Play ( 5 );
 			SceneManager.LoadScene ( id );
 		}
 	}

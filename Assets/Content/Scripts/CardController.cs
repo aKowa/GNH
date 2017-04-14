@@ -263,7 +263,7 @@ namespace Content.Scripts
 			    this.gameManager.PreviewResults ( this.ChosenPolicy );
 			    this.textAdressee.text = "Dear " + this.adresseeNames[1] + ',';
 			    this.ShowCardSwipeText ();
-				AudioController.Instance.PlaySound ( this.swipeClip );
+				AudioController.Instance.Play ( 4 );
 		    }
 		    else if (Mathf.Abs(this.EulerZ) <= this.thresholdAngle && this.hasCrossedThreshold)
 			{
@@ -617,7 +617,7 @@ namespace Content.Scripts
         /// </summary>
         private IEnumerator MoveAway()
 		{
-			AudioController.Instance.PlaySound(this.newCardClip);
+			AudioController.Instance.Play ( 3 );
 			this.image.raycastTarget = false;
             float t = 0;
             while ( t <= 1 )

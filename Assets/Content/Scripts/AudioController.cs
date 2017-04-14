@@ -7,20 +7,6 @@ namespace Content.Scripts
 	public class AudioController : MonoBehaviour
 	{
 		/// <summary>
-		/// Background music source
-		/// </summary>
-		[SerializeField]
-		private static AudioSource bgMusic = null;
-
-		/// <summary>
-		/// external bg music
-		/// </summary>
-		public static AudioSource BgMusic
-		{
-			get { return bgMusic; }
-		}
-
-		/// <summary>
 		/// internal instance
 		/// </summary>
 		private static AudioController instance = null;
@@ -34,89 +20,105 @@ namespace Content.Scripts
 		}
 
 		/// <summary>
-		/// Sound controller holding all sound instances
+		/// Background musicSource source
 		/// </summary>
-		private static GameObject soundController = null;
+		[SerializeField]
+		private AudioSource musicSource = null;
 
 		/// <summary>
-		/// internal mute flag
+		/// Sound controller holding all soundSource instances
 		/// </summary>
-		private static bool isMuted;
+		[SerializeField]
+		private AudioSource soundSource = null;
 
 		/// <summary>
-		/// External mute flag
+		/// Audio clips
 		/// </summary>
-		public static bool IsMuted
+		[SerializeField]
+		private AudioClip[] audioClips = null;
+
+		/// <summary>
+		/// Mute bool
+		/// </summary>
+		public bool Mute
 		{
-			get { return isMuted; }
+			get
+			{ return this.musicSource.mute; }
+			set
+			{
+				this.musicSource.mute = value;
+				this.soundSource.mute = value;
+			}
 		}
 
 		/// <summary>
-		/// Resets music to background, after loading
+		/// Instantiate audiocontroller
+		/// </summary>
+		/// <param name="audioController"></param>
+		public static void Instantiate ( GameObject audioController )
+		{
+			if ( instance != null ) return;
+			var clone = Instantiate(audioController, Camera.main.transform.position, Quaternion.identity);
+			instance = clone.GetComponent <AudioController>();
+		}
+
+		/// <summary>
+		/// Game start
+		/// </summary>
+		private void Start ()
+		{
+			DontDestroyOnLoad( this.gameObject );
+			if ( this.musicSource.clip.name != "background" )
+			{
+				this.Play ( 0 );
+			}
+			StartCoroutine ( this.LoadMusicFiles () );
+		}
+
+		/// <summary>
+		/// Resets musicSource to background, after loading
 		/// </summary>
 		/// <param name="level"></param>
 		private void OnLevelWasLoaded(int level)
 		{
-			this.SetBgMusic ();
-		}
-		
-		/// <summary>
-		/// Sets static instance 
-		/// </summary>
-		private void Start ()
-		{
-			this.SetBgMusic ();
-			if ( instance == null )
+			if (this.musicSource.clip.name != "background")
 			{
-				instance = this;
-				soundController = Instantiate(new GameObject(), this.transform, false);
-				soundController.name = "SoundController";
-				DontDestroyOnLoad(this.gameObject);
+				this.Play(0);
 			}
 		}
 
 		/// <summary>
-		/// Sets audio soruce to background music
+		/// Plays audio
 		/// </summary>
-		private void SetBgMusic ()
+		public void Play ( int id )
 		{
-			if ( bgMusic == null )
+			if ( id < 0 )
 			{
-				bgMusic = this.GetComponentInChildren<AudioSource>();
+				Debug.LogWarning ( "Negative id is not allowed!" );
+				return;
 			}
-			if ( bgMusic.clip.name != "background" )
+
+			if ( id < 3 )
 			{
-				bgMusic.clip = Resources.Load("background") as AudioClip;
-				bgMusic.Play();
+				this.musicSource.clip = this.audioClips[id];
+				this.musicSource.Play();
 			}
-			bgMusic.loop = true;
+			else
+			{
+				this.soundSource.clip = this.audioClips[id];
+				this.soundSource.Play();
+			}
 		}
 
-		/// <summary>
-		/// Sets mute state
-		/// </summary>
-		/// <param name="state">Target mute state.</param>
-		public void Mute ( bool state )
+		private IEnumerator LoadMusicFiles ()
 		{
-			isMuted = state;
-			bgMusic.mute = state;
-		}
+			var asyncLoseClip = Resources.LoadAsync<AudioClip>("ending_sad");
+			yield return asyncLoseClip;
+			yield return this.audioClips[2] = asyncLoseClip.asset as AudioClip;
 
-		/// <summary>
-		/// Instantiates a game object and plays audio clip
-		/// </summary>
-		/// <param name="clip">Audio clip to be played</param>
-		public void PlaySound ( AudioClip clip )
-		{
-			if ( !isMuted )
-			{
-				var soundInstance = Instantiate ( new GameObject (), soundController.transform, false );
-				soundInstance.name = clip.name;
-				var source = soundInstance.AddComponent <AudioSource> ();
-				source.clip = clip;
-				source.Play ();
-				Destroy( soundInstance, clip.length);
-			}
+			var asyncWinClip = Resources.LoadAsync <AudioClip> ( "ending_happy" );
+			yield return asyncWinClip;
+			yield return this.audioClips[1] = asyncWinClip.asset as AudioClip;
 		}
 	}
 }

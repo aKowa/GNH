@@ -2808,6 +2808,8 @@ MonoBehaviour:
   minPreviewColor: {r: 0.68235296, g: 0.92549026, b: 0.90196085, a: 1}
   maxPreviewColor: {r: 0.1764706, g: 0.53333336, b: 0.5058824, a: 1}
   revertSpeed: 1.5
+  winMusicClip: {fileID: 8300000, guid: 21acc668225a5c1418586f9a918be260, type: 3}
+  loseMusicClip: {fileID: 8300000, guid: e9c991de47a13d84f93fc9f7603c58e8, type: 3}
 --- !u!1 &1794012712
 GameObject:
   m_ObjectHideFlags: 0

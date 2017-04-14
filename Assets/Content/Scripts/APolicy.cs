@@ -78,7 +78,7 @@ namespace Content.Scripts
 				}
 
 				var images = this.gameObject.GetComponentsInChildren<Image>();
-				return images.FirstOrDefault(image => image.tag == "PreviewIcon");
+				return this.previewIcon = images.FirstOrDefault(image => image.tag == "PreviewIcon");
 			}
 		}
 

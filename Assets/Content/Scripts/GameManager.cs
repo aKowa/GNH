@@ -280,7 +280,6 @@ namespace Content.Scripts
 		/// <summary>
 		/// Checks policy values and determines as well as executes a game over.
 		/// NOTE: reload logic is on the GameOverScreenObject
-		/// TODO: Add new elections card at this count
 		/// </summary>
 		private void CheckforGameOver ()
 		{
@@ -288,7 +287,7 @@ namespace Content.Scripts
 			{
 				if ( this.policies[5].Value <= this.winThreshold )
 				{
-					this.GetGameOverText ( 5 ).text = "Victory! \n \n Your happiness exceeds all expectations! \n \n Party hard!!!";
+					this.GetGameOverText ( 5 ).text = "";
 					this.SetWin ();
 					return;
 				}

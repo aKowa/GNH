@@ -287,7 +287,7 @@ namespace Content.Scripts
 			{
 				if ( this.policies[5].Value <= this.winThreshold )
 				{
-					this.GetGameOverText ( 5 ).text = "Victory! \n \n Your happiness exceeds all expectations! \n \n Party hard!!!";
+					this.GetGameOverText ( 5 ).text = "";
 					this.SetWin ();
 					return;
 				}

@@ -814,8 +814,8 @@ namespace Content.Scripts
 				    return i;
 			    }
 			}
-			Debug.LogWarning("Could not find " + categoryName + " in theFourCardCategories");
-			return -1;
+			Debug.LogWarning("Could not find " + categoryName + " in theFourCardCategories. Set returned default id: 0");
+			return 0;
 		}
     }
 }

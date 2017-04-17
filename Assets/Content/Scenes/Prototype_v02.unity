@@ -427,7 +427,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: f6de086d737f34c4eb0acc30d18082d4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dead810662972884e8de8ff44297bd8a, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1015,7 +1015,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 31b451c2c6b303143839e00a7729116b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 943da0fcc778cfd459732354d136ddea, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1059,10 +1059,10 @@ RectTransform:
   m_Father: {fileID: 795344640}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.15248221, y: 0.70759636}
-  m_AnchorMax: {x: 0.938786, y: 0.8046025}
-  m_AnchoredPosition: {x: 0, y: 0.5}
-  m_SizeDelta: {x: 0, y: -1}
+  m_AnchorMin: {x: 0.15248221, y: 0.6956025}
+  m_AnchorMax: {x: 0.938786, y: 0.7914037}
+  m_AnchoredPosition: {x: -0.18799019, y: -0.2000122}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &571054913
 MonoBehaviour:
@@ -1323,7 +1323,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 942f6151a98881a439160767b4b74cd9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ea553b161f4c8b0439e59372e5d36dd9, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1483,7 +1483,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: e34c3af317bddb649b9cc2157f03ce08, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 237909ad24e1cd24caaa0cf4a8793b55, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1523,15 +1523,13 @@ MonoBehaviour:
   animationMoveDistance: 900
   animationNextCardDegree: 720
   aniamtionNextCardSpeed: 1
-  electionTextColor: {r: 1, g: 1, b: 1, a: 1}
-  electionCardColor: {r: 0.5955882, g: 0.5955882, b: 0.5955882, a: 1}
-  electionCardText: 'Congrats!
-
-
-    You got reelected!'
-  electionAnswerText: 'Cheers!
-
-    And now give me some sweet moneys!'
+  letterSprite:
+  - {fileID: 21300000, guid: 237909ad24e1cd24caaa0cf4a8793b55, type: 3}
+  - {fileID: 21300000, guid: efee0cdba90c5ea46bea4871c678c084, type: 3}
+  - {fileID: 21300000, guid: 89c2b3c806c215e40b338b71f9215270, type: 3}
+  - {fileID: 21300000, guid: 57fa97d8dfa4e314785118ad94f79717, type: 3}
+  reelectionLetterSprite: {fileID: 21300000, guid: de35345df5dafc44c99bcec5549dcc09,
+    type: 3}
   electionMoneyBonus: 30
 --- !u!114 &795344644
 MonoBehaviour:
@@ -2150,10 +2148,10 @@ RectTransform:
   m_Father: {fileID: 795344640}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.15248221, y: 0.066}
-  m_AnchorMax: {x: 0.8898729, y: 0.6415963}
+  m_AnchorMin: {x: 0.15248221, y: 0.16680123}
+  m_AnchorMax: {x: 0.89000005, y: 0.6415963}
   m_AnchoredPosition: {x: -0.18799973, y: 0}
-  m_SizeDelta: {x: 0.375, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1127767392
 MonoBehaviour:
@@ -2601,7 +2599,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: c3ed92f194da62a4cb257ba21bef3d49, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5843b83272cd73c44a218706cd0c49a4, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -2973,7 +2971,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 76be9bbdc2f2243429bb5ba6eed1266f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 18d521fbef143474a81002183fb4a4d3, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -3137,7 +3135,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 47e4ffc5f568cc74d94b9a8457df9fa4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e79a4f0460a4484438b36c7c0304a1b0, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

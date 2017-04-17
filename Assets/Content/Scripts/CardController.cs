@@ -175,20 +175,12 @@ namespace Content.Scripts
 		/// </summary>
 		private bool hasCrossedThreshold = false;
 
-		private Color initTextColor = Color.black;
 
 		[SerializeField]
-		private Color electionTextColor = Color.white;
-
-		// TODO: comments
-		[SerializeField]
-		private Color electionCardColor = Color.black;
+		private Sprite[] letterSprite = null;
 
 		[SerializeField]
-		private string electionCardText = "Congrats!\n\nYou got reelected!";
-
-		[SerializeField]
-		private string electionAnswerText = "Cheers!\nAnd now give me some sweet moneys!";
+		private Sprite reelectionLetterSprite = null;
 
 		[SerializeField]
 		private int electionMoneyBonus = 30;
@@ -543,10 +535,7 @@ namespace Content.Scripts
 		    this.policyValuesL[(int) PolicyType.Treasury] = this.electionMoneyBonus;
 			this.policyValuesR[(int)PolicyType.Treasury] = this.electionMoneyBonus;
 			
-		    this.textAdressee.color = this.electionTextColor;
-			this.cardTextUIComponent.text = this.electionCardText;
-		    this.cardTextUIComponent.color = this.electionTextColor;
-			this.Image.color = this.electionCardColor;
+			this.Image.sprite = this.reelectionLetterSprite;
 			this.ShowCardText ();
 		}
 
@@ -592,11 +581,7 @@ namespace Content.Scripts
 			this.policyValuesR[3] = this.currentCard.SecurityR;
 			this.policyValuesR[4] = this.currentCard.TreasuryR;
 
-			// sets text and init color values
 			this.ShowCardText();
-			this.textAdressee.color = this.initTextColor;
-		    this.cardTextUIComponent.color = this.initTextColor;
-			this.Image.color = Color.white;
 
 			this.cardHand.RemoveAt(0);
 			this.FillCardHand();
@@ -636,8 +621,7 @@ namespace Content.Scripts
             else
             {
                 // sort list by descending id, because they are later pushed to a stack in order. the big ones need to go down first
-                this.cardLists[category] =
-                    new List<CardData>(this.cardLists[category].OrderByDescending(card => card.CardId));
+                this.cardLists[category] = new List<CardData>(this.cardLists[category].OrderByDescending(card => card.CardId));
             }
         }
 
@@ -691,6 +675,9 @@ namespace Content.Scripts
             this.StartCoroutine( this.NextCardAnimation() );
         }
 
+		/// <summary>
+		/// Plays next card animation
+		/// </summary>
         private IEnumerator NextCardAnimation()
         {
             this.transform.position = this.initPosition;
@@ -765,7 +752,7 @@ namespace Content.Scripts
         {
 	        if ( this.gameManager.IsElection )
 	        {
-		        this.cardTextUIComponent.text = this.electionAnswerText;
+				//todo
 		        return;
 	        }
 
@@ -788,11 +775,12 @@ namespace Content.Scripts
 			this.textAdressee.text = "Dear " + this.adresseeNames[0] + ',';
 			if ( this.gameManager.IsElection )
 	        {
-		        this.cardTextUIComponent.text = this.electionCardText;
+				//todo
 		        return;
 	        }
 			this.cardTextUIComponent.text = this.currentCard.Text;
-        }
+			this.Image.sprite = letterSprite[this.CategoryToId(currentCard.Category)];
+		}
 
 		/// <summary>
 		/// Sets card values on start.
@@ -800,11 +788,23 @@ namespace Content.Scripts
 		private void Start()
         {
 			this.initPosition = this.transform.position;
-			this.initTextColor = this.cardTextUIComponent.color;
 			this.SetupCardLists();
             this.SetupCardStacks();
             this.FillCardHand();
             this.GetNextCard();
         }
+
+	    private int CategoryToId( string categoryName )
+	    {
+		    for (int i = 0; i < theFourCardCategories.Length; i++)
+		    {
+			    if (categoryName == theFourCardCategories[i])
+			    {
+				    return i;
+			    }
+		    }
+			return -1;
+			Debug.LogWarning("Could not find " + categoryName + " in theFourCardCategories");
+		}
     }
 }

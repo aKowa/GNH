@@ -280,7 +280,6 @@ namespace Content.Scripts
 		/// <summary>
 		/// Checks policy values and determines as well as executes a game over.
 		/// NOTE: reload logic is on the GameOverScreenObject
-		/// TODO: Add new elections card at this count
 		/// </summary>
 		private void CheckforGameOver ()
 		{

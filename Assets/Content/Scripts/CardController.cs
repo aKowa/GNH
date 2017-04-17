@@ -752,8 +752,9 @@ namespace Content.Scripts
         {
 	        if ( this.gameManager.IsElection )
 	        {
-				//todo
-		        return;
+				this.textAdressee.text = "";
+				this.cardTextUIComponent.text = "";
+				return;
 	        }
 
 			// left positive, right negative
@@ -774,12 +775,17 @@ namespace Content.Scripts
 		{
 			this.textAdressee.text = "Dear " + this.adresseeNames[0] + ',';
 			if ( this.gameManager.IsElection )
-	        {
-				//todo
+			{
+				this.textAdressee.text = "";
+				this.cardTextUIComponent.text = "";
 		        return;
 	        }
 			this.cardTextUIComponent.text = this.currentCard.Text;
-			this.Image.sprite = letterSprite[this.CategoryToId(currentCard.Category)];
+			var id = this.CategoryToId(currentCard.Category);
+			if (id >= 0 && id < 4)
+			{
+				this.Image.sprite = letterSprite[id];
+			}
 		}
 
 		/// <summary>
@@ -794,6 +800,11 @@ namespace Content.Scripts
             this.GetNextCard();
         }
 
+		/// <summary>
+		/// Gets a categories id
+		/// </summary>
+		/// <param name="categoryName">The Category name</param>
+		/// <returns>id or -1 of none was found.</returns>
 	    private int CategoryToId( string categoryName )
 	    {
 		    for (int i = 0; i < theFourCardCategories.Length; i++)
@@ -802,9 +813,9 @@ namespace Content.Scripts
 			    {
 				    return i;
 			    }
-		    }
-			return -1;
+			}
 			Debug.LogWarning("Could not find " + categoryName + " in theFourCardCategories");
+			return -1;
 		}
     }
 }

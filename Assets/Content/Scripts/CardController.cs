@@ -388,10 +388,18 @@ namespace Content.Scripts
         /// </param>
         private void CheckForAndInsertFollowUpCard(int id, int step)
         {
-            if (id > 0 && step >= 0)
+            if (id > 0)
             {
+                if (step < 0)
+                {
+                    step = Random.Range(4, 12);
+                }
                 this.cardHand.Insert(step, this.cardsById[id]);
                 Debug.LogFormat("Follow Up Card with ID {0} inserted in {1} cards.", id, step + 1);
+            }
+            else
+            {
+                Debug.LogWarningFormat("Follow Up Card ID was out of range (read: negative). ID was {0}", id);
             }
         }
 

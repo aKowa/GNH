@@ -6,6 +6,9 @@
 //   Defines the LetterController type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+
 namespace Content.Scripts
 {
     using System.Collections;
@@ -789,10 +792,16 @@ namespace Content.Scripts
 		        return;
 	        }
 			this.letterTextUIComponent.text = this.currentLetter.Text;
-			var id = this.CategoryToId(this.currentLetter.Category);
-			if (id >= 0 && id < 4)
+
+			var id = (int)this.currentLetter.Character;
+			try
 			{
-				this.Image.sprite = letterSprite[id];
+				this.Image.sprite = this.letterSprite[id];
+			}
+			catch ( IndexOutOfRangeException )
+			{
+				Debug.LogWarning("Character index is out of range! No screen set at id: " + id);
+				this.Image.sprite = this.letterSprite[0];
 			}
 		}
 
@@ -807,23 +816,5 @@ namespace Content.Scripts
             this.FillLetterHand();
             this.GetNextLetter();
         }
-
-		/// <summary>
-		/// Gets a categories id
-		/// </summary>
-		/// <param name="categoryName">The Category name</param>
-		/// <returns>id or -1 of none was found.</returns>
-	    private int CategoryToId( string categoryName )
-	    {
-		    for (int i = 0; i < this.theFourLetterCategories.Length; i++)
-		    {
-			    if (categoryName == this.theFourLetterCategories[i])
-			    {
-				    return i;
-			    }
-			}
-			Debug.LogWarning("Could not find " + categoryName + " in theFourLetterCategories. Set returned default id: 0");
-			return 0;
-		}
     }
 }

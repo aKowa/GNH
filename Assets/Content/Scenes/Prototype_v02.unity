@@ -1683,9 +1683,9 @@ RectTransform:
   - {fileID: 147798425}
   - {fileID: 1824892494}
   - {fileID: 1715703454}
-  - {fileID: 966244896}
   - {fileID: 1475051266}
   - {fileID: 1503697948}
+  - {fileID: 966244896}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1731,7 +1731,7 @@ RectTransform:
   m_Children:
   - {fileID: 2051478130}
   m_Father: {fileID: 823761080}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2475,7 +2475,7 @@ RectTransform:
   m_Children:
   - {fileID: 971197082}
   m_Father: {fileID: 823761080}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.12856251}
@@ -2643,7 +2643,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 823761080}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.016250001, y: 0.01121875}
   m_AnchorMax: {x: 0.13375, y: 0.09056251}
@@ -2804,10 +2804,18 @@ MonoBehaviour:
   - {fileID: 1349639703}
   - {fileID: 745386112}
   startValueRange: {x: 45, y: 55}
-  gameOverObject: {fileID: 966244895}
+  gameOverImage: {fileID: 966244897}
   winScreen: {fileID: 21300000, guid: cd007b230767a3e44897535c24ba8165, type: 3}
-  loseScreens:
-  - {fileID: 21300000, guid: c43e3a18c1c137c43a0c81924a7a6a97, type: 3}
+  loseScreensTooLow:
+  - {fileID: 21300000, guid: a4bc76e04d872b340b0090fa71d7d60f, type: 3}
+  - {fileID: 21300000, guid: 5a3df7c49a60b7542bdd878c6e6e7586, type: 3}
+  - {fileID: 21300000, guid: 1ea650c3ab76a5940bf01709e60b5b9f, type: 3}
+  - {fileID: 21300000, guid: 72e1a4a71b1dd7e4c97a0f164ac489ed, type: 3}
+  loseScreensTooHigh:
+  - {fileID: 21300000, guid: b658bb4590f7b0d4fa19f6318d4ec1cf, type: 3}
+  - {fileID: 21300000, guid: 68a67ce1276fd6c4d9cc37ecc06a56ec, type: 3}
+  - {fileID: 21300000, guid: 8197bb939131c4243a8ec86e683d0e9d, type: 3}
+  - {fileID: 21300000, guid: 28f2a2f2814f3d549aaa4479561a0efc, type: 3}
   winCheck: 10
   winThreshold: 10
   loseDeviationThreshold: 40

@@ -17,9 +17,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
-  - Text: A gang of artists occupies a highly profitable area in the city. Several companies showed interest in buying it.
-  - TextL: Support the artists.
-  - TextR: Remove artists and sell it.
+  - Text: a gang of artists occupies a highly profitable area in the city. Several companies showed interest in buying it.
+  - TextL: support the artists.
+  - TextR: remove the artists and sell it.
   - TreasuryL: -5
   - TreasuryR: 5
 components:
@@ -43,9 +43,9 @@ attributes:
   - FollowUpStepR: -1
   - SecurityL: 0
   - SecurityR: 0
-  - Text: Researches show that working 35 hours a week doesn't only leave employees with more time for themselves but also increases productivity long term.
-  - TextL: Haha, that's half of what I did working in games.
-  - TextR: Encourage more companies to introduce it.
+  - Text: researches show that working 35 hours a week doesn't only leave employees with more time for themselves but also increases productivity long term.
+  - TextL: haha, that's half of what I did working in games.
+  - TextR: encourage more companies to introduce it.
   - TreasuryL: 0
   - TreasuryR: -10
 components:
@@ -69,9 +69,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: -10
-  - Text: The Olympus Games want our country to be the next host! People from all over the world will come to watch!
+  - Text: the Olympus Games want our country to be the next host! People from all over the world will come to watch!
   - TextL: I have no time for games.
-  - TextR: You can never have enough stadiums!
+  - TextR: you can never have enough stadiums!
   - TreasuryL: 0
   - TreasuryR: -15
 components:
@@ -95,9 +95,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
-  - Text: We should offer higher taxation benefits for charity donations.
-  - TextL: We can't afford that.
-  - TextR: Sounds good.
+  - Text: we should offer higher taxation benefits for charity donations.
+  - TextL: we can't afford that.
+  - TextR: that sounds good.
   - TreasuryL: 0
   - TreasuryR: -10
 components:
@@ -121,9 +121,9 @@ attributes:
   - FollowUpStepR: -1
   - SecurityL: 0
   - SecurityR: 0
-  - Text: We should build a new phillarmonic hall in the city that will put all others to shame. It will take a year but when its finished the people will love it.
+  - Text: we should build a new phillarmonic hall in the city that will put all others to shame. It will take a year but when its finished the people will love it.
   - TextL: I'm not sure about your calculations here ...
-  - TextR: Yes, the City needs a new landmark.
+  - TextR: yes, the City needs a new landmark.
   - TreasuryL: 0
   - TreasuryR: -15
 components:
@@ -147,9 +147,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
-  - Text: The bill to legalize same sex marriage is ready for your signature.
-  - TextL: Why would I not sign that?
-  - TextR: It's about time.
+  - Text: the bill to legalize same sex marriage is ready for your signature.
+  - TextL: why would I not sign that?
+  - TextR: it's about time.
   - TreasuryL: 0
   - TreasuryR: 0
 components:
@@ -173,9 +173,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
-  - Text: There is a group of people that want to celebrate being GHNish and spread merch with our flag.
-  - TextL: Its okay to be proud but there is no need for another celebration.
-  - TextR: Patriotism only seperates people.
+  - Text: there is a group of people that want to celebrate being GHNish and spread merch with our flag.
+  - TextL: it's okay to be proud but there is no need for another celebration.
+  - TextR: patriotism only seperates people.
   - TreasuryL: 0
   - TreasuryR: 0
 components:
@@ -199,9 +199,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
-  - Text: Legalizing marijuana would decrease small-time criminality and also give us a new source for taxes.
-  - TextL: No, drugs are bad for our people.
-  - TextR: But what about the health of our people?
+  - Text: legalizing marijuana would decrease small-time criminality and also give us a new source for taxes.
+  - TextL: no, drugs are bad for our people.
+  - TextR: but what about the health of our people?
   - TreasuryL: 0
   - TreasuryR: 0
 components:
@@ -225,9 +225,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
-  - Text: New studies found out that global warming is in fact real!
-  - TextL: The scientists must be conspirators too.
-  - TextR: Release lower emission standard.
+  - Text: new studies found out that global warming is in fact real!
+  - TextL: the scientists must be conspirators too.
+  - TextR: release lower emission standard.
   - TreasuryL: 0
   - TreasuryR: -5
 components:
@@ -251,9 +251,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
-  - Text: Green Power offered to raise the amount of clean energy to over 90.00 percent, given the right funding.
-  - TextL: Other countries don't care about clean energy either.
-  - TextR: Let's raise some wind turbines!
+  - Text: green Power offered to raise the amount of clean energy to over 90.00 percent, given the right funding.
+  - TextL: other countries don't care about clean energy either.
+  - TextR: let's raise some wind turbines!
   - TreasuryL: 0
   - TreasuryR: -15
 components:
@@ -277,9 +277,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
-  - Text: Pollution from traffic keeps increasing in all areas.
-  - TextL: Raise a toll on commercial transport.
-  - TextR: No more driving on sunday.
+  - Text: pollution from traffic keeps increasing in all areas.
+  - TextL: raise a toll on commercial transport.
+  - TextR: no more driving on sunday.
   - TreasuryL: -5
   - TreasuryR: -5
 components:
@@ -303,9 +303,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: -10
-  - Text: The big pharma does questionable things with their waste. If we spoil their business they might increase insurance cost for the people though.
-  - TextL: Meddling with them isn't worth it.
-  - TextR: Fines are always good.
+  - Text: the big pharma does questionable things with their waste. If we spoil their business they might increase insurance cost for the people though.
+  - TextL: meddling with them isn't worth it.
+  - TextR: fines are always good.
   - TreasuryL: 0
   - TreasuryR: 10
 components:
@@ -329,9 +329,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: -10
   - SecurityR: 10
-  - Text: The Big River flooded several cities again. We need to build a dike and dry it out.
-  - TextL: No, we need to find another way.
-  - TextR: If you say so.
+  - Text: the Big River flooded several cities again. We need to build a dike and dry it out.
+  - TextL: no, we need to find another way.
+  - TextR: if you say so.
   - TreasuryL: -5
   - TreasuryR: -10
 components:
@@ -355,9 +355,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
-  - Text: The HapPine Forest and Valley should be declared a national park before the industry destroys it.
-  - TextL: We have other forests and valleys in our nation.
-  - TextR: Totally, I will make the calls.
+  - Text: the HapPine Forest and Valley should be declared a national park before the industry destroys it.
+  - TextL: we have other forests and valleys in our nation.
+  - TextR: totally, I will make the calls.
   - TreasuryL: 0
   - TreasuryR: -5
 components:
@@ -381,9 +381,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: -5
-  - Text: We need to rework a system to keep people busy. Let's put the focus on environment.
-  - TextL: What other choice is there?
-  - TextR: Alright, have fun.
+  - Text: we need to rework a system to keep people busy. Let's put the focus on environment.
+  - TextL: what other choice is there?
+  - TextR: alright, have fun.
   - TreasuryL: 0
   - TreasuryR: -5
 components:
@@ -407,9 +407,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 5
   - SecurityR: 0
-  - Text: Nuclear power plants have unforseeable consequences for our environment. We should abandon them.
-  - TextL: They will just get power from the nuclear power plants of our neighbours.
-  - TextR: Someone has to take the first step in order to save our world.
+  - Text: nuclear power plants have unforseeable consequences for our environment. We should abandon them.
+  - TextL: they will just get power from the nuclear power plants of our neighbours.
+  - TextR: someone has to take the first step in order to save our world.
   - TreasuryL: 0
   - TreasuryR: -10
 components:
@@ -433,9 +433,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: -5
   - SecurityR: 5
-  - Text: Some companies complain about too high taxes and threaten to relocate their business.
-  - TextL: They're bluffing.
-  - TextR: Lower the taxes.
+  - Text: some companies complain about too high taxes and threaten to relocate their business.
+  - TextL: they're bluffing.
+  - TextR: lower the taxes.
   - TreasuryL: 0
   - TreasuryR: -10
 components:
@@ -459,9 +459,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 10
   - SecurityR: -10
-  - Text: Open the boarders so the trade can flow more freely.
-  - TextL: We need to focus on ourselves.
-  - TextR: Open borders, yay!
+  - Text: open the borders so the trade can flow more freely.
+  - TextL: we need to focus on ourselves.
+  - TextR: open borders, yay!
   - TreasuryL: 0
   - TreasuryR: 0
 components:
@@ -485,9 +485,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
-  - Text: Companies would be willing to pay more taxes if there was more tolerance in regards of pollution.
+  - Text: companies would be willing to pay more taxes if there was more tolerance in regards of pollution.
   - TextL: I have little tolerance for that.
-  - TextR: We don't have to be so nitpicky.
+  - TextR: we don't have to be so nitpicky.
   - TreasuryL: 0
   - TreasuryR: 10
 components:
@@ -511,9 +511,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 10
   - SecurityR: 5
-  - Text: Our neighbours start to produce and sell wares similar to ours, we expect there are industry spies.
-  - TextL: Prosecute theft of IP more thoroughly.
-  - TextR: Allow for more surveillance at work.
+  - Text: our neighbours start to produce and sell wares similar to ours, we expect there are industry spies.
+  - TextL: prosecute theft of IP more thoroughly.
+  - TextR: allow for more surveillance at work.
   - TreasuryL: -15
   - TreasuryR: -5
 components:
@@ -537,9 +537,9 @@ attributes:
   - FollowUpStepR: -1
   - SecurityL: 0
   - SecurityR: 0
-  - Text: Companies request more building space. There is still a lot of forest left that we can free up.
+  - Text: companies request more building space. There is still a lot of forest left that we can free up.
   - TextL: I like our forest.
-  - TextR: You can always regrow trees.
+  - TextR: you can always regrow trees.
   - TreasuryL: 0
   - TreasuryR: -5
 components:
@@ -563,9 +563,9 @@ attributes:
   - FollowUpStepR: -1
   - SecurityL: 0
   - SecurityR: 5
-  - Text: Companies are outsourcing their production to poorer countries to save money.
-  - TextL: We can't keep up with these low wage countries.
-  - TextR: Offer taxation benefits for lower wage jobs.
+  - Text: companies are outsourcing their production to poorer countries to save money.
+  - TextL: we can't keep up with these low wage countries.
+  - TextR: offer taxation benefits for lower wage jobs.
   - TreasuryL: 0
   - TreasuryR: -10
 components:
@@ -589,9 +589,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 5
   - SecurityR: -5
-  - Text: We should make it easier for illegal immigrants to come into our country so the industry finds more cheap workers.
-  - TextL: You are fired.
-  - TextR: Yes. (Evil laughter)
+  - Text: we should make it easier for illegal immigrants to come into our country so the industry finds more cheap workers.
+  - TextL: you are fired.
+  - TextR: yes. (Evil laughter)
   - TreasuryL: 0
   - TreasuryR: 0
 components:
@@ -615,9 +615,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 5
-  - Text: There have been some accidents, some believe it was terrorist attacks.
-  - TextL: No reason to overreact...
-  - TextR: Raise the police presence.
+  - Text: there have been some accidents, some believe it was terrorist attacks.
+  - TextL: no reason to overreact...
+  - TextR: raise the police presence.
   - TreasuryL: 0
   - TreasuryR: -5
 components:
@@ -641,9 +641,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 15
   - SecurityR: 10
-  - Text: People fear about their living standard after the crisis. If there are no raises they will ask us to lower the taxes.
-  - TextL: More of the taxes can be shifted towards the employers
-  - TextR: We can lower the taxes a bit... We still have spare money, right?
+  - Text: people fear about their living standard after the crisis. If there are no raises they will ask us to lower the taxes.
+  - TextL: more of the taxes can be shifted towards the employers
+  - TextR: we can lower the taxes a bit... We still have spare money, right?
   - TreasuryL: 0
   - TreasuryR: -10
 components:
@@ -667,9 +667,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 10
-  - Text: We need to rework our health insurance system.
-  - TextL: No we don't.
-  - TextR: If you say so.
+  - Text: we need to rework our health insurance system.
+  - TextL: no we don't.
+  - TextR: if you say so.
   - TreasuryL: 0
   - TreasuryR: -15
 components:
@@ -693,9 +693,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: -10
-  - Text: The introduction of the reformed recycling and waste disposal costs, contrary to our calculation, more than we can afford.
-  - TextL: Cut the recycling.
-  - TextR: Raise the fee for waste disposal.
+  - Text: the introduction of the reformed recycling and waste disposal costs, contrary to our calculation, more than we can afford.
+  - TextL: cut the recycling.
+  - TextR: raise the fee for waste disposal.
   - TreasuryL: -5
   - TreasuryR: -5
 components:
@@ -719,9 +719,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: -15
   - SecurityR: 15
-  - Text: Another bank files for insolvency. We need to help them out or a lot of people will lose their money.
-  - TextL: We can't afford that.
-  - TextR: We have no choice.
+  - Text: another bank files for insolvency. We need to help them out or a lot of people will lose their money.
+  - TextL: we can't afford that.
+  - TextR: we have no choice.
   - TreasuryL: 0
   - TreasuryR: -15
 components:
@@ -745,9 +745,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 10
   - SecurityR: 10
-  - Text: The Great Celebration of Happiness draws near and our secret service found hints of a potential terrorist attack.
-  - TextL: The celebration can't be canceled anymore. Increase safety measures.
-  - TextR: The celebration must be canceled.
+  - Text: the Great Celebration of Happiness draws near and our secret service found hints of a potential terrorist attack.
+  - TextL: the celebration can't be canceled anymore. Increase safety measures.
+  - TextR: the celebration must be canceled.
   - TreasuryL: -10
   - TreasuryR: 0
 components:
@@ -771,9 +771,9 @@ attributes:
   - FollowUpStepR: -1
   - SecurityL: 5
   - SecurityR: -5
-  - Text: Because of a war far away, a lot of refugees flee to our nation. 
-  - TextL: Set up camps around the border, we will have to be careful.
-  - TextR: Our Nation was based on refugees, bid them welcome.
+  - Text: because of a war far away, a lot of refugees flee to our nation. 
+  - TextL: set up camps around the border, we will have to be careful.
+  - TextR: our Nation was based on refugees, bid them welcome.
   - TreasuryL: -10
   - TreasuryR: -5
 components:
@@ -797,9 +797,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 5
   - SecurityR: 0
-  - Text: Some people want us to build a giant wall to stop illegal immigration.
-  - TextL: Why us? Our neighbours should build one.
-  - TextR: Are you kidding me?
+  - Text: some people want us to build a giant wall to stop illegal immigration.
+  - TextL: why us? Our neighbours should build one.
+  - TextR: are you kidding me?
   - TreasuryL: 0
   - TreasuryR: 0
 components:
@@ -823,9 +823,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 10
   - SecurityR: 0
-  - Text: We spend little money on military, if there is ever a war coming we will be in trouble.
-  - TextL: War. War never changes.
-  - TextR: Every penny spend on warfare is a waste.
+  - Text: we spend little money on military, if there is ever a war coming we will be in trouble.
+  - TextL: war. War never changes.
+  - TextR: every penny spend on warfare is a waste.
   - TreasuryL: -20
   - TreasuryR: 0
 components:
@@ -849,9 +849,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
-  - Text: Companies who introduced the 35 hours week register an increased productivity.
-  - TextL: How is that still not a thing?
-  - TextR: Great!
+  - Text: companies who introduced the 35 hours week register an increased productivity.
+  - TextL: how is that still not a thing?
+  - TextR: great!
   - TreasuryL: 0
   - TreasuryR: 0
 components:
@@ -875,9 +875,9 @@ attributes:
   - FollowUpStepR: -1
   - SecurityL: 0
   - SecurityR: 0
-  - Text: The phillarmonic hall we are building takes longer than anticipated. We need more funds to continue the construction.
-  - TextL: Cancel the project and salvage what's possible.
-  - TextR: It will pay off eventually.
+  - Text: the phillarmonic hall we are building takes longer than anticipated. We need more funds to continue the construction.
+  - TextL: cancel the project and salvage what's possible.
+  - TextR: it will pay off eventually.
   - TreasuryL: 0
   - TreasuryR: -15
 components:
@@ -901,9 +901,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
-  - Text: The phillarmonic hall is done!
-  - TextL: Didn't think that day would come.
-  - TextR: Terrific!
+  - Text: the phillarmonic hall is done!
+  - TextL: didn't think that day would come.
+  - TextR: terrific!
   - TreasuryL: 0
   - TreasuryR: 0
 components:
@@ -927,7 +927,7 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: -5
   - SecurityR: 10
-  - Text: Researches show it is way less damaging than alchohol and does't actually serve as a gateway drug.
+  - Text: researches show it is way less damaging than alchohol and does't actually serve as a gateway drug.
   - TextL: I don't care about facts.
   - TextR: I don't see the reason we haven't done it yet.
   - TreasuryL: 0
@@ -953,9 +953,9 @@ attributes:
   - FollowUpStepR: -1
   - SecurityL: 0
   - SecurityR: 0
-  - Text: Companies request more building space. There is still some forest left that we can free up.
-  - TextL: They have to look somewhere else.
-  - TextR: You can always regrow trees, right?
+  - Text: companies request more building space. There is still some forest left that we can free up.
+  - TextL: they have to look somewhere else.
+  - TextR: you can always regrow trees, right?
   - TreasuryL: 0
   - TreasuryR: 0
 components:
@@ -979,9 +979,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
-  - Text: The clearing of our forests worsened our air. We need to plant more trees to fight this trend.
+  - Text: the clearing of our forests worsened our air. We need to plant more trees to fight this trend.
   - TextL: I can't notice any difference.
-  - TextR: Definetly.
+  - TextR: definetly.
   - TreasuryL: 0
   - TreasuryR: -15
 components:
@@ -1005,9 +1005,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 0
-  - Text: Some people from our nation are offended by all the refugees.
-  - TextL: Help their integration.
-  - TextR: Their unhapiness must come from somthing else.
+  - Text: some people from our nation are offended by all the refugees.
+  - TextL: help their integration.
+  - TextR: their unhapiness must come from somthing else.
   - TreasuryL: -5
   - TreasuryR: 0
 components:
@@ -1031,9 +1031,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 5
-  - Text: We could rework the health system again?
-  - TextL: What other options are there?
-  - TextR: Yes, people love new health systems.
+  - Text: we could rework the health system again?
+  - TextL: what other options are there?
+  - TextR: yes, people love new health systems.
   - TreasuryL: 0
   - TreasuryR: -5
 components:
@@ -1057,9 +1057,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 5
-  - Text: We could hear out lobbyists so we know how to help our economy?
-  - TextL: What other options are there?
-  - TextR: Brilliant!
+  - Text: we could hear out lobbyists so we know how to help our economy?
+  - TextL: what other options are there?
+  - TextR: brilliant!
   - TreasuryL: 0
   - TreasuryR: -5
 components:
@@ -1083,9 +1083,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: -5
-  - Text: We could schudle a new holiday that is focused on creativity? Maybe?
-  - TextL: What other options are there?
-  - TextR: Great idea, people should have more time to be creative.
+  - Text: we could schudle a new holiday that is focused on creativity? Maybe?
+  - TextL: what other options are there?
+  - TextR: great idea, people should have more time to be creative.
   - TreasuryL: 0
   - TreasuryR: -5
 components:
@@ -1109,9 +1109,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 0
   - SecurityR: 5
-  - Text: You are really streching me thin here...
-  - TextL: How about dismissing some officials because our apparatus of state is inefficiently big?
-  - TextR: How about doing something that actually needs work?
+  - Text: you are really streching me thin here...
+  - TextL: how about dismissing some officials because our apparatus of state is inefficiently big?
+  - TextR: how about doing something that actually needs work?
   - TreasuryL: 20
   - TreasuryR: -5
 components:
@@ -1135,9 +1135,9 @@ attributes:
   - FollowUpStepR: 0
   - SecurityL: 5
   - SecurityR: -5
-  - Text: The costs to keep lower wage jobs in our country viable are every increasing. The living costs in our country don't allow it.
-  - TextL: Keep it up, the next election is close.
-  - TextR: We have to focus on keeping development in our country, not production.
+  - Text: the costs to keep lower wage jobs in our country viable are every increasing. The living costs in our country don't allow it.
+  - TextL: keep it up, the next election is close.
+  - TextR: we have to focus on keeping development in our country, not production.
   - TreasuryL: -10
   - TreasuryR: -10
 components:

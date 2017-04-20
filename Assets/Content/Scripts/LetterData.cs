@@ -1,9 +1,9 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CardData.cs" company="Morra">
+// <copyright file="LetterData.cs" company="Morra">
 //   Bent Nürnberg
 // </copyright>
 // <summary>
-//   Defines the CardData type.
+//   Defines the LetterData type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -16,16 +16,16 @@ namespace Content.Scripts
     /// <summary>
     /// The data to create a card
     /// </summary>
-    public class CardData
+    public class LetterData
     {
         /// <summary>
         /// Gets or sets the card id.
         /// </summary>
-        public int CardId { get; set; }
+        public int LetterId { get; set; }
 
         /// <summary>
         /// Gets or sets the card attributes.
         /// </summary>
-        public CardAttributes CardAttributes { get; set; }
+        public LetterAttributes LetterAttributes { get; set; }
     }
 }

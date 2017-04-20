@@ -1,9 +1,9 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CardAttributes.cs" company="Morra">
+// <copyright file="LetterAttributes.cs" company="Morra">
 //   Bent Nürnberg
 // </copyright>
 // <summary>
-//   Defines the CardAttributes type.
+//   Defines the LetterAttributes type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -14,7 +14,7 @@ namespace Content.Scripts
     /// <summary>
     /// The card attributes.
     /// </summary>
-    public class CardAttributes
+    public class LetterAttributes
     {
         /// <summary>
         /// Gets or sets the category.

@@ -1,9 +1,9 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CardController.cs" company="-">
+// <copyright file="LetterController.cs" company="-">
 //   Andr� Kowalewski & Bent N�rnberg
 // </copyright>
 // <summary>
-//   Defines the CardController type.
+//   Defines the LetterController type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace Content.Scripts
@@ -15,9 +15,9 @@ namespace Content.Scripts
     using UnityEngine.UI;
 
     /// <summary>
-    /// The card controller.
+    /// The letter controller.
     /// </summary>
-    public class CardController : MonoBehaviour
+    public class LetterController : MonoBehaviour
     {
         /// <summary>
         /// The game manager.
@@ -26,10 +26,10 @@ namespace Content.Scripts
         private GameManager gameManager = null;
 
         /// <summary>
-        /// The card text.
+        /// The letter text.
         /// </summary>
         [SerializeField]
-        private Text cardTextUIComponent = null;
+        private Text letterTextUIComponent = null;
 
 		/// <summary>
 		/// The adress text.
@@ -50,88 +50,88 @@ namespace Content.Scripts
         private int deviationToHelp = 20;
 
         /// <summary>
-        /// The max cards in hand.
+        /// The max letters in hand.
         /// </summary>
         [SerializeField]
-        private int maxCardsInHand = 20;
+        private int maxLettersInHand = 20;
 
         /// <summary>
         /// The max angle.
         /// </summary>
-        [Tooltip("The maximum angle in degrees the card rotates, when dragged.")]
+        [Tooltip("The maximum angle in degrees the letter rotates, when dragged.")]
         [SerializeField]
         private float maxAngle = 15f;
 
         /// <summary>
         /// The threshold angle.
         /// </summary>
-        [Tooltip("Angle in degrees when a card is marked as chosen.")]
+        [Tooltip("Angle in degrees when a letter is marked as chosen.")]
         [SerializeField]
         private float thresholdAngle = 10f;
 
         /// <summary>
         /// The aniamtions back rotation speed.
         /// </summary>
-        [Tooltip("The speed used for rotating the card back, when it was not choosen.")]
+        [Tooltip("The speed used for rotating the letter back, when it was not choosen.")]
         [SerializeField]
         private float animationRevertRotationSpeed = 1f;
 
         /// <summary>
-        /// How fast the card moves away
+        /// How fast the letter moves away
         /// </summary>
-        [Tooltip("The speed used for moving the card away after choosing.")]
+        [Tooltip("The speed used for moving the letter away after choosing.")]
         [SerializeField]
         private float animationMoveSpeed = 1f;
 		
         /// <summary>
-        /// How far the card should move away
+        /// How far the letter should move away
         /// </summary>
         [Tooltip("The target distance to move away after chossing")]
         [SerializeField]
         private float animationMoveDistance = 900f;
         
         /// <summary>
-        /// Degrees to start with when next card rotate animation is being played.
+        /// Degrees to start with when next letter rotate animation is being played.
         /// </summary>
-        [Tooltip("Degrees to start with when next card rotate animation is being played.")]
+        [Tooltip("Degrees to start with when next letter rotate animation is being played.")]
         [SerializeField]
-        private float animationNextCardDegree = 720;
+        private float animationNextLetterDegree = 720;
 
         /// <summary>
-        /// The speed at which the next card rotation animation is being played.
+        /// The speed at which the next letter rotation animation is being played.
         /// </summary>
         [SerializeField]
-        private float aniamtionNextCardSpeed = 1;
+        private float animationNextLetterSpeed = 1;
 		
 		/// <summary>
-		/// This cards inital position.
+		/// This letters inital position.
 		/// </summary>
 		private Vector3 initPosition;
 
         /// <summary>
-        /// The card hand.
+        /// The letter hand.
         /// </summary>
-        private List<CardData> cardHand;
+        private List<LetterData> letterHand;
 
         /// <summary>
-        /// The card lists.
+        /// The letter lists.
         /// </summary>
-        private Dictionary<string, List<CardData>> cardLists;
+        private Dictionary<string, List<LetterData>> letterLists;
 
         /// <summary>
-        /// The cards by id.
+        /// The letters by id.
         /// </summary>
-        private Dictionary<int, CardData> cardsById;
+        private Dictionary<int, LetterData> lettersById;
 
         /// <summary>
-        /// The card stacks.
+        /// The letter stacks.
         /// </summary>
-        private Dictionary<string, Stack<CardData>> cardStacks;
+        private Dictionary<string, Stack<LetterData>> letterStacks;
 
         /// <summary>
-        /// The current card.
+        /// The current letter.
         /// </summary>
-        private CardAttributes currentCard;
+        private LetterAttributes currentLetter;
 
         /// <summary>
         /// The last category.
@@ -149,12 +149,12 @@ namespace Content.Scripts
         private int[] policyValuesR = new int[5];
 
         /// <summary>
-        /// The the four card categories.
+        /// The the four letter categories.
         /// </summary>
-        private string[] theFourCardCategories = { "Culture", "Economy", "Environment", "Security" };
+        private string[] theFourLetterCategories = { "Culture", "Economy", "Environment", "Security" };
 
 		/// <summary>
-		/// This cards image, used as raycasting target
+		/// This letters image, used as raycasting target
 		/// </summary>
         private Image image;
 
@@ -171,7 +171,7 @@ namespace Content.Scripts
 	    }
 
 	    /// <summary>
-		/// Flag if angular threshold of card was crossed
+		/// Flag if angular threshold of letter was crossed
 		/// </summary>
 		private bool hasCrossedThreshold = false;
 
@@ -249,7 +249,7 @@ namespace Content.Scripts
         }
 
         /// <summary>
-        /// Rotates the card towards the input position when dragged.
+        /// Rotates the letter towards the input position when dragged.
         /// </summary>
         public void OnDrag()
         {
@@ -272,7 +272,7 @@ namespace Content.Scripts
 			    this.hasCrossedThreshold = true;
 			    this.gameManager.PreviewResults ( this.ChosenPolicy );
 			    this.textAdressee.text = "Dear " + this.adresseeNames[1] + ',';
-			    this.ShowCardSwipeText ();
+			    this.ShowLetterSwipeText ();
 				AudioController.Instance.Play ( 4 );
 		    }
 		    else if (Mathf.Abs(this.EulerZ) <= this.thresholdAngle && this.hasCrossedThreshold)
@@ -280,7 +280,7 @@ namespace Content.Scripts
 				this.hasCrossedThreshold = false;
 				this.gameManager.RevertPreview ();
 			    this.textAdressee.text = "Dear " + this.adresseeNames[0] + ',';
-			    this.ShowCardText ();
+			    this.ShowLetterText ();
 		    }
         }
 
@@ -300,85 +300,85 @@ namespace Content.Scripts
                 // if swipe was left or else if swipe was right
                 if (this.EulerZ > this.thresholdAngle)
                 {
-                    this.CheckForAndInsertFollowUpCard(this.currentCard.FollowUpIdL, this.currentCard.FollowUpStepL);
+                    this.CheckForAndInsertFollowUpLetter(this.currentLetter.FollowUpIdL, this.currentLetter.FollowUpStepL);
                 }
                 else if (this.EulerZ < -this.thresholdAngle)
                 {
-                    this.CheckForAndInsertFollowUpCard(this.currentCard.FollowUpIdR, this.currentCard.FollowUpStepR);
+                    this.CheckForAndInsertFollowUpLetter(this.currentLetter.FollowUpIdR, this.currentLetter.FollowUpStepR);
                 }
                 this.StartCoroutine( this.MoveAway() );
             }
         }
 
         /// <summary>
-        /// Callback from animation system, when NextCardAnimation is over.
+        /// Callback from animation system, when NextLetterAnimation is over.
         /// </summary>
-        public void OnAppliedCardAnimationOver()
+        public void OnAppliedLetterAnimationOver()
         {
             this.StopAllCoroutines();
-			this.GetNextCard();
+			this.GetNextLetter();
         }
 
         /// <summary>
-        /// The add card list to currentCard stack.
+        /// The add letter list to currentLetter stack.
         /// </summary>
         /// <param name="category">
         /// The category.
         /// </param>
-        private void AddCardListToCardStack(string category)
+        private void AddLetterListToLetterStack(string category)
         {
-            foreach (var card in this.cardLists[category])
+            foreach (var letter in this.letterLists[category])
             {
-                this.AddToCardStacks(card);
+                this.AddToLetterStacks(letter);
             }
         }
 
         /// <summary>
-        /// The add to card lists.
+        /// The add to letter lists.
         /// </summary>
-        /// <param name="card">
-        /// The card.
+        /// <param name="letter">
+        /// The letter.
         /// </param>
-        private void AddToCardLists(CardData card)
+        private void AddToLetterLists(LetterData letter)
         {
-            var category = card.CardAttributes.Category;
-            var id = card.CardId;
+            var category = letter.LetterAttributes.Category;
+            var id = letter.LetterId;
 
             // if category was not added to dictionary
-            if (!this.cardLists.ContainsKey(category))
+            if (!this.letterLists.ContainsKey(category))
             {
                 // create and add list for this category
-                this.cardLists.Add(category, new List<CardData>());
+                this.letterLists.Add(category, new List<LetterData>());
             }
 
             // add to list for this category
-            this.cardLists[category].Add(card);
-            this.cardsById.Add(id, card);
+            this.letterLists[category].Add(letter);
+            this.lettersById.Add(id, letter);
         }
 
         /// <summary>
-        /// The add to card stacks.
+        /// The add to letter stacks.
         /// </summary>
-        /// <param name="card">
-        /// The card.
+        /// <param name="letter">
+        /// The letter.
         /// </param>
-        private void AddToCardStacks(CardData card)
+        private void AddToLetterStacks(LetterData letter)
         {
-            var category = card.CardAttributes.Category;
+            var category = letter.LetterAttributes.Category;
 
             // if category was not added to dictionary
-            if (!this.cardStacks.ContainsKey(category))
+            if (!this.letterStacks.ContainsKey(category))
             {
                 // create and add stack for this category
-                this.cardStacks.Add(category, new Stack<CardData>());
+                this.letterStacks.Add(category, new Stack<LetterData>());
             }
 
             // add to stack for this category
-            this.cardStacks[category].Push(card);
+            this.letterStacks[category].Push(letter);
         }
 
         /// <summary>
-        /// The check for and insert follow up card.
+        /// The check for and insert follow up letter.
         /// </summary>
         /// <param name="id">
         /// The id.
@@ -386,7 +386,7 @@ namespace Content.Scripts
         /// <param name="step">
         /// The step.
         /// </param>
-        private void CheckForAndInsertFollowUpCard(int id, int step)
+        private void CheckForAndInsertFollowUpLetter(int id, int step)
         {
             if (id > 0)
             {
@@ -394,45 +394,45 @@ namespace Content.Scripts
                 {
                     step = (int)Random.Range(4, 12);
                 }
-                this.cardHand.Insert(step, this.cardsById[id]);
-                Debug.LogFormat("Follow Up Card with ID {0} inserted in {1} cards.", id, step + 1);
+                this.letterHand.Insert(step, this.lettersById[id]);
+                Debug.LogFormat("Follow Up Letter with ID {0} inserted in {1} letters.", id, step + 1);
             }
-            else
+            else if (id < 0)
             {
-                Debug.LogWarningFormat("Follow Up Card ID was out of range (read: negative). ID was {0}", id);
+                Debug.LogWarningFormat("Follow Up Letter ID was out of range (read: negative). ID was {0}", id);
             }
         }
 
         /// <summary>
-        /// The deviated card hand fill.
+        /// The deviated letter hand fill.
         /// </summary>
         /// <param name="mostDeviatedValue">
         /// The most deviated value.
         /// </param>
-        private void DeviatedCardHandFill(PolicyType mostDeviatedValue)
+        private void DeviatedLetterHandFill(PolicyType mostDeviatedValue)
         {
-            var card = this.GetCardFromStack(mostDeviatedValue.ToString());
-            if (card == null)
+            var letter = this.GetLetterFromStack(mostDeviatedValue.ToString());
+            if (letter == null)
             {
-                Debug.LogWarningFormat( "DeviatedCardHandFill got null as card, aborting. PolicyType was {0}.", mostDeviatedValue.ToString());
+                Debug.LogWarningFormat( "DeviatedLetterHandFill got null as letter, aborting. PolicyType was {0}.", mostDeviatedValue.ToString());
                 return;
             }
 
-            this.cardHand.Insert(0, card);
-            this.NormalCardHandFill();
+            this.letterHand.Insert(0, letter);
+            this.NormalLetterHandFill();
         }
 
         /// <summary>
-        /// The fill card hand.
+        /// The fill letter hand.
         /// </summary>
-        private void FillCardHand()
+        private void FillLetterHand()
         {
-            if (this.cardHand == null)
+            if (this.letterHand == null)
             {
-                this.cardHand = new List<CardData>();
+                this.letterHand = new List<LetterData>();
             }
 
-            if (this.cardHand.Count >= this.maxCardsInHand)
+            if (this.letterHand.Count >= this.maxLettersInHand)
             {
                 return;
             }
@@ -442,39 +442,39 @@ namespace Content.Scripts
 
             if (deviation < this.deviationToHelp)
             {
-                this.NormalCardHandFill();
+                this.NormalLetterHandFill();
             }
             else
             {
-                this.DeviatedCardHandFill(mostDeviatedValue);
+                this.DeviatedLetterHandFill(mostDeviatedValue);
             }
         }
 
         /// <summary>
-        /// The get card from stack.
+        /// The get letter from stack.
         /// </summary>
         /// <param name="category">
         /// The category.
         /// </param>
         /// <returns>
-        /// The <see cref="CardData"/>.
+        /// The <see cref="LetterData"/>.
         /// </returns>
-        private CardData GetCardFromStack(string category)
+        private LetterData GetLetterFromStack(string category)
         {
-            if (this.cardStacks.ContainsKey(category))
+            if (this.letterStacks.ContainsKey(category))
             {
-                if (this.cardStacks[category].Count != 0)
+                if (this.letterStacks[category].Count != 0)
                 {
-                    return this.cardStacks[category].Pop();
+                    return this.letterStacks[category].Pop();
                 }
 
-                this.PrepareCardList(category);
-                this.AddCardListToCardStack(category);
-                return this.cardStacks[category].Pop();
+                this.PrepareLetterList(category);
+                this.AddLetterListToLetterStack(category);
+                return this.letterStacks[category].Pop();
             }
 
             Debug.LogWarning(
-                "You tried to get a card from a category, where no currentCard stack is present (not even an empty one, so that might be a wrong category or your currentCard data is corrupt/incorrect).");
+                "You tried to get a letter from a category, where no currentLetter stack is present (not even an empty one, so that might be a wrong category or your currentLetter data is corrupt/incorrect).");
             return null;
         }
 
@@ -516,24 +516,24 @@ namespace Content.Scripts
         }
 
         /// <summary>
-        /// Gets next card.
+        /// Gets next letter.
         /// </summary>
-        private void GetNextCard()
+        private void GetNextLetter()
         {
 	        if ( this.gameManager.IsElection )
 	        {
-		       this.SetElectionCard ();
+		       this.SetElectionLetter ();
 	        }
 	        else
 	        {
-				this.GetNextCardFromList ();
+				this.GetNextLetterFromList ();
 			}
         }
 
 		/// <summary>
-		/// Gets card values for election card
+		/// Gets letter values for election letter
 		/// </summary>
-	    private void SetElectionCard ()
+	    private void SetElectionLetter ()
 	    {
 		    for ( int i = 0; i < this.policyValuesL.Length; i++ )
 		    {
@@ -544,97 +544,97 @@ namespace Content.Scripts
 			this.policyValuesR[(int)PolicyType.Treasury] = this.electionMoneyBonus;
 			
 			this.Image.sprite = this.reelectionLetterSprite;
-			this.ShowCardText ();
+			this.ShowLetterText ();
 		}
 
 		/// <summary>
-		/// Gets the next card from list
+		/// Gets the next letter from list
 		/// </summary>
-		private void GetNextCardFromList ()
+		private void GetNextLetterFromList ()
 	    {
-			if (this.cardHand == null)
+			if (this.letterHand == null)
 			{
-				Debug.LogWarning("The cardHand list is null, aborting GetNextCard()");
+				Debug.LogWarning("The letterHand list is null, aborting GetNextLetter()");
 				if (Debug.isDebugBuild)
 				{
 					this.SetRandomPolicyValues();
-					AConsoleController.Instance.AddToConsole("The cardHand list is null, aborting GetNextCard()");
+					AConsoleController.Instance.AddToConsole("The letterHand list is null, aborting GetNextLetter()");
 				}
 				return;
 			}
 
-			if (this.cardHand.Count == 0)
+			if (this.letterHand.Count == 0)
 			{
-				Debug.LogWarning("The cardHand list is empty, aborting GetNextCard()");
+				Debug.LogWarning("The letterHand list is empty, aborting GetNextLetter()");
 				if (Debug.isDebugBuild)
 				{
 					this.SetRandomPolicyValues();
-					AConsoleController.Instance.AddToConsole("The cardHand list is empty, aborting GetNextCard()");
+					AConsoleController.Instance.AddToConsole("The letterHand list is empty, aborting GetNextLetter()");
 				}
 
 				return;
 			}
 
-			this.currentCard = this.cardHand[0].CardAttributes;
+			this.currentLetter = this.letterHand[0].LetterAttributes;
 
-			this.policyValuesL[0] = this.currentCard.CultureL;
-			this.policyValuesL[1] = this.currentCard.EconomyL;
-			this.policyValuesL[2] = this.currentCard.EnvironmentL;
-			this.policyValuesL[3] = this.currentCard.SecurityL;
-			this.policyValuesL[4] = this.currentCard.TreasuryL;
+			this.policyValuesL[0] = this.currentLetter.CultureL;
+			this.policyValuesL[1] = this.currentLetter.EconomyL;
+			this.policyValuesL[2] = this.currentLetter.EnvironmentL;
+			this.policyValuesL[3] = this.currentLetter.SecurityL;
+			this.policyValuesL[4] = this.currentLetter.TreasuryL;
 
-			this.policyValuesR[0] = this.currentCard.CultureR;
-			this.policyValuesR[1] = this.currentCard.EconomyR;
-			this.policyValuesR[2] = this.currentCard.EnvironmentR;
-			this.policyValuesR[3] = this.currentCard.SecurityR;
-			this.policyValuesR[4] = this.currentCard.TreasuryR;
+			this.policyValuesR[0] = this.currentLetter.CultureR;
+			this.policyValuesR[1] = this.currentLetter.EconomyR;
+			this.policyValuesR[2] = this.currentLetter.EnvironmentR;
+			this.policyValuesR[3] = this.currentLetter.SecurityR;
+			this.policyValuesR[4] = this.currentLetter.TreasuryR;
 
-			this.ShowCardText();
+			this.ShowLetterText();
 
-			this.cardHand.RemoveAt(0);
-			this.FillCardHand();
+			this.letterHand.RemoveAt(0);
+			this.FillLetterHand();
 		}
 
         /// <summary>
-        /// The normal card hand fill.
+        /// The normal letter hand fill.
         /// </summary>
-        private void NormalCardHandFill()
+        private void NormalLetterHandFill()
         {
-            for (var i = 0; i < this.maxCardsInHand - this.cardHand.Count; i++)
+            for (var i = 0; i < this.maxLettersInHand - this.letterHand.Count; i++)
             {
                 var category = (PolicyType)this.LastCategory++;
-                var card = this.GetCardFromStack(category.ToString());
+                var letter = this.GetLetterFromStack(category.ToString());
 
-                if (card != null)
+                if (letter != null)
                 {
-                    this.cardHand.Add(card);
+                    this.letterHand.Add(letter);
                 }
             }
         }
 
         /// <summary>
-        /// The prepare card list.
+        /// The prepare letter list.
         /// </summary>
         /// <param name="category">
         /// The category.
         /// </param>
-        private void PrepareCardList(string category)
+        private void PrepareLetterList(string category)
         {
             // if the category is one of the big four
-            if (this.theFourCardCategories.Contains(category))
+            if (this.theFourLetterCategories.Contains(category))
             {
-                // shuffle cards
-                this.cardLists[category].Shuffle();
+                // shuffle letters
+                this.letterLists[category].Shuffle();
             }
             else
             {
                 // sort list by descending id, because they are later pushed to a stack in order. the big ones need to go down first
-                this.cardLists[category] = new List<CardData>(this.cardLists[category].OrderByDescending(card => card.CardId));
+                this.letterLists[category] = new List<LetterData>(this.letterLists[category].OrderByDescending(card => card.LetterId));
             }
         }
 
         /// <summary>
-        /// Rotates the card smoothly back, when drag ended.
+        /// Rotates the letter smoothly back, when drag ended.
         /// </summary>
         /// <param name="currentRotation">
         /// The current Rotation.
@@ -656,7 +656,7 @@ namespace Content.Scripts
         }
 
         /// <summary>
-        /// Moves the card away into the chosen direction
+        /// Moves the letter away into the chosen direction
         /// </summary>
         private IEnumerator MoveAway()
 		{
@@ -679,14 +679,14 @@ namespace Content.Scripts
                 yield return null;
             }
 
-            this.GetNextCard();
-            this.StartCoroutine( this.NextCardAnimation() );
+            this.GetNextLetter();
+            this.StartCoroutine( this.NextLetterAnimation() );
         }
 
 		/// <summary>
-		/// Plays next card animation
+		/// Plays next letter animation
 		/// </summary>
-        private IEnumerator NextCardAnimation()
+        private IEnumerator NextLetterAnimation()
         {
             this.transform.position = this.initPosition;
             this.transform.rotation = Quaternion.identity;
@@ -697,9 +697,9 @@ namespace Content.Scripts
             while (t <= 1)
             {
                 targetTransform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, t);
-                var targetZ = Mathf.Lerp(this.animationNextCardDegree, 0, t);
+                var targetZ = Mathf.Lerp(this.animationNextLetterDegree, 0, t);
                 targetTransform.rotation = Quaternion.Euler(0,0,targetZ);
-                t += this.aniamtionNextCardSpeed * Time.deltaTime;
+                t += this.animationNextLetterSpeed * Time.deltaTime;
              
                 yield return null;
             }
@@ -722,74 +722,74 @@ namespace Content.Scripts
         }
 
         /// <summary>
-        /// The setup card lists.
+        /// The setup letter lists.
         /// </summary>
-        private void SetupCardLists()
+        private void SetupLetterLists()
         {
             // init dictionaries
-            this.cardLists = new Dictionary<string, List<CardData>>();
-            this.cardsById = new Dictionary<int, CardData>();
+            this.letterLists = new Dictionary<string, List<LetterData>>();
+            this.lettersById = new Dictionary<int, LetterData>();
 
-            var list = CardDataLoader.GetCardDataList();
+            var list = LetterDataLoader.GetLetterDataList();
 
-            foreach (var card in list)
+            foreach (var letter in list)
             {
-                this.AddToCardLists(card);
+                this.AddToLetterLists(letter);
             }
         }
 
         /// <summary>
-        /// The setup card stacks.
+        /// The setup letter stacks.
         /// </summary>
-        private void SetupCardStacks()
+        private void SetupLetterStacks()
         {
             // init dictionary
-            this.cardStacks = new Dictionary<string, Stack<CardData>>();
+            this.letterStacks = new Dictionary<string, Stack<LetterData>>();
 
-            foreach (var key in this.cardLists.Keys.ToList())
+            foreach (var key in this.letterLists.Keys.ToList())
             {
-                this.PrepareCardList(key);
-                this.AddCardListToCardStack(key);
+                this.PrepareLetterList(key);
+                this.AddLetterListToLetterStack(key);
             }
         }
 
         /// <summary>
-        /// The show card swipe text.
+        /// The show letter swipe text.
         /// </summary>
-        private void ShowCardSwipeText()
+        private void ShowLetterSwipeText()
         {
 	        if ( this.gameManager.IsElection )
 	        {
 				this.textAdressee.text = "";
-				this.cardTextUIComponent.text = "";
+				this.letterTextUIComponent.text = "";
 				return;
 	        }
 
 			// left positive, right negative
 			if (this.EulerZ > this.thresholdAngle)
             {
-                this.cardTextUIComponent.text = this.currentCard.TextL;
+                this.letterTextUIComponent.text = this.currentLetter.TextL;
             }
             else if (this.EulerZ < -this.thresholdAngle)
             {
-                this.cardTextUIComponent.text = this.currentCard.TextR;
+                this.letterTextUIComponent.text = this.currentLetter.TextR;
             }
         }
 
         /// <summary>
-        /// The show card text.
+        /// The show letter text.
         /// </summary>
-        private void ShowCardText()
+        private void ShowLetterText()
 		{
 			this.textAdressee.text = "Dear " + this.adresseeNames[0] + ',';
 			if ( this.gameManager.IsElection )
 			{
 				this.textAdressee.text = "";
-				this.cardTextUIComponent.text = "";
+				this.letterTextUIComponent.text = "";
 		        return;
 	        }
-			this.cardTextUIComponent.text = this.currentCard.Text;
-			var id = this.CategoryToId(currentCard.Category);
+			this.letterTextUIComponent.text = this.currentLetter.Text;
+			var id = this.CategoryToId(this.currentLetter.Category);
 			if (id >= 0 && id < 4)
 			{
 				this.Image.sprite = letterSprite[id];
@@ -797,15 +797,15 @@ namespace Content.Scripts
 		}
 
 		/// <summary>
-		/// Sets card values on start.
+		/// Sets letter values on start.
 		/// </summary>
 		private void Start()
         {
 			this.initPosition = this.transform.position;
-			this.SetupCardLists();
-            this.SetupCardStacks();
-            this.FillCardHand();
-            this.GetNextCard();
+			this.SetupLetterLists();
+            this.SetupLetterStacks();
+            this.FillLetterHand();
+            this.GetNextLetter();
         }
 
 		/// <summary>
@@ -815,14 +815,14 @@ namespace Content.Scripts
 		/// <returns>id or -1 of none was found.</returns>
 	    private int CategoryToId( string categoryName )
 	    {
-		    for (int i = 0; i < theFourCardCategories.Length; i++)
+		    for (int i = 0; i < this.theFourLetterCategories.Length; i++)
 		    {
-			    if (categoryName == theFourCardCategories[i])
+			    if (categoryName == this.theFourLetterCategories[i])
 			    {
 				    return i;
 			    }
 			}
-			Debug.LogWarning("Could not find " + categoryName + " in theFourCardCategories. Set returned default id: 0");
+			Debug.LogWarning("Could not find " + categoryName + " in theFourLetterCategories. Set returned default id: 0");
 			return 0;
 		}
     }

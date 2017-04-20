@@ -1,9 +1,9 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CardDataLoader.cs" company="Morra">
+// <copyright file="LetterDataLoader.cs" company="Morra">
 //   Bent Nürnberg
 // </copyright>
 // <summary>
-//   Defines the CardDataLoader type.
+//   Defines the LetterDataLoader type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -18,9 +18,9 @@ namespace Content.Scripts
     using UnityEngine;
 
     /// <summary>
-    /// The card data loader.
+    /// The letter data loader.
     /// </summary>
-    public static class CardDataLoader
+    public static class LetterDataLoader
     {
         /// <summary>
         /// The delimiters.
@@ -28,14 +28,14 @@ namespace Content.Scripts
         private static char[] delimiter = { ':', ' ' };
 
         /// <summary>
-        /// The get card data list.
+        /// The get letter data list.
         /// </summary>
         /// <returns>
         /// The <see cref="List"/>.
         /// </returns>
-        public static List<CardData> GetCardDataList()
+        public static List<LetterData> GetLetterDataList()
         {
-            var cardDataList = new List<CardData>();
+            var letterDataList = new List<LetterData>();
 
             try
             {
@@ -56,10 +56,10 @@ namespace Content.Scripts
 
                         if (line.StartsWith("---"))
                         {
-                            var cardData = GetDeserializedCardData(streamReader);
-                            if (cardData != null)
+                            var letterData = GetDeserializedLetterData(streamReader);
+                            if (letterData != null)
                             {
-                                cardDataList.Add(cardData);
+                                letterDataList.Add(letterData);
                             }
                         }
                     }
@@ -71,31 +71,31 @@ namespace Content.Scripts
                 Debug.Log(string.Format("Exception message from {0}: {1}", e, e.Message));
             }
 
-            return cardDataList;
+            return letterDataList;
         }
 
         /// <summary>
-        /// The get deserialized card data.
+        /// The get deserialized letter data.
         /// </summary>
         /// <param name="streamReader">
         /// The stream reader.
         /// </param>
         /// <returns>
-        /// The <see cref="CardData"/>.
+        /// The <see cref="LetterData"/>.
         /// </returns>
-        private static CardData GetDeserializedCardData(TextReader streamReader)
+        private static LetterData GetDeserializedLetterData(TextReader streamReader)
         {
-            var cardData = new CardData();
-            var cardAttributes = new CardAttributes();
+            var letterData = new LetterData();
+            var letterAttributes = new LetterAttributes();
             var output = new StringBuilder();
-            output.AppendLine("deserialized card data");
+            output.AppendLine("deserialized letter data");
 
             /*
-             * CARD ID
+             * LETTER ID
              */
             var line = streamReader.ReadLine();
-            cardData.CardId = GetIntegerValue(line, 2);
-            output.AppendLine(string.Format("id: {0}", cardData.CardId));
+            letterData.LetterId = GetIntegerValue(line, 2);
+            output.AppendLine(string.Format("id: {0}", letterData.LetterId));
 
             /*
              * PARENT (ignore)
@@ -111,21 +111,21 @@ namespace Content.Scripts
              * BACKGROUND COLOR
              */
             line = streamReader.ReadLine();
-            cardAttributes.BackgroundColor = GetColorValue(line, 5);
-            output.AppendLine(string.Format("BackgroundColor: {0}", cardAttributes.BackgroundColor));
+            letterAttributes.BackgroundColor = GetColorValue(line, 5);
+            output.AppendLine(string.Format("BackgroundColor: {0}", letterAttributes.BackgroundColor));
             /*
              * do some magic
              *                  here!
              */
 
-            // cardAttributes.BackgroundColor = new Color32(0x2B, 0x2B, 0x2B, 0x2B); // pass right byte or float values
+            // letterAttributes.BackgroundColor = new Color32(0x2B, 0x2B, 0x2B, 0x2B); // pass right byte or float values
 
             /*
              * CATEGORY
              */
             line = streamReader.ReadLine();
-            cardAttributes.Category = GetStringValue(line, 5);
-            output.AppendLine(string.Format("Category: {0}", cardAttributes.Category));
+            letterAttributes.Category = GetStringValue(line, 5);
+            output.AppendLine(string.Format("Category: {0}", letterAttributes.Category));
 
             /*
              * CHARACTER
@@ -136,147 +136,147 @@ namespace Content.Scripts
             switch (character)
             {
                 case "Character1":
-                    cardAttributes.Character = Character.Character1;
+                    letterAttributes.Character = Character.Character1;
                     break;
                 case "Character2":
-                    cardAttributes.Character = Character.Character2;
+                    letterAttributes.Character = Character.Character2;
                     break;
                 case "Character3":
-                    cardAttributes.Character = Character.Character3;
+                    letterAttributes.Character = Character.Character3;
                     break;
                 case "Character4":
-                    cardAttributes.Character = Character.Character4;
+                    letterAttributes.Character = Character.Character4;
                     break;
                 default:
-                    cardAttributes.Character = Character.NotSet;
+                    letterAttributes.Character = Character.NotSet;
                     Debug.Log("Error reading Character");
                     break;
             }
-            output.AppendLine(string.Format("Character: {0}", cardAttributes.Character));
+            output.AppendLine(string.Format("Character: {0}", letterAttributes.Character));
 
             /*
              * CULTURE L
              */
             line = streamReader.ReadLine();
-            cardAttributes.CultureL = GetIntegerValue(line, 5);
-            output.AppendLine(string.Format("Culture L: {0}", cardAttributes.CultureL));
+            letterAttributes.CultureL = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Culture L: {0}", letterAttributes.CultureL));
 
             /*
              * CULTURE R
              */
             line = streamReader.ReadLine();
-            cardAttributes.CultureR = GetIntegerValue(line, 5);
-            output.AppendLine(string.Format("Culture R: {0}", cardAttributes.CultureR));
+            letterAttributes.CultureR = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Culture R: {0}", letterAttributes.CultureR));
 
             /*
              * ECONOMY L
              */
             line = streamReader.ReadLine();
-            cardAttributes.EconomyL = GetIntegerValue(line, 5);
-            output.AppendLine(string.Format("Economy L: {0}", cardAttributes.EconomyL));
+            letterAttributes.EconomyL = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Economy L: {0}", letterAttributes.EconomyL));
 
             /*
              * ECONOMY R
              */
             line = streamReader.ReadLine();
-            cardAttributes.EconomyR = GetIntegerValue(line, 5);
-            output.AppendLine(string.Format("EconomyR: {0}", cardAttributes.EconomyR));
+            letterAttributes.EconomyR = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("EconomyR: {0}", letterAttributes.EconomyR));
 
             /*
              * ENVIRONMENT L
              */
             line = streamReader.ReadLine();
-            cardAttributes.EnvironmentL = GetIntegerValue(line, 5);
-            output.AppendLine(string.Format("Environment L: {0}", cardAttributes.EnvironmentL));
+            letterAttributes.EnvironmentL = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Environment L: {0}", letterAttributes.EnvironmentL));
 
             /*
              * ENVIRONMENT R
              */
             line = streamReader.ReadLine();
-            cardAttributes.EnvironmentR = GetIntegerValue(line, 5);
-            output.AppendLine(string.Format("Environment R: {0}", cardAttributes.EnvironmentR));
+            letterAttributes.EnvironmentR = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Environment R: {0}", letterAttributes.EnvironmentR));
 
             /*
              * FOLLOW UP ID L
              */
             line = streamReader.ReadLine();
-            cardAttributes.FollowUpIdL = GetIntegerValue(line, 5);
-            output.AppendLine(string.Format("Follow Up Id L: {0}", cardAttributes.FollowUpIdL));
+            letterAttributes.FollowUpIdL = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Follow Up Id L: {0}", letterAttributes.FollowUpIdL));
 
             /*
              * FOLLOW UP ID R
              */
             line = streamReader.ReadLine();
-            cardAttributes.FollowUpIdR = GetIntegerValue(line, 5);
-            output.AppendLine(string.Format("Follow Up Id R: {0}", cardAttributes.FollowUpIdR));
+            letterAttributes.FollowUpIdR = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Follow Up Id R: {0}", letterAttributes.FollowUpIdR));
 
             /*
              * FOLLOW UP STEP L
             */
             line = streamReader.ReadLine();
-            cardAttributes.FollowUpStepL = GetIntegerValue(line, 5);
-            output.AppendLine(string.Format("Follow Up Step L: {0}", cardAttributes.FollowUpStepL));
+            letterAttributes.FollowUpStepL = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Follow Up Step L: {0}", letterAttributes.FollowUpStepL));
 
             /*
              * FOLLOW UP STEP R
             */
             line = streamReader.ReadLine();
-            cardAttributes.FollowUpStepR = GetIntegerValue(line, 5);
-            output.AppendLine(string.Format("Follow Up Step R: {0}", cardAttributes.FollowUpStepR));
+            letterAttributes.FollowUpStepR = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Follow Up Step R: {0}", letterAttributes.FollowUpStepR));
 
             /*
              * SECURITY L
              */
             line = streamReader.ReadLine();
-            cardAttributes.SecurityL = GetIntegerValue(line, 5);
-            output.AppendLine(string.Format("Security L: {0}", cardAttributes.SecurityL));
+            letterAttributes.SecurityL = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Security L: {0}", letterAttributes.SecurityL));
 
             /*
              * SECURITY R
              */
             line = streamReader.ReadLine();
-            cardAttributes.SecurityR = GetIntegerValue(line, 5);
-            output.AppendLine(string.Format("Security R: {0}", cardAttributes.SecurityR));
+            letterAttributes.SecurityR = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Security R: {0}", letterAttributes.SecurityR));
 
             /*
              * TEXT
              */
             line = streamReader.ReadLine();
-            cardAttributes.Text = GetStringValue(line, 5);
-            output.AppendLine(string.Format("Text: {0}", cardAttributes.Text));
+            letterAttributes.Text = GetStringValue(line, 5);
+            output.AppendLine(string.Format("Text: {0}", letterAttributes.Text));
 
             /*
              * TEXT L
              */
             line = streamReader.ReadLine();
-            cardAttributes.TextL = GetStringValue(line, 5);
-            output.AppendLine(string.Format("Text L: {0}", cardAttributes.TextL));
+            letterAttributes.TextL = GetStringValue(line, 5);
+            output.AppendLine(string.Format("Text L: {0}", letterAttributes.TextL));
 
             /*
              * TEXT R
              */
             line = streamReader.ReadLine();
-            cardAttributes.TextR = GetStringValue(line, 5);
-            output.AppendLine(string.Format("Text R: {0}", cardAttributes.TextR));
+            letterAttributes.TextR = GetStringValue(line, 5);
+            output.AppendLine(string.Format("Text R: {0}", letterAttributes.TextR));
 
             /*
              * TREASURY L
              */
             line = streamReader.ReadLine();
-            cardAttributes.TreasuryL = GetIntegerValue(line, 5);
-            output.AppendLine(string.Format("Treasury L: {0}", cardAttributes.TreasuryL));
+            letterAttributes.TreasuryL = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Treasury L: {0}", letterAttributes.TreasuryL));
 
             /*
              * TREASURY R
              */
             line = streamReader.ReadLine();
-            cardAttributes.TreasuryR = GetIntegerValue(line, 5);
-            output.AppendLine(string.Format("Treasury R: {0}", cardAttributes.TreasuryR));
+            letterAttributes.TreasuryR = GetIntegerValue(line, 5);
+            output.AppendLine(string.Format("Treasury R: {0}", letterAttributes.TreasuryR));
 
             //Debug.Log(output);
 
-            cardData.CardAttributes = cardAttributes;
-            return cardData;
+            letterData.LetterAttributes = letterAttributes;
+            return letterData;
         }
 
         /// <summary>

@@ -546,8 +546,6 @@ namespace Content.Scripts
 				this.policyValuesL[i] = 0;
 				this.policyValuesR[i] = 0;
 			}
-			this.policyValuesL[(int) PolicyType.Treasury] = this.electionMoneyBonus;
-			this.policyValuesR[(int) PolicyType.Treasury] = this.electionMoneyBonus;
 
 			// set reelection card depending on happiness
 			var step = this.gameManager.LoseDeviationThreshold / 4;
@@ -559,7 +557,14 @@ namespace Content.Scripts
 					this.Image.sprite = this.reelectionLetterSprites[i];
 					if ( i == 3 )
 					{
-						Debug.Log ( "Reelection lost!" );
+						this.gameManager.lostElection = true;
+						this.policyValuesL[(int)PolicyType.Treasury] = 0;
+						this.policyValuesR[(int)PolicyType.Treasury] = 0;
+					}
+					else
+					{
+						this.policyValuesL[(int)PolicyType.Treasury] = this.electionMoneyBonus;
+						this.policyValuesR[(int)PolicyType.Treasury] = this.electionMoneyBonus;
 					}
 					break;
 				}

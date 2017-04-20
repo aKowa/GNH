@@ -58,6 +58,17 @@ namespace Content.Scripts
 		private Sprite winScreen = null;
 
 		/// <summary>
+		/// Lose screen sprite, when not reelected.
+		/// </summary>
+		[SerializeField]
+		private Sprite loseScreenNotReelected = null;
+
+		/// <summary>
+		/// Flag to determine lost by election (set in LetterController)
+		/// </summary>
+		public bool lostElection = false;
+
+		/// <summary>
 		/// Lose screens, when policy is too low.
 		/// </summary>
 		[Tooltip("ID determines which screen is shown, when corresponding policy value is too low.")]
@@ -303,11 +314,16 @@ namespace Content.Scripts
 		/// </summary>
 		private void CheckforGameOver ()
 		{
+			if ( this.lostElection )
+			{
+				this.SetLose( this.loseScreenNotReelected );
+				return;
+			}
+
 			if ( this.IsElection )
 			{
 				if ( this.policies[5].Value <= this.winThreshold )
 				{
-					//this.GetGameOverText ( 5 ).text = "";
 					this.SetWinImage ();
 					AudioController.Instance.Play(1);
 					return;
@@ -317,8 +333,7 @@ namespace Content.Scripts
 			// Check for lose if deviation exceeds threshold
 			if ( this.policies[ (int)PolicyType.Happiness ].Value >= this.loseDeviationThreshold && this.loseDeviationThreshold > 0 )
 			{
-				//this.GetGameOverText ( 5 ).text += " was too damn low!";
-				this.SetLoseImage ();
+				this.SetLose ();
 				AudioController.Instance.Play(2);
 				return;
 			}
@@ -327,8 +342,7 @@ namespace Content.Scripts
 			for ( var i = 0; i < 4; i++ )
 				if ( this.policies[i].Value <= 0 )
 				{
-					//this.GetGameOverText ( i ).text += " was too damn low!";
-					this.SetLoseImage ( i );
+					this.SetLose ( i );
 					AudioController.Instance.Play(2);
 					return;
 				}
@@ -347,16 +361,15 @@ namespace Content.Scripts
 		/// <summary>
 		/// Sets lose image via deviation
 		/// </summary>
-		private void SetLoseImage ()
+		private void SetLose ()
 		{
-			this.gameOverImage.gameObject.SetActive(true);
 			if ( this.policies[this.maxDeviatiedPolicyID].Value > this.Average )
 			{
-				this.gameOverImage.sprite = this.loseScreensTooHigh[ this.maxDeviatiedPolicyID ];
+				this.SetLose( this.loseScreensTooHigh[ this.maxDeviatiedPolicyID ] );
 			}
 			else
 			{
-				this.SetLoseImage(  this.maxDeviatiedPolicyID );
+				this.SetLose(  this.maxDeviatiedPolicyID );
 			}
 		}
 
@@ -364,18 +377,28 @@ namespace Content.Scripts
 		/// Sets the lose screen to the correxponding too low policy
 		/// </summary>
 		/// <param name="id">Policy id</param>
-		private void SetLoseImage ( int id )
+		private void SetLose ( int id )
 		{
-			this.gameOverImage.gameObject.SetActive(true);
 			try
 			{
-				this.gameOverImage.sprite = this.loseScreensTooLow[id];
+				this.SetLose( this.loseScreensTooLow[id] );
 			}
 			catch ( IndexOutOfRangeException )
 			{
 				Debug.LogWarning ( "IndexOutOfRange! No loseToLowScreen set at id: " + id );
-				this.gameOverImage.sprite = this.loseScreensTooLow[0] ?? this.winScreen;
+				this.SetLose( this.loseScreensTooLow[0] ?? this.winScreen );
 			}
+		}
+
+		/// <summary>
+		/// Sets a lose screen.
+		/// </summary>
+		/// <param name="sprite">´Target sprite.</param>
+		private void SetLose( Sprite sprite )
+		{
+			this.gameOverImage.gameObject.SetActive(true);
+			this.gameOverImage.sprite = sprite;
+			this.gameOverImage.GetComponentInChildren <Text> ( true ).text = "You lasted\n" + this.round + " months";
 		}
 
 		/// <summary>

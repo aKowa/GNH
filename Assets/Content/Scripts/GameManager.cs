@@ -48,7 +48,7 @@ namespace Content.Scripts
 		/// The game over object.
 		/// </summary>
 		[SerializeField]
-		private GameObject gameOverObject = null;
+		private Image gameOverImage = null;
 
 		/// <summary>
 		/// Win screen sprite.
@@ -98,6 +98,11 @@ namespace Content.Scripts
 		[Tooltip ( "Threshold policyType of happines used to determine when player lost! Use negative policyType to disable.")]
 		[SerializeField]
 		private int loseDeviationThreshold = 20;
+
+		/// <summary>
+		/// The maximum deviatedd policy id.
+		/// </summary>
+		private int maxDeviatiedPolicyID = -1;
 
 		/// <summary>
 		/// Determines if an election takes place
@@ -258,7 +263,7 @@ namespace Content.Scripts
 		/// </summary>
 		public void Start ()
 		{
-			this.gameOverObject.SetActive ( false );
+			this.gameOverImage.gameObject.SetActive ( false );
 			this.blockInput = false;
 
 			this.SetValuesActive ( Debug.isDebugBuild && this.showValues );
@@ -304,7 +309,7 @@ namespace Content.Scripts
 			if ( this.policies[ (int)PolicyType.Happiness ].Value >= this.loseDeviationThreshold && this.loseDeviationThreshold > 0 )
 			{
 				//this.GetGameOverText ( 5 ).text += " was too damn low!";
-				this.SetLose ( 5 );
+				this.SetLose ();
 				return;
 			}
 			
@@ -321,17 +326,13 @@ namespace Content.Scripts
 		/// <summary>
 		/// Returns GameOver text object and sets parameter for blocking input.
 		/// </summary>
-		/// <param name="policyId">
-		/// The policyID responsible for the game over.
-		/// </param>
-		/// <returns>
-		/// The <see cref="Text" />.
-		/// </returns>
+		/// <param name="policyId"> The policyID responsible for the game over. </param>
+		/// <returns> The <see cref="Text" />. </returns>
 		private Text GetGameOverText ( int policyId )
 		{
 			this.blockInput = true;
-			this.gameOverObject.SetActive ( true );
-			var gameOverText = this.gameOverObject.GetComponentInChildren <Text> ( true );
+			this.gameOverImage.gameObject.SetActive ( true );
+			var gameOverText = this.gameOverImage.GetComponentInChildren <Text> ( true );
 			var policyName = this.policies[policyId].type.ToString ();
 			gameOverText.text = "You Lost! \n Your " + policyName;
 			return gameOverText;
@@ -343,12 +344,24 @@ namespace Content.Scripts
 		private void SetWin ()
 		{
 			// set screen
-			this.gameOverObject.SetActive ( true );
-			var gameOverImage = this.gameOverObject.GetComponent <Image> ();
-			gameOverImage.sprite = this.winScreen;
+			this.gameOverImage.gameObject.SetActive ( true );
+			this.gameOverImage.sprite = this.winScreen;
 
 			// play audio
 			AudioController.Instance.Play ( 1 );
+		}
+
+		private void SetLose ()
+		{
+			this.gameOverImage.gameObject.SetActive(true);
+			if ( this.policies[this.maxDeviatiedPolicyID].Value > this.Average )
+			{
+				this.gameOverImage.sprite = this.loseScreensTooHigh[ this.maxDeviatiedPolicyID ];
+			}
+			else
+			{
+				this.SetLose(  this.maxDeviatiedPolicyID );
+			}
 		}
 
 		/// <summary>
@@ -357,16 +370,15 @@ namespace Content.Scripts
 		/// <param name="id">Policy id</param>
 		private void SetLose ( int id )
 		{
-			this.gameOverObject.SetActive ( true );
-			var gameOverImage = this.gameOverObject.GetComponent <Image> ();
+			this.gameOverImage.gameObject.SetActive(true);
 			try
 			{
-				gameOverImage.sprite = this.loseScreensTooLow[id];
+				this.gameOverImage.sprite = this.loseScreensTooLow[id];
 			}
 			catch ( IndexOutOfRangeException )
 			{
 				Debug.LogWarning ( "IndexOutOfRange! No loseToLowScreen set at id: " + id );
-				gameOverImage.sprite = this.loseScreensTooLow[0] ?? this.winScreen;
+				this.gameOverImage.sprite = this.loseScreensTooLow[0] ?? this.winScreen;
 			}
 
 			// play audio
@@ -374,26 +386,35 @@ namespace Content.Scripts
 		}
 
 		/// <summary>
+		/// The average of all 4 policies.
+		/// </summary>
+		private int Average
+		{
+			get
+			{
+				var average = 0;
+				for ( var i = 0; i < 4; i++ )
+				{
+					average += this.policies[i].Value;
+				}
+				return average / 4;
+			}
+		}
+
+		/// <summary>
 		/// Sets happiness value to max deviation
 		/// </summary>
 		private void SetHappiness ()
 		{
-			// set average
-			var average = 0;
-			for ( var i = 0; i < 4; i++ )
-			{
-				average += this.policies[i].Value;
-			}
-			average = average / 4;
-
-			// set max deviation to average
+			// set max deviation from average
 			var maxDeviation = 0;
 			for ( var j = 0; j < 4; j++ )
 			{
-				var tempDeviation = Math.Abs ( this.policies[j].Value - average );
+				var tempDeviation = Math.Abs ( this.policies[j].Value - this.Average );
 				if ( tempDeviation > maxDeviation )
 				{
 					maxDeviation = tempDeviation;
+					this.maxDeviatiedPolicyID = j;
 				}
 			}
 			

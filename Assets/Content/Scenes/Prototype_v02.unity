@@ -2804,7 +2804,7 @@ MonoBehaviour:
   - {fileID: 1349639703}
   - {fileID: 745386112}
   startValueRange: {x: 45, y: 55}
-  gameOverObject: {fileID: 966244895}
+  gameOverImage: {fileID: 966244897}
   winScreen: {fileID: 21300000, guid: cd007b230767a3e44897535c24ba8165, type: 3}
   loseScreensTooLow:
   - {fileID: 21300000, guid: b658bb4590f7b0d4fa19f6318d4ec1cf, type: 3}

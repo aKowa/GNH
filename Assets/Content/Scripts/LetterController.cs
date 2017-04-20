@@ -789,10 +789,14 @@ namespace Content.Scripts
 		        return;
 	        }
 			this.letterTextUIComponent.text = this.currentLetter.Text;
-			var id = this.CategoryToId(this.currentLetter.Category);
+			var id = (int)this.currentLetter.Character;
 			if (id >= 0 && id < 4)
 			{
-				this.Image.sprite = letterSprite[id];
+				this.Image.sprite = this.letterSprite[id];
+			}
+			else
+			{
+				Debug.LogWarning ( "Character on Letter not set! Please provide a valid character!" );
 			}
 		}
 
@@ -807,23 +811,5 @@ namespace Content.Scripts
             this.FillLetterHand();
             this.GetNextLetter();
         }
-
-		/// <summary>
-		/// Gets a categories id
-		/// </summary>
-		/// <param name="categoryName">The Category name</param>
-		/// <returns>id or -1 of none was found.</returns>
-	    private int CategoryToId( string categoryName )
-	    {
-		    for (int i = 0; i < this.theFourLetterCategories.Length; i++)
-		    {
-			    if (categoryName == this.theFourLetterCategories[i])
-			    {
-				    return i;
-			    }
-			}
-			Debug.LogWarning("Could not find " + categoryName + " in theFourLetterCategories. Set returned default id: 0");
-			return 0;
-		}
     }
 }

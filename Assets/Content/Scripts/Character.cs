@@ -17,26 +17,26 @@ namespace Content.Scripts
         /// <summary>
         /// The character is not set.
         /// </summary>
-        NotSet,
+        NotSet = -1,
 
         /// <summary>
         /// The character 1.
         /// </summary>
-        Character1,
+        Character1 = 0,
 
         /// <summary>
         /// The character 2.
         /// </summary>
-        Character2,
+        Character2 = 1,
 
         /// <summary>
         /// The character 3.
         /// </summary>
-        Character3,
+        Character3 = 2,
 
         /// <summary>
         /// The character 4.
         /// </summary>
-        Character4
+        Character4 = 3
     }
 }

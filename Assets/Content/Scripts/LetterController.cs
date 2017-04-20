@@ -6,6 +6,9 @@
 //   Defines the LetterController type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+
 namespace Content.Scripts
 {
     using System.Collections;
@@ -789,14 +792,16 @@ namespace Content.Scripts
 		        return;
 	        }
 			this.letterTextUIComponent.text = this.currentLetter.Text;
+
 			var id = (int)this.currentLetter.Character;
-			if (id >= 0 && id < 4)
+			try
 			{
 				this.Image.sprite = this.letterSprite[id];
 			}
-			else
+			catch ( IndexOutOfRangeException )
 			{
-				Debug.LogWarning ( "Character on Letter not set! Please provide a valid character!" );
+				Debug.LogWarning("Character index is out of range! No screen set at id: " + id);
+				this.Image.sprite = this.letterSprite[0];
 			}
 		}
 

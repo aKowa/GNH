@@ -2806,8 +2806,16 @@ MonoBehaviour:
   startValueRange: {x: 45, y: 55}
   gameOverObject: {fileID: 966244895}
   winScreen: {fileID: 21300000, guid: cd007b230767a3e44897535c24ba8165, type: 3}
-  loseScreens:
-  - {fileID: 21300000, guid: c43e3a18c1c137c43a0c81924a7a6a97, type: 3}
+  loseScreensTooLow:
+  - {fileID: 21300000, guid: b658bb4590f7b0d4fa19f6318d4ec1cf, type: 3}
+  - {fileID: 21300000, guid: 68a67ce1276fd6c4d9cc37ecc06a56ec, type: 3}
+  - {fileID: 21300000, guid: 8197bb939131c4243a8ec86e683d0e9d, type: 3}
+  - {fileID: 21300000, guid: 28f2a2f2814f3d549aaa4479561a0efc, type: 3}
+  loseScreensTooHigh:
+  - {fileID: 21300000, guid: b658bb4590f7b0d4fa19f6318d4ec1cf, type: 3}
+  - {fileID: 21300000, guid: 68a67ce1276fd6c4d9cc37ecc06a56ec, type: 3}
+  - {fileID: 21300000, guid: 8197bb939131c4243a8ec86e683d0e9d, type: 3}
+  - {fileID: 21300000, guid: 28f2a2f2814f3d549aaa4479561a0efc, type: 3}
   winCheck: 10
   winThreshold: 10
   loseDeviationThreshold: 40

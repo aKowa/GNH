@@ -51,18 +51,24 @@ namespace Content.Scripts
 		private GameObject gameOverObject = null;
 
 		/// <summary>
-		///  Win screen sprite.
+		/// Win screen sprite.
 		/// </summary>
 		[Tooltip ( "This Screen is set on Game Over, if the player has won." )]
 		[SerializeField]
 		private Sprite winScreen = null;
 
 		/// <summary>
-		///  Lose screens, when policy is too low.
+		/// Lose screens, when policy is too low.
 		/// </summary>
 		[Tooltip("ID determines which screen is shown, when corresponding policy value is too low.")]
 		[SerializeField]
-		private Sprite[] loseScreens = null;
+		private Sprite[] loseScreensTooLow = null;
+
+		/// <summary>
+		/// Lose screens, when policy is too low.
+		/// </summary>
+		[SerializeField]
+		private Sprite[] loseScreensTooHigh = null;
 
 		/// <summary>
 		/// Checks Happiness Threshold Win every set round.
@@ -287,16 +293,17 @@ namespace Content.Scripts
 			{
 				if ( this.policies[5].Value <= this.winThreshold )
 				{
-					this.GetGameOverText ( 5 ).text = "";
+					//this.GetGameOverText ( 5 ).text = "";
 					this.SetWin ();
 					return;
 				}
 			}
-			
+
 			// Check for lose by happiness
+			// TODO: determine which policy is too high
 			if ( this.policies[ (int)PolicyType.Happiness ].Value >= this.loseDeviationThreshold && this.loseDeviationThreshold > 0 )
 			{
-				this.GetGameOverText ( 5 ).text += " was too damn low!";
+				//this.GetGameOverText ( 5 ).text += " was too damn low!";
 				this.SetLose ( 5 );
 				return;
 			}
@@ -305,7 +312,7 @@ namespace Content.Scripts
 			for ( var i = 0; i < 4; i++ )
 				if ( this.policies[i].Value <= 0 )
 				{
-					this.GetGameOverText ( i ).text += " was too damn low!";
+					//this.GetGameOverText ( i ).text += " was too damn low!";
 					this.SetLose ( i );
 					return;
 				}
@@ -354,12 +361,12 @@ namespace Content.Scripts
 			var gameOverImage = this.gameOverObject.GetComponent <Image> ();
 			try
 			{
-				gameOverImage.sprite = this.loseScreens[id];
+				gameOverImage.sprite = this.loseScreensTooLow[id];
 			}
 			catch ( IndexOutOfRangeException )
 			{
 				Debug.LogWarning ( "IndexOutOfRange! No loseToLowScreen set at id: " + id );
-				gameOverImage.sprite = this.loseScreens[0] ?? this.winScreen;
+				gameOverImage.sprite = this.loseScreensTooLow[0] ?? this.winScreen;
 			}
 
 			// play audio

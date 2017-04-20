@@ -356,6 +356,7 @@ namespace Content.Scripts
 			// set screen
 			this.gameOverImage.gameObject.SetActive ( true );
 			this.gameOverImage.sprite = this.winScreen;
+			this.gameOverImage.GetComponentInChildren <Text> ( true ).text = "";
 		}
 
 		/// <summary>

@@ -23,6 +23,11 @@ namespace Content.Scripts
 					throw new NullReferenceException ();
 				}
 				AudioController.Instantiate ( this.audioController );
+
+				if ( Debug.isDebugBuild )
+				{
+					AudioController.Instance.Mute = true;
+				}
 			}
 		}
 	}

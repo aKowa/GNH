@@ -242,6 +242,7 @@ namespace Content.Scripts
 		/// <summary>
 		/// Overload. Starts reverting preview color.
 		/// </summary>
+		/// <param name="values">Policy values</param>
 		/// <param name="speed">The speed at which the color lerps back</param>
 		public void RevertPreview( int[] values, float speed)
 		{
@@ -277,7 +278,7 @@ namespace Content.Scripts
 		}
 
 		/// <summary>
-		///  Shows/ hides values on interface
+		/// Shows/ hides values on interface
 		/// </summary>
 		/// <param name="state">The target active state</param>
 		public void SetValuesActive ( bool state )
@@ -299,59 +300,46 @@ namespace Content.Scripts
 				if ( this.policies[5].Value <= this.winThreshold )
 				{
 					//this.GetGameOverText ( 5 ).text = "";
-					this.SetWin ();
+					this.SetWinImage ();
+					AudioController.Instance.Play(1);
 					return;
 				}
 			}
 
-			// Check for lose by happiness
-			// TODO: determine which policy is too high
+			// Check for lose if deviation exceeds threshold
 			if ( this.policies[ (int)PolicyType.Happiness ].Value >= this.loseDeviationThreshold && this.loseDeviationThreshold > 0 )
 			{
 				//this.GetGameOverText ( 5 ).text += " was too damn low!";
-				this.SetLose ();
+				this.SetLoseImage ();
+				AudioController.Instance.Play(2);
 				return;
 			}
 			
-			// check policy bounds
+			// checks if a polcy crossed zero
 			for ( var i = 0; i < 4; i++ )
 				if ( this.policies[i].Value <= 0 )
 				{
 					//this.GetGameOverText ( i ).text += " was too damn low!";
-					this.SetLose ( i );
+					this.SetLoseImage ( i );
+					AudioController.Instance.Play(2);
 					return;
 				}
-		}
-
-		/// <summary>
-		/// Returns GameOver text object and sets parameter for blocking input.
-		/// </summary>
-		/// <param name="policyId"> The policyID responsible for the game over. </param>
-		/// <returns> The <see cref="Text" />. </returns>
-		private Text GetGameOverText ( int policyId )
-		{
-			this.blockInput = true;
-			this.gameOverImage.gameObject.SetActive ( true );
-			var gameOverText = this.gameOverImage.GetComponentInChildren <Text> ( true );
-			var policyName = this.policies[policyId].type.ToString ();
-			gameOverText.text = "You Lost! \n Your " + policyName;
-			return gameOverText;
 		}
 
 		/// <summary>
 		/// Sets the win screen
 		/// </summary>
-		private void SetWin ()
+		private void SetWinImage ()
 		{
 			// set screen
 			this.gameOverImage.gameObject.SetActive ( true );
 			this.gameOverImage.sprite = this.winScreen;
-
-			// play audio
-			AudioController.Instance.Play ( 1 );
 		}
 
-		private void SetLose ()
+		/// <summary>
+		/// Sets lose image via deviation
+		/// </summary>
+		private void SetLoseImage ()
 		{
 			this.gameOverImage.gameObject.SetActive(true);
 			if ( this.policies[this.maxDeviatiedPolicyID].Value > this.Average )
@@ -360,7 +348,7 @@ namespace Content.Scripts
 			}
 			else
 			{
-				this.SetLose(  this.maxDeviatiedPolicyID );
+				this.SetLoseImage(  this.maxDeviatiedPolicyID );
 			}
 		}
 
@@ -368,7 +356,7 @@ namespace Content.Scripts
 		/// Sets the lose screen to the correxponding too low policy
 		/// </summary>
 		/// <param name="id">Policy id</param>
-		private void SetLose ( int id )
+		private void SetLoseImage ( int id )
 		{
 			this.gameOverImage.gameObject.SetActive(true);
 			try
@@ -380,9 +368,6 @@ namespace Content.Scripts
 				Debug.LogWarning ( "IndexOutOfRange! No loseToLowScreen set at id: " + id );
 				this.gameOverImage.sprite = this.loseScreensTooLow[0] ?? this.winScreen;
 			}
-
-			// play audio
-			AudioController.Instance.Play( 2 );
 		}
 
 		/// <summary>

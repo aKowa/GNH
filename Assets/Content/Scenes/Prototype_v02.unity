@@ -1509,20 +1509,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1715703455}
-  cardTextUIComponent: {fileID: 1127767392}
+  letterTextUIComponent: {fileID: 1127767392}
   textAdressee: {fileID: 571054913}
   adresseeNames:
   - Authority
   - Minion
   deviationToHelp: 20
-  maxCardsInHand: 20
+  maxLettersInHand: 20
   maxAngle: 15
   thresholdAngle: 10
   animationRevertRotationSpeed: 2
   animationMoveSpeed: 1
   animationMoveDistance: 900
-  animationNextCardDegree: 720
-  aniamtionNextCardSpeed: 1
+  animationNextLetterDegree: 720
+  animationNextLetterSpeed: 1
   letterSprite:
   - {fileID: 21300000, guid: 237909ad24e1cd24caaa0cf4a8793b55, type: 3}
   - {fileID: 21300000, guid: efee0cdba90c5ea46bea4871c678c084, type: 3}

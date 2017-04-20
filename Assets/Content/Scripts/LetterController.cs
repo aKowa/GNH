@@ -549,28 +549,22 @@ namespace Content.Scripts
 			this.policyValuesL[(int) PolicyType.Treasury] = this.electionMoneyBonus;
 			this.policyValuesR[(int) PolicyType.Treasury] = this.electionMoneyBonus;
 
+			// set reelection card depending on happiness
 			var step = this.gameManager.LoseDeviationThreshold / 4;
-			var id = -1;
 			var happiness = this.gameManager.GetPolicyValue ( PolicyType.Happiness );
-			for ( var i = 0; i < 2; i++ )
+			for ( var i = 3; i >= 0; i-- )
 			{
-				if ( happiness > (i * step) && happiness <= (i + 1) * step )
+				if ( happiness > ( i * step ) )
 				{
-					id = i;
+					this.Image.sprite = this.reelectionLetterSprites[i];
+					if ( i == 3 )
+					{
+						Debug.Log ( "Reelection lost!" );
+					}
+					break;
 				}
 			}
-
-			if ( id == -1 )
-			{
-				Debug.Log("Reelection Lost!");
-				this.Image.sprite = this.reelectionLetterSprites[3];
-			}
-			else
-			{
-				this.Image.sprite = this.reelectionLetterSprites[id];
-			}
 			this.ShowLetterText ();
-			Debug.Log(" Happiness: " + happiness + "Id: " + id + "   Step: " + step + " ");
 		}
 
 		/// <summary>

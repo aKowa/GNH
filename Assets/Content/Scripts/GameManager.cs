@@ -100,6 +100,14 @@ namespace Content.Scripts
 		private int loseDeviationThreshold = 20;
 
 		/// <summary>
+		/// The external read-only lose deviation threshold
+		/// </summary>
+		public int LoseDeviationThreshold
+		{
+			get { return this.loseDeviationThreshold; }
+		}
+
+		/// <summary>
 		/// The maximum deviatedd policy id.
 		/// </summary>
 		private int maxDeviatiedPolicyID = -1;

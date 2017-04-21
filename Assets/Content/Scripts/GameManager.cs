@@ -66,6 +66,7 @@ namespace Content.Scripts
 		/// <summary>
 		/// Flag to determine lost by election (set in LetterController)
 		/// </summary>
+		[HideInInspector]
 		public bool lostElection = false;
 
 		/// <summary>

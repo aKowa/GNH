@@ -1529,10 +1529,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 89c2b3c806c215e40b338b71f9215270, type: 3}
   - {fileID: 21300000, guid: 57fa97d8dfa4e314785118ad94f79717, type: 3}
   reelectionLetterSprites:
-  - {fileID: 21300000, guid: de35345df5dafc44c99bcec5549dcc09, type: 3}
-  - {fileID: 21300000, guid: eb287c005bbfb5247b59742192453a4c, type: 3}
-  - {fileID: 21300000, guid: 6034fe068232b6940ae499a46d8b8b09, type: 3}
-  - {fileID: 21300000, guid: fbec4fadf213d9542bdd582879dde543, type: 3}
+  - {fileID: 21300000, guid: a40769c2baa915b478cf4a87551021de, type: 3}
+  - {fileID: 21300000, guid: d02481315c42c90469bf90b4af24364a, type: 3}
+  - {fileID: 21300000, guid: 95c5ab4c5cde0d64ca19426e3cad351d, type: 3}
+  - {fileID: 21300000, guid: b4aecd7772c7e9a47b345752a09476e8, type: 3}
   electionMoneyBonus: 30
 --- !u!114 &795344644
 MonoBehaviour:
@@ -2797,7 +2797,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67fb4437eab0bf341993b0a26cb72dd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showValues: 0
+  showValues: 1
   blockInput: 0
   policies:
   - {fileID: 497749266}

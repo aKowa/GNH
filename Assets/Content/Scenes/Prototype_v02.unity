@@ -1760,7 +1760,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: b658bb4590f7b0d4fa19f6318d4ec1cf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c17939c9439bc814cad6c81a95fcaecd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2809,7 +2809,7 @@ MonoBehaviour:
   startValueRange: {x: 45, y: 55}
   gameOverImage: {fileID: 966244897}
   winScreen: {fileID: 21300000, guid: cd007b230767a3e44897535c24ba8165, type: 3}
-  loseScreenNotReelected: {fileID: 21300000, guid: 724abc04933aaa540aca5a8b460f713c,
+  loseScreenNotReelected: {fileID: 21300000, guid: c17939c9439bc814cad6c81a95fcaecd,
     type: 3}
   lostElection: 0
   loseScreensTooLow:
